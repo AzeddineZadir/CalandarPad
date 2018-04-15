@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/db" android:title="Acceuil" android:icon="@drawable/ic_home_black_24dp"/>
+    <item android:id="@+id/calendrier" android:title="Calendrier" android:icon="@drawable/ic_event_note_black_24dp"/>
+    <item android:id="@+id/agenda" android:title="Agenda" android:icon="@drawable/ic_class_black_24dp"/>
+    <item android:id="@+id/alerte" android:title="Alerte" android:icon="@drawable/ic_add_alert_black_24dp"/>
+    <item android:id="@+id/paramétre" android:title="Paramétres" android:icon="@drawable/ic_build_black_24dp"/>
+    <item android:id="@+id/apropos" android:title="A propos" android:icon="@drawable/ic_forum_black_24dp"/>
+
+</menu>
