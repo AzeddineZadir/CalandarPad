@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.silver_desk.interfactest.CalendrierActivity;
 import com.example.silver_desk.interfactest.R;
 import com.example.silver_desk.interfactest.database.Alerte;
+import com.example.silver_desk.interfactest.database.AppDatabase;
 import com.example.silver_desk.interfactest.database.Calendrier;
 import com.example.silver_desk.interfactest.database.Evenement;
 
@@ -30,6 +31,7 @@ import java.sql.Time;
 import java.text.SimpleDateFormat;
 
 import static com.example.silver_desk.interfactest.CalendrierActivity.fragmentManager;
+import static com.example.silver_desk.interfactest.fragment.ListeCalendrierFragment.database;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,6 +39,7 @@ import static com.example.silver_desk.interfactest.CalendrierActivity.fragmentMa
 public class AjoutCalendrierFragment extends Fragment implements View.OnClickListener{
 // les compoansant manipuler dans ce fragmant
 Spinner spinner ;
+
 EditText e_titre,e_couleur ;
 CheckBox c_activite,c_visibilite ;
 Button b_ajouter ;
@@ -113,7 +116,7 @@ Date date;
                     cal.setCouleur(e_couleur.getText().toString());
 
                     Toast.makeText(view.getContext()," ajout",Toast.LENGTH_LONG).show();
-                    CalendrierActivity.database.calendrierDao().insert(cal);
+                    database.calendrierDao().insert(cal);
                   /*
                    date=new Date(148645645);
                    td=new Time( 486464684 );
@@ -128,7 +131,15 @@ Date date;
                 }
 
                 Toast.makeText(view.getContext()," ajout",Toast.LENGTH_LONG).show();
-                // supprimer le fragment
+
+            android.support.v4.app.FragmentTransaction transaction= CalendrierActivity.fragmentManager.beginTransaction();
+            ListeCalendrierFragment fragment = new ListeCalendrierFragment();
+            transaction.replace(R.id.conteneur_defragments,fragment,null);
+            transaction.commit();
+
+
+
+
 
             }
 

@@ -89,5 +89,5 @@
         android:background="@color/whit"
         app:headerLayout="@layout/header"
         app:itemTextColor="@color/darkgray"
-        app:menu="@menu/drawermenu"></android.support.design.widget.NavigationView>
+        app:menu="@menu/drawermenu"/>
 </android.support.v4.widget.DrawerLayout >
