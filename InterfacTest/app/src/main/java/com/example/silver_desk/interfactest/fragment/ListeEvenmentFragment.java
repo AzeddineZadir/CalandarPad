@@ -36,7 +36,7 @@ public class ListeEvenmentFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_liste_evenment, container, false);
-        t_listeEvenment=(TextView)view.findViewById(R.id.t_listecalendrier);
+        t_listeEvenment=(TextView)view.findViewById(R.id.recyclerView);
         List<Evenement> EvenmentList= CalendrierActivity.database.evenementDao().loadAllevenement();
         chaine_daffichage = "";
 

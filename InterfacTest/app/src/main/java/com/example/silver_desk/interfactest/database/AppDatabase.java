@@ -54,11 +54,11 @@ public abstract class AppDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(final Void... params) {
             mDao.deleteAll();
-            Calendrier calendrier = new Calendrier(1,"rouge","important","Hello","rouge","rouge");
+            Calendrier calendrier = new Calendrier(1,"rouge","important","Hello","rouge","rouge","description1");
             mDao.insert(calendrier);
-            Calendrier calendrier1 = new Calendrier(2,"rouge","important","Hello","rouge","rouge");
+            Calendrier calendrier1 = new Calendrier(2,"rouge","important","Hello","rouge","rouge","description2");
             mDao.insert(calendrier1);
-            Calendrier calendrier2 = new Calendrier(3,"rouge","important","Hello","rouge","rouge");
+            Calendrier calendrier2 = new Calendrier(3,"rouge","important","Hello","rouge","rouge","description3");
             mDao.insert(calendrier2);
             return null;
         }
