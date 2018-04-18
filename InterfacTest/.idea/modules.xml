@@ -3,9 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/InterfacTest.iml" filepath="$PROJECT_DIR$/InterfacTest.iml" />
-      <module fileurl="file://D:/gitrep/prototypapp/InterfacTest/InterfacTest.iml" filepath="D:/gitrep/prototypapp/InterfacTest/InterfacTest.iml" />
+      <module fileurl="file://D:\gitrep\prototypapp\InterfacTest\InterfacTest.iml" filepath="D:\gitrep\prototypapp\InterfacTest\InterfacTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://D:/gitrep/prototypapp/InterfacTest/app/app.iml" filepath="D:/gitrep/prototypapp/InterfacTest/app/app.iml" />
+      <module fileurl="file://D:\gitrep\prototypapp\InterfacTest\app\app.iml" filepath="D:\gitrep\prototypapp\InterfacTest\app\app.iml" />
     </modules>
   </component>
 </project>
