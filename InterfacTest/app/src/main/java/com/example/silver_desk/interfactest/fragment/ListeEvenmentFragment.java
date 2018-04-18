@@ -43,8 +43,8 @@ public class ListeEvenmentFragment extends Fragment {
         long td= 21849879;
         long tf= 21849879;
         String lib="rdv";
-        Evenement event=new Evenement(lib,date,td, tf, "Bejaia", "Medecin", "Souvent", 1);
-        CalendrierActivity.database.evenementDao().insert(event);
+        //Evenement event=new Evenement(lib,date,td, tf, "Bejaia", "Medecin", "Souvent", 1);
+        //CalendrierActivity.database.evenementDao().insert(event);
 
         List<Evenement> EvenmentList= CalendrierActivity.database.evenementDao().loadAllevenement();
         chaine_daffichage = "";
@@ -55,10 +55,10 @@ public class ListeEvenmentFragment extends Fragment {
             int id = evenement.getId();
             String libele= evenement.getLibele();
             Date jour= evenement.getJour();
-            long heur_debut=evenement.getHeure_debut();
+          //  long heur_debut=evenement.getHeure_debut();
 
 
-            chaine_daffichage= chaine_daffichage +"\n\n"+"id :"+id+"\n Libele:"+libele+"\njour:"+date+"\nheure :"+heur_debut;
+            //chaine_daffichage= chaine_daffichage +"\n\n"+"id :"+id+"\n Libele:"+libele+"\njour:"+date+"\nheure :"+heur_debut;
         }
         t_listeEvenment.setText(chaine_daffichage);
         return view ;

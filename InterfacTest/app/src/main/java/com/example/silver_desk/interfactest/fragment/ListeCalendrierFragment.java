@@ -34,6 +34,7 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
     TextView t_listecalendrier;
     String chaine_daffichage ;
     RecyclerView recyclerView;
+
     public ListeCalendrierFragment() {
         // Required empty public constructor
     }
@@ -65,7 +66,7 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
 
 
 
-        chaine_daffichage = "";
+       /* chaine_daffichage = "";
         for  (Calendrier calendrier :calendrierList){
             int id = calendrier.getId();
             String titre= calendrier.getTitre();
@@ -75,9 +76,12 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
             String couleur= calendrier.getCouleur();
             chaine_daffichage= chaine_daffichage +"\n\n\n\n"+"id :"+id+"\n\n titre :"+titre;
         }
-        t_listecalendrier.setText(chaine_daffichage);
+        t_listecalendrier.setText(chaine_daffichage);*/
 
-
+        recyclerView=view.findViewById(R.id.recyclerView);
+        CalendrierListeAdapter calendarList_adapter=new CalendrierListeAdapter(calendrierList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(calendarList_adapter);
         return  view ;
     }
 

@@ -12,24 +12,22 @@ public class TimeConverter {
     static DateFormat df=new SimpleDateFormat("HH:mm:ss");
 
     @TypeConverter
-    public static Time toTime(String value){
-        if (value!=null){
-            try {
-                return (Time) df.parse(value);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }return null;
-        }else {
+    public static Time toTime(long value){
+        if (value!=0){
+
+                return new Time(value);}
+
+         else {
             return null;
         }
     }
 
     @TypeConverter
-    public static String fromTime(Time value){
+    public static long toLong(Time value){
         if (value!=null){
-            return df.format(value);
+            return value.getTime();
         }else {
-            return null;
+            return 0;
         }
     }
 }

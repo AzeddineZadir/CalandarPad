@@ -5,6 +5,7 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -12,8 +13,11 @@ import android.support.annotation.NonNull;
 import com.example.silver_desk.interfactest.database.Daos.AlerteDao;
 import com.example.silver_desk.interfactest.database.Daos.CalendrierDao;
 import com.example.silver_desk.interfactest.database.Daos.EvenementDao;
+import com.example.silver_desk.interfactest.database.TypeConverters.DateConverter;
+import com.example.silver_desk.interfactest.database.TypeConverters.TimeConverter;
 
 @Database(entities = {Calendrier.class,Evenement.class,Alerte.class},version = 1)
+@TypeConverters({DateConverter.class,TimeConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     public abstract CalendrierDao calendrierDao ();
     public abstract EvenementDao evenementDao();
