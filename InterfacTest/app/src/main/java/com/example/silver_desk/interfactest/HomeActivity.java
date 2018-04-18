@@ -1,6 +1,5 @@
 package com.example.silver_desk.interfactest;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -89,6 +88,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         //affichage du dashboard
         if (id==R.id.db){
             Toast.makeText(this,"this is the dashboard activity",Toast.LENGTH_LONG).show();
+        openEvenmentActivity();
         }
         //affichage du calendrier
         if (id==R.id.calendrier){
@@ -128,6 +128,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Toast.makeText(HomeActivity.this,"calendrier",Toast.LENGTH_LONG).show();
         Intent intent_calendrier = new Intent(HomeActivity.this,CalendrierActivity.class);
         startActivity(intent_calendrier);
+
+    }
+    //open EvenmentActivity
+    public void openEvenmentActivity(){
+        Toast.makeText(HomeActivity.this,"Evenment",Toast.LENGTH_LONG).show();
+        Intent intent_Evenment = new Intent(HomeActivity.this,AjoutEvenmentActivity.class);
+        startActivity(intent_Evenment);
 
     }
 }

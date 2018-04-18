@@ -25,13 +25,13 @@ import com.example.silver_desk.interfactest.database.Alerte;
 import com.example.silver_desk.interfactest.database.AppDatabase;
 import com.example.silver_desk.interfactest.database.Calendrier;
 import com.example.silver_desk.interfactest.database.Evenement;
+import com.example.silver_desk.interfactest.fragment.ListeCalendrierFragment;
 
 import java.sql.Date;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 
 import static com.example.silver_desk.interfactest.CalendrierActivity.fragmentManager;
-import static com.example.silver_desk.interfactest.fragment.ListeCalendrierFragment.database;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -116,16 +116,9 @@ Date date;
                     cal.setCouleur(e_couleur.getText().toString());
 
                     Toast.makeText(view.getContext()," ajout",Toast.LENGTH_LONG).show();
-                    database.calendrierDao().insert(cal);
+                   CalendrierActivity.database.calendrierDao().insert(cal);
                   /*
-                   date=new Date(148645645);
-                   td=new Time( 486464684 );
-                   tf=new Time(21849879);
-                   event=new Evenement("je sais pas",date,td, tf, "Bejaia", "Medecin", "Souvent", 1);
-                        CalendrierActivity.database.evenementDao().insert(event);
-
-                    alerte=new Alerte( "Alerte1",td, "coolio.mp3", tf, false, 1);
-                        CalendrierActivity.database.alerteDao().insert(alerte);*/
+                  */
 
 
                 }
@@ -134,7 +127,7 @@ Date date;
 
             android.support.v4.app.FragmentTransaction transaction= CalendrierActivity.fragmentManager.beginTransaction();
             ListeCalendrierFragment fragment = new ListeCalendrierFragment();
-            transaction.replace(R.id.conteneur_defragments,fragment,null);
+            transaction.replace(R.id.conteneur,fragment,null);
             transaction.commit();
 
 

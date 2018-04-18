@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.silver_desk.interfactest.AjoutEvenmentActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/t_libele"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/b_debut"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="41dp"
+            android:layout_weight="1"
+            android:text="libele :"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/t_lieu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/t_joure"
+            android:layout_below="@+id/t_recurrence"
+            android:layout_marginTop="28dp"
+            android:layout_weight="1"
+            android:text="@string/lieu"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/t_joure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/t_libele"
+            android:layout_below="@+id/e_libele"
+            android:layout_marginTop="28dp"
+            android:layout_weight="1"
+            android:text="joure :"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/t_recurrence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/t_libele"
+            android:layout_below="@+id/e_jour"
+            android:layout_marginTop="33dp"
+            android:layout_weight="1"
+            android:text="@string/recurrence"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/t_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/t_lieu"
+            android:layout_below="@+id/e_lieu"
+            android:layout_marginTop="23dp"
+            android:layout_weight="1"
+            android:text="@string/description"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/t_titre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="11dp"
+            android:layout_weight="1"
+            android:text="ajout evenment"
+            android:textSize="25sp" />
+
+        <EditText
+            android:id="@+id/e_libele"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/t_libele"
+            android:layout_alignBottom="@+id/t_libele"
+            android:layout_toEndOf="@+id/b_debut"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <CheckBox
+            android:id="@+id/c_recurrence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/t_lieu"
+            android:layout_marginStart="31dp"
+            android:layout_toEndOf="@+id/t_description"
+            android:text="oui" />
+
+        <EditText
+            android:id="@+id/e_lieu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/t_lieu"
+            android:layout_alignBottom="@+id/t_lieu"
+            android:layout_alignEnd="@+id/e_description"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/e_jour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/t_joure"
+            android:layout_alignBottom="@+id/t_joure"
+            android:layout_alignStart="@+id/e_libele"
+            android:ems="10"
+            android:inputType="date" />
+
+        <EditText
+            android:id="@+id/e_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/t_description"
+            android:layout_alignBottom="@+id/t_description"
+            android:layout_alignEnd="@+id/e_jour"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@+id/t_description"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/b_debut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/t_titre"
+            android:text="@string/debut" />
+
+        <Button
+            android:id="@+id/b_fin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/t_titre"
+            android:text="@string/fin" />
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

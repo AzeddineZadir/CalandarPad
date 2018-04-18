@@ -18,14 +18,16 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="22dp"
         android:layout_marginEnd="21dp"
-
         android:clickable="true"
         app:srcCompat="@drawable/ic_action_name" />
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <TextView
         android:id="@+id/t_listecalendrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Bienvenus"
-        android:textSize="30sp" />
+        android:textSize="24sp" />
+</ScrollView>
 </FrameLayout>
