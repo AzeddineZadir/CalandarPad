@@ -31,7 +31,6 @@ public class Evenement {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int id ;
-
     @ColumnInfo(name = "libele")
     @NonNull
     private String libele ;
@@ -97,7 +96,7 @@ public class Evenement {
         return libele;
     }
 
-    public void setLibele(@NonNull String libele) {
+    public void setLibele(@NonNull String libelé) {
         this.libele = libele;
     }
 

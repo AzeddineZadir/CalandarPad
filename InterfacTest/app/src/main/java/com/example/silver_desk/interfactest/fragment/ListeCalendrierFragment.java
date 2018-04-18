@@ -5,12 +5,15 @@ import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.silver_desk.interfactest.Adapters.CalendrierListeAdapter;
 import com.example.silver_desk.interfactest.CalendrierActivity;
 import com.example.silver_desk.interfactest.R;
 import com.example.silver_desk.interfactest.database.AppDatabase;
@@ -30,7 +33,7 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
     //public static AppDatabase database ;
     TextView t_listecalendrier;
     String chaine_daffichage ;
-
+    RecyclerView recyclerView;
     public ListeCalendrierFragment() {
         // Required empty public constructor
     }
@@ -42,19 +45,11 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_liste_calendrier, container, false);
         fab_add=(FloatingActionButton) view.findViewById(R.id.fab_add);
-<<<<<<< HEAD
-<<<<<<< HEAD
         b_evenment=(Button) view.findViewById(R.id.b_evenment);
         t_listecalendrier=(TextView)view.findViewById(R.id.listecalendrier);
 
 
 
-=======
-        t_listecalendrier=(TextView)view.findViewById(R.id.t_listecalendrier);
->>>>>>> parent of dda5dd2... Ajout RecyclerView
-=======
-        t_listecalendrier=(TextView)view.findViewById(R.id.t_listecalendrier);
->>>>>>> parent of dda5dd2... Ajout RecyclerView
         fab_add.setOnClickListener(this);
         b_evenment.setOnClickListener(this);
         //declaration de la BDD
@@ -64,28 +59,12 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
         Time td=new Time(21849879);
         Time tf=new Time(21849879);
         Evenement event=new Evenement("je sais pas",date,td, tf, "Bejaia", "Medecin", "Souvent", 1);
-<<<<<<< HEAD
-<<<<<<< HEAD
         CalendrierActivity.database.evenementDao().insert(event);*/
 
         List<Calendrier> calendrierList=CalendrierActivity.database.calendrierDao().loadAllCalendrier();
 
 
 
-=======
-
-
-        CalendrierActivity.database.evenementDao().insert(event);
-
-        List<Calendrier> calendrierList=CalendrierActivity.database.calendrierDao().loadAllCalendrier();
->>>>>>> parent of dda5dd2... Ajout RecyclerView
-=======
-
-
-        CalendrierActivity.database.evenementDao().insert(event);
-
-        List<Calendrier> calendrierList=CalendrierActivity.database.calendrierDao().loadAllCalendrier();
->>>>>>> parent of dda5dd2... Ajout RecyclerView
         chaine_daffichage = "";
         for  (Calendrier calendrier :calendrierList){
             int id = calendrier.getId();
@@ -97,14 +76,8 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
             chaine_daffichage= chaine_daffichage +"\n\n\n\n"+"id :"+id+"\n\n titre :"+titre;
         }
         t_listecalendrier.setText(chaine_daffichage);
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 
-=======
->>>>>>> parent of dda5dd2... Ajout RecyclerView
-=======
->>>>>>> parent of dda5dd2... Ajout RecyclerView
         return  view ;
     }
 
