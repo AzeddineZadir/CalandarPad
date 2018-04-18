@@ -38,6 +38,7 @@ public class ListeEvenmentFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_liste_evenment, container, false);
 <<<<<<< HEAD
+<<<<<<< HEAD
         t_listeEvenment=(TextView)view.findViewById(R.id.listevenemnt);
         // creation dun evenment
 
@@ -48,6 +49,9 @@ public class ListeEvenmentFragment extends Fragment {
         Evenement event=new Evenement(lib,date,td, tf, "Bejaia", "Medecin", "Souvent", 1);
         CalendrierActivity.database.evenementDao().insert(event);
 
+=======
+        t_listeEvenment=(TextView)view.findViewById(R.id.t_listecalendrier);
+>>>>>>> parent of dda5dd2... Ajout RecyclerView
 =======
         t_listeEvenment=(TextView)view.findViewById(R.id.t_listecalendrier);
 >>>>>>> parent of dda5dd2... Ajout RecyclerView

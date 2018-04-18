@@ -1,7 +1,14 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+=======
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list"
+>>>>>>> parent of dda5dd2... Ajout RecyclerView
 =======
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -62,4 +69,7 @@
         android:textSize="24sp" />
 </ScrollView>
 </FrameLayout>
+<<<<<<< HEAD
+>>>>>>> parent of dda5dd2... Ajout RecyclerView
+=======
 >>>>>>> parent of dda5dd2... Ajout RecyclerView

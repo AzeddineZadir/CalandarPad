@@ -43,11 +43,15 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
         View view =inflater.inflate(R.layout.fragment_liste_calendrier, container, false);
         fab_add=(FloatingActionButton) view.findViewById(R.id.fab_add);
 <<<<<<< HEAD
+<<<<<<< HEAD
         b_evenment=(Button) view.findViewById(R.id.b_evenment);
         t_listecalendrier=(TextView)view.findViewById(R.id.listecalendrier);
 
 
 
+=======
+        t_listecalendrier=(TextView)view.findViewById(R.id.t_listecalendrier);
+>>>>>>> parent of dda5dd2... Ajout RecyclerView
 =======
         t_listecalendrier=(TextView)view.findViewById(R.id.t_listecalendrier);
 >>>>>>> parent of dda5dd2... Ajout RecyclerView
@@ -61,12 +65,20 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
         Time tf=new Time(21849879);
         Evenement event=new Evenement("je sais pas",date,td, tf, "Bejaia", "Medecin", "Souvent", 1);
 <<<<<<< HEAD
+<<<<<<< HEAD
         CalendrierActivity.database.evenementDao().insert(event);*/
 
         List<Calendrier> calendrierList=CalendrierActivity.database.calendrierDao().loadAllCalendrier();
 
 
 
+=======
+
+
+        CalendrierActivity.database.evenementDao().insert(event);
+
+        List<Calendrier> calendrierList=CalendrierActivity.database.calendrierDao().loadAllCalendrier();
+>>>>>>> parent of dda5dd2... Ajout RecyclerView
 =======
 
 
@@ -86,8 +98,11 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
         }
         t_listecalendrier.setText(chaine_daffichage);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> parent of dda5dd2... Ajout RecyclerView
 =======
 >>>>>>> parent of dda5dd2... Ajout RecyclerView
         return  view ;
