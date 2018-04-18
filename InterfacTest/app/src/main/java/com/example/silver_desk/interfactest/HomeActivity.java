@@ -88,7 +88,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         //affichage du dashboard
         if (id==R.id.db){
             Toast.makeText(this,"this is the dashboard activity",Toast.LENGTH_LONG).show();
-
+        openEvenmentActivity();
         }
         //affichage du calendrier
         if (id==R.id.calendrier){
@@ -133,7 +133,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     //open EvenmentActivity
     public void openEvenmentActivity(){
         Toast.makeText(HomeActivity.this,"Evenment",Toast.LENGTH_LONG).show();
-        Intent intent_Evenment = new Intent(HomeActivity.this,EvenementActivity.class);
+        Intent intent_Evenment = new Intent(HomeActivity.this,AjoutEvenmentActivity.class);
         startActivity(intent_Evenment);
 
     }

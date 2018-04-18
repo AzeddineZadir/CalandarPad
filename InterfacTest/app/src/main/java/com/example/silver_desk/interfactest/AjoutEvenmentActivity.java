@@ -1,6 +1,5 @@
 package com.example.silver_desk.interfactest;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.support.v4.app.DialogFragment;
@@ -10,18 +9,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.silver_desk.interfactest.fragment.DatePickerFragment;
 import com.example.silver_desk.interfactest.fragment.TimePickerFragment;
 
 public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnClickListener ,TimePickerDialog.OnTimeSetListener,DatePickerDialog.OnDateSetListener{
-   EditText e_libele,e_jour,e_description,e_lieu;
+    EditText t_libele,t_jour,t_description,t_lieu;
     Button b_debut,b_fin;
 
-    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,11 +28,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         b_fin=(Button)findViewById(R.id.b_fin);
         b_fin.setOnClickListener(this);
         // les texte view
-       e_libele=(EditText) findViewById(R.id.e_libele);
-       e_jour=(EditText) findViewById(R.id.e_jour);
-       e_description=(EditText) findViewById(R.id.e_description);
-       e_lieu=(EditText) findViewById(R.id.e_lieu);
-        e_jour.setOnClickListener(this);
+        
 
     }
 
@@ -50,10 +42,6 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         if(view.getId()==R.id.b_fin){
             DialogFragment timepicker=new TimePickerFragment();
             timepicker.show(getSupportFragmentManager(),"time picker");
-        }
-        if(view.getId()==R.id.e_jour){
-            DialogFragment datepicker=new DatePickerFragment();
-            datepicker.show(getSupportFragmentManager(),"date picker");
         }
     }
 
