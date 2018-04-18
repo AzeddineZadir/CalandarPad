@@ -103,7 +103,7 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
         if(view.getId()==R.id.b_evenment) {
 
             android.support.v4.app.FragmentTransaction transaction= CalendrierActivity.fragmentManager.beginTransaction();
-           ListeEvenmentFragment fragment = new ListeEvenmentFragment() ;
+            ListeEvenmentFragment fragment = new ListeEvenmentFragment();
             transaction.replace(R.id.conteneur,fragment,null);
             transaction.addToBackStack(null).commit();
 
