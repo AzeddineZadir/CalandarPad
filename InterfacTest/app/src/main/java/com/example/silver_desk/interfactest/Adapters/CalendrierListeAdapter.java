@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.silver_desk.interfactest.R;
 import com.example.silver_desk.interfactest.database.Calendrier;
+import com.example.silver_desk.interfactest.fragment.ListeCalendrierFragment;
 
 import java.util.List;
 
@@ -45,14 +47,14 @@ public class CalendrierListeAdapter  extends RecyclerView.Adapter<CalendrierList
 
     public class MyHolder extends RecyclerView.ViewHolder{
         TextView titre,descri;
-
+        LinearLayout linearLayout ;
 
         public MyHolder(View itemView) {
             super(itemView);
 
             titre=(TextView)itemView.findViewById(R.id.calTitre);
             descri=(TextView)itemView.findViewById(R.id.calDescri);
-            
+
 
         }
     }
