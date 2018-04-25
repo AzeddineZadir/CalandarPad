@@ -1,6 +1,5 @@
 package com.example.silver_desk.interfactest;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +13,8 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
+
+
 
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -44,6 +45,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         ani_close= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         ani_rotateclockwise= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_roteatclockwise);
         ani_rotateanticlockwise= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_roteatanticlockwis);
+
         //le boutton  fab
         fab_nav.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +91,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         //affichage du dashboard
         if (id==R.id.db){
             Toast.makeText(this,"this is the dashboard activity",Toast.LENGTH_LONG).show();
+
         }
         //affichage du calendrier
         if (id==R.id.calendrier){
@@ -128,6 +131,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Toast.makeText(HomeActivity.this,"calendrier",Toast.LENGTH_LONG).show();
         Intent intent_calendrier = new Intent(HomeActivity.this,CalendrierActivity.class);
         startActivity(intent_calendrier);
+
+    }
+    //open EvenmentActivity
+    public void openEvenmentActivity(){
+        Toast.makeText(HomeActivity.this,"Evenment",Toast.LENGTH_LONG).show();
+        Intent intent_Evenment = new Intent(HomeActivity.this,EvenementActivity.class);
+        startActivity(intent_Evenment);
 
     }
 }

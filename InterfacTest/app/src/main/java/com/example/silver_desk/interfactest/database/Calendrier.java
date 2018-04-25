@@ -32,14 +32,18 @@ public class Calendrier {
     @ColumnInfo(name = "priorite")
     private String priorite ;
 
+    @ColumnInfo(name="description")
+    private String description;
 
-    public Calendrier(int id, @NonNull String titre, @NonNull String visibilite, @NonNull String activite, String couleur, String priorite) {
+
+    public Calendrier(int id, @NonNull String titre, @NonNull String visibilite, @NonNull String activite, String couleur, String priorite,String description) {
         this.id = id;
         this.titre = titre;
         this.visibilite = visibilite;
         this.activite = activite;
         this.couleur = couleur;
         this.priorite = priorite;
+        this.description=description;
     }
 
     @NonNull
@@ -103,5 +107,13 @@ this.titre=titre;
 
     public void setPriorite(String priorité) {
         this.priorite = priorité;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -53,8 +53,7 @@ public class Alerte {
     //Constructeurs
 
 
-    public Alerte() {
-    }
+
 
     public Alerte(String description, @NonNull Time heure, String sonnerie, Time delai, boolean etat, int evenementId) {
         this.description = description;
