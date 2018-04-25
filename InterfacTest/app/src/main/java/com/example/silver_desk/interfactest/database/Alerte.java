@@ -33,15 +33,15 @@ public class Alerte {
 
     @ColumnInfo(name = "heure")
     @NonNull
-    @TypeConverters({TimeConverter.class})
-    private Time heure ;
+
+    private long heure ;
 
     @ColumnInfo(name = "sonnerie")
     private String sonnerie ;
 
     @ColumnInfo(name = "delai")
-    @TypeConverters({TimeConverter.class})
-    private Time delai;
+
+    private long delai;
 
     @ColumnInfo(name = "etat")
     private boolean etat;
@@ -55,7 +55,7 @@ public class Alerte {
 
 
 
-    public Alerte(String description, @NonNull Time heure, String sonnerie, Time delai, boolean etat, int evenementId) {
+    public Alerte(String description, @NonNull long heure, String sonnerie, long delai, boolean etat, int evenementId) {
         this.description = description;
         this.heure = heure;
         this.sonnerie = sonnerie;
@@ -83,11 +83,11 @@ public class Alerte {
     }
 
     @NonNull
-    public Time getHeure() {
+    public long getHeure() {
         return heure;
     }
 
-    public void setHeure(@NonNull Time heure) {
+    public void setHeure(@NonNull long heure) {
         this.heure = heure;
     }
 
@@ -99,11 +99,11 @@ public class Alerte {
         this.sonnerie = sonnerie;
     }
 
-    public Time getDelai() {
+    public long getDelai() {
         return delai;
     }
 
-    public void setDelai(Time delai) {
+    public void setDelai(long delai) {
         this.delai = delai;
     }
 

@@ -41,21 +41,13 @@ public class ListeEvenmentFragment extends Fragment {
         t_listeEvenment=(TextView)view.findViewById(R.id.listevenemnt);
         // creation dun evenment
 
-        Date date=new Date(148645645);
-        Time td= new Time (21849879);
-        Time tf= new Time (21849879);
-        String lib="rdv";
-        Evenement event=new Evenement(lib,date,td, tf, "Bejaia", "Medecin", "Souvent", 1);
 
 
 
-        Time h=new Time(System.currentTimeMillis()+60000);
-        Alerte alerte=new Alerte("testeAlert",h,null,null,true,1);
-        CalendrierActivity.DATABASE.alerteDao().insert(alerte);
-        List<Evenement> EvenmentList= CalendrierActivity.DATABASE.evenementDao().loadAllevenement();
-        List<Alerte> Alertlist= CalendrierActivity.DATABASE.alerteDao().loadAllAlerte();
 
-        chaine_daffichage = "";
+
+
+
 
 
 /* affichage des evenments

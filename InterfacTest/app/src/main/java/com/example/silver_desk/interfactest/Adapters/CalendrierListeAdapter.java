@@ -31,11 +31,12 @@ public class CalendrierListeAdapter  extends RecyclerView.Adapter<CalendrierList
     }
 
     @Override
-    public void onBindViewHolder(MyHolder holder, int position) {
+    public void onBindViewHolder(MyHolder holder, final int position) {
         Calendrier c=calendrierList.get(position);
 
         holder.titre.setText(c.getTitre());
         holder.descri.setText(c.getDescription());
+
 
 
     }
@@ -45,16 +46,22 @@ public class CalendrierListeAdapter  extends RecyclerView.Adapter<CalendrierList
         return calendrierList.size();
     }
 
-    public class MyHolder extends RecyclerView.ViewHolder{
+    public class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView titre,descri;
-        LinearLayout linearLayout ;
+        LinearLayout item ;
 
         public MyHolder(View itemView) {
             super(itemView);
 
             titre=(TextView)itemView.findViewById(R.id.calTitre);
             descri=(TextView)itemView.findViewById(R.id.calDescri);
+            item=(LinearLayout)itemView.findViewById(R.id.myitem);
+            itemView.setOnClickListener(this);
 
+        }
+
+        @Override
+        public void onClick(View view) {
 
         }
     }

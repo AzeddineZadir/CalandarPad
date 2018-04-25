@@ -37,17 +37,17 @@ public class Evenement {
 
     @ColumnInfo(name = "jour")
     @NonNull
-    @TypeConverters({DateConverter.class})
-    private Date jour ;
+
+    private long jour ;
 
     @ColumnInfo(name = "heure_debut")
     @NonNull
-    @TypeConverters({TimeConverter.class})
-    private Time heure_debut ;
+
+    private long heure_debut ;
 
     @ColumnInfo(name = "heure_fin")
-    @TypeConverters({TimeConverter.class})
-    private Time heure_fin;
+
+    private long heure_fin;
 
 
     @ColumnInfo(name = "lieu")
@@ -59,7 +59,7 @@ public class Evenement {
     private String description;
 
     @ColumnInfo(name = "recurrence")
-    private String recurrence;
+    private boolean recurrence;
 
     @ColumnInfo(name="calendrierId")
     private int calendrierId;
@@ -70,7 +70,7 @@ public class Evenement {
     }
 
 
-    public Evenement(@NonNull String libele, @NonNull Date jour, @NonNull Time heure_debut, Time heure_fin, String lieu, String description, String recurrence, int calendrierId) {
+    public Evenement(@NonNull String libele, @NonNull long jour, @NonNull long heure_debut, long heure_fin, String lieu, String description, boolean recurrence, int calendrierId) {
         this.libele = libele;
         this.jour = jour;
         this.heure_debut = heure_debut;
@@ -101,28 +101,28 @@ public class Evenement {
     }
 
     @NonNull
-    public Date getJour() {
+    public long getJour() {
         return jour;
     }
 
-    public void setJour(@NonNull Date jour) {
+    public void setJour(@NonNull long jour) {
         this.jour = jour;
     }
 
     @NonNull
-    public Time getHeure_debut() {
+    public long getHeure_debut() {
         return heure_debut;
     }
 
-    public void setHeure_debut(@NonNull Time heure_debut) {
+    public void setHeure_debut(@NonNull long heure_debut) {
         this.heure_debut = heure_debut;
     }
 
-    public Time getHeure_fin() {
+    public long getHeure_fin() {
         return heure_fin;
     }
 
-    public void setHeure_fin(Time heure_fin) {
+    public void setHeure_fin(long heure_fin) {
         this.heure_fin = heure_fin;
     }
 
@@ -142,11 +142,11 @@ public class Evenement {
         this.description = description;
     }
 
-    public String getRecurrence() {
+    public boolean getRecurrence() {
         return recurrence;
     }
 
-    public void setRecurrence(String recurrence) {
+    public void setRecurrence(boolean recurrence) {
         this.recurrence = recurrence;
     }
 
