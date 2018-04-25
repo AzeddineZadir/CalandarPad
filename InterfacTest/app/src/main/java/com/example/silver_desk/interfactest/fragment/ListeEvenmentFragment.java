@@ -67,7 +67,7 @@ public class ListeEvenmentFragment extends Fragment {
 
 
             chaine_daffichage= chaine_daffichage +"\n\n"+"id :"+id+"\n Libele:"+libele+"\njour:"+date+"\nheure :"+heur_debut;
-        }*/
+        }
 //affichages des alertes ajouter a la main
         for  (Alerte alerte1 :Alertlist) {
             int id = alerte1.getId();
@@ -78,7 +78,7 @@ public class ListeEvenmentFragment extends Fragment {
             chaine_daffichage = chaine_daffichage + "\n\n" + "id :" + id + "\n Libele:" + libele +  "\nheure :" +heur_debut.getTime()+"\nheur system"+System.currentTimeMillis();
 
         }
-        t_listeEvenment.setText(chaine_daffichage);
+        t_listeEvenment.setText(chaine_daffichage);*/
         return view ;
     }
 

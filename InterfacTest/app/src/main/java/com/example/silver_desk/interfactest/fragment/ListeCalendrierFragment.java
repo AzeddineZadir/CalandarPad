@@ -46,13 +46,13 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_liste_calendrier, container, false);
         fab_add=(FloatingActionButton) view.findViewById(R.id.fab_add);
-        b_evenment=(Button) view.findViewById(R.id.b_evenment);
+
         t_listecalendrier=(TextView)view.findViewById(R.id.listecalendrier);
 
 
 
         fab_add.setOnClickListener(this);
-        b_evenment.setOnClickListener(this);
+
         //declaration de la BDD
         CalendrierActivity.DATABASE= Room.databaseBuilder(view.getContext(),AppDatabase.class,"AppDatabase").allowMainThreadQueries().build();
         /*
@@ -100,13 +100,6 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
             transaction.addToBackStack(null).commit();
 
         }
-        if(view.getId()==R.id.b_evenment) {
 
-            android.support.v4.app.FragmentTransaction transaction= CalendrierActivity.fragmentManager.beginTransaction();
-            ListeEvenmentFragment fragment = new ListeEvenmentFragment();
-            transaction.replace(R.id.conteneur,fragment,null);
-            transaction.addToBackStack(null).commit();
-
-        }
     }
 }
