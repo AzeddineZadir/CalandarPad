@@ -20,14 +20,14 @@ public class Calendrier {
 
     @ColumnInfo(name = "visibilite")
     @NonNull
-    private String visibilite ;
+    private boolean visibilite ;
 
     @ColumnInfo(name = "activite")
     @NonNull
     private String activite ;
 
     @ColumnInfo(name = "couleur")
-    private String couleur;
+    private long couleur;
 
     @ColumnInfo(name = "priorite")
     private String priorite ;
@@ -35,8 +35,10 @@ public class Calendrier {
     @ColumnInfo(name="description")
     private String description;
 
+    public Calendrier() {
+    }
 
-    public Calendrier(int id, @NonNull String titre, @NonNull String visibilite, @NonNull String activite, String couleur, String priorite,String description) {
+    public Calendrier(int id, @NonNull String titre, @NonNull boolean visibilite, @NonNull String activite, long couleur, String priorite,String description) {
         this.id = id;
         this.titre = titre;
         this.visibilite = visibilite;
@@ -47,12 +49,11 @@ public class Calendrier {
     }
 
     @NonNull
-
-    public String getVisibilite() {
+    public boolean isVisibilite() {
         return visibilite;
     }
 
-    public void setVisibilite(@NonNull String visibilite) {
+    public void setVisibilite(@NonNull boolean visibilite) {
         this.visibilite = visibilite;
     }
 
@@ -68,8 +69,7 @@ public class Calendrier {
 
 
 
-    public Calendrier() {
-    }
+
 
     public Calendrier(String titre) {
 this.titre=titre;
@@ -93,11 +93,11 @@ this.titre=titre;
     }
 
 
-    public String getCouleur() {
+    public long getCouleur() {
         return couleur;
     }
 
-    public void setCouleur(String couleur) {
+    public void setCouleur(long couleur) {
         this.couleur = couleur;
     }
 

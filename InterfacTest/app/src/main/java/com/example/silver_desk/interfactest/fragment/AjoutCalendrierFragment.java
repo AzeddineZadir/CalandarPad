@@ -110,10 +110,10 @@ Date date;
 
                     Calendrier  cal= new Calendrier() ;
                     cal.setTitre(e_titre.getText().toString());
-                    cal.setVisibilite(c_clicked(c_visibilite)+"");
+                   // cal.setVisibilite(c_clicked(c_visibilite));
                     cal.setActivite(c_clicked(c_activite)+"");
                     cal.setPriorite(PRIORITE);
-                    cal.setCouleur(e_couleur.getText().toString());
+                   // cal.setCouleur(e_couleur.getText());
 
                     Toast.makeText(view.getContext()," ajout",Toast.LENGTH_LONG).show();
                    CalendrierActivity.DATABASE.calendrierDao().insert(cal);

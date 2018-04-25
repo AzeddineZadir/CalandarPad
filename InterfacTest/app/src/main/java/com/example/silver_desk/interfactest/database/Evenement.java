@@ -4,15 +4,8 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverter;
-import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
 
-import com.example.silver_desk.interfactest.database.TypeConverters.DateConverter;
-import com.example.silver_desk.interfactest.database.TypeConverters.TimeConverter;
-
-import java.sql.Time;
-import java.util.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 

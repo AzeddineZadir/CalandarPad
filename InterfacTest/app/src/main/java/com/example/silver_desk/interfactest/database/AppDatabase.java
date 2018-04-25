@@ -5,7 +5,6 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
-import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -13,11 +12,8 @@ import android.support.annotation.NonNull;
 import com.example.silver_desk.interfactest.database.Daos.AlerteDao;
 import com.example.silver_desk.interfactest.database.Daos.CalendrierDao;
 import com.example.silver_desk.interfactest.database.Daos.EvenementDao;
-import com.example.silver_desk.interfactest.database.TypeConverters.DateConverter;
-import com.example.silver_desk.interfactest.database.TypeConverters.TimeConverter;
 
 @Database(entities = {Calendrier.class,Evenement.class,Alerte.class},version = 1)
-@TypeConverters({DateConverter.class,TimeConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     public abstract CalendrierDao calendrierDao ();
     public abstract EvenementDao evenementDao();
@@ -58,12 +54,12 @@ public abstract class AppDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(final Void... params) {
             mDao.deleteAll();
-            Calendrier calendrier = new Calendrier(1,"rouge","important","Hello","rouge","rouge","description1");
+          /*  Calendrier calendrier = new Calendrier(1,"rouge","important","Hello","rouge","rouge","description1");
             mDao.insert(calendrier);
             Calendrier calendrier1 = new Calendrier(2,"rouge","important","Hello","rouge","rouge","description2");
             mDao.insert(calendrier1);
             Calendrier calendrier2 = new Calendrier(3,"rouge","important","Hello","rouge","rouge","description3");
-            mDao.insert(calendrier2);
+            mDao.insert(calendrier2);*/
             return null;
         }
     }
