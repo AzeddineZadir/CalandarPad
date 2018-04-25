@@ -116,7 +116,7 @@ Date date;
                     cal.setCouleur(e_couleur.getText().toString());
 
                     Toast.makeText(view.getContext()," ajout",Toast.LENGTH_LONG).show();
-                   CalendrierActivity.database.calendrierDao().insert(cal);
+                   CalendrierActivity.DATABASE.calendrierDao().insert(cal);
                   /*
                   */
 

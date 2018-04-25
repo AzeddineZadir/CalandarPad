@@ -14,6 +14,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
+import com.example.silver_desk.interfactest.service.Myservice;
+
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
  private DrawerLayout drawerLayout ;
@@ -43,6 +45,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         ani_close= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         ani_rotateclockwise= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_roteatclockwise);
         ani_rotateanticlockwise= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_roteatanticlockwis);
+        // lecement du service
+        //start service
+        Intent  intent= new Intent(this, Myservice.class);
+        startService(intent);
         //le boutton  fab
         fab_nav.setOnClickListener(new View.OnClickListener() {
             @Override

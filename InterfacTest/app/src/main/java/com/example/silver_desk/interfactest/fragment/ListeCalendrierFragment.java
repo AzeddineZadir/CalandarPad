@@ -54,7 +54,7 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
         fab_add.setOnClickListener(this);
         b_evenment.setOnClickListener(this);
         //declaration de la BDD
-        CalendrierActivity.database= Room.databaseBuilder(view.getContext(),AppDatabase.class,"AppDatabase").allowMainThreadQueries().build();
+        CalendrierActivity.DATABASE= Room.databaseBuilder(view.getContext(),AppDatabase.class,"AppDatabase").allowMainThreadQueries().build();
         /*
         Date date=new Date(148645645);
         Time td=new Time(21849879);
@@ -62,7 +62,7 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
         Evenement event=new Evenement("je sais pas",date,td, tf, "Bejaia", "Medecin", "Souvent", 1);
         CalendrierActivity.database.evenementDao().insert(event);*/
 
-        List<Calendrier> calendrierList=CalendrierActivity.database.calendrierDao().loadAllCalendrier();
+        List<Calendrier> calendrierList=CalendrierActivity.DATABASE.calendrierDao().loadAllCalendrier();
 
 
 

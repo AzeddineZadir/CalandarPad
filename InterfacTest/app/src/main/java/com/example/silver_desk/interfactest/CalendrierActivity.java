@@ -10,7 +10,7 @@ import com.example.silver_desk.interfactest.fragment.ListeCalendrierFragment;
 public class CalendrierActivity extends AppCompatActivity  {
     public static FragmentManager fragmentManager ;
     public static android.support.v4.app.FragmentTransaction  transaction;
-    public static AppDatabase database;
+    public static AppDatabase DATABASE;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -18,9 +18,11 @@
         </activity>
         <activity android:name=".HomeActivity" />
         <activity android:name=".CalendrierActivity" />
-        <activity android:name=".CalendrierInterface" />
+
         <activity android:name=".EvenementActivity" />
-        <activity android:name=".AjoutEvenmentActivity"></activity>
+        <activity android:name=".AjoutEvenmentActivity"/>
+        <service android:name=".service.Myservice"/>
+
     </application>
 
 </manifest>
