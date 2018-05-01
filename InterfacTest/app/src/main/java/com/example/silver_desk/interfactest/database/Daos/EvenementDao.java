@@ -28,7 +28,7 @@ public interface EvenementDao {
 
     //selectioner tous les evenments d"un calendrier deonné
     @Query("SELECT * FROM evenement_table WHERE calendrierId like :id")
-    public abstract List<Evenement> loadEvenmentById(int id);
+    public  List<Evenement> loadEvenmentById(int id);
 
     @Query("DELETE FROM evenement_table ")
     void deleteAllEvenement();

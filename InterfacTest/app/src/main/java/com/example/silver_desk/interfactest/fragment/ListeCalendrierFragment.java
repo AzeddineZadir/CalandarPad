@@ -13,15 +13,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.silver_desk.interfactest.Adapters.CalendrierListeAdapter;
+import com.example.silver_desk.interfactest.Adapters.CalendrierAdapter;
 import com.example.silver_desk.interfactest.CalendrierActivity;
 import com.example.silver_desk.interfactest.R;
 import com.example.silver_desk.interfactest.database.AppDatabase;
 import com.example.silver_desk.interfactest.database.Calendrier;
-import com.example.silver_desk.interfactest.database.Evenement;
 
-import java.sql.Time;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,10 +27,11 @@ import java.util.List;
 public class ListeCalendrierFragment extends Fragment implements View.OnClickListener {
     FloatingActionButton fab_add ;
     Button b_evenment ;
-    //public static AppDatabase database ;
-    TextView t_listecalendrier;
-    String chaine_daffichage ;
-    RecyclerView recyclerView;
+
+    private TextView t_listecalendrier;
+    private String chaine_daffichage ;
+    private RecyclerView recyclerView;
+    private  RecyclerView.Adapter adapter ;
 
     public ListeCalendrierFragment() {
         // Required empty public constructor
@@ -46,22 +44,7 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_liste_calendrier, container, false);
         fab_add=(FloatingActionButton) view.findViewById(R.id.fab_add);
-
-        t_listecalendrier=(TextView)view.findViewById(R.id.listecalendrier);
-
-
-
         fab_add.setOnClickListener(this);
-
-        //declaration de la BDD
-        CalendrierActivity.DATABASE= Room.databaseBuilder(view.getContext(),AppDatabase.class,"AppDatabase").allowMainThreadQueries().build();
-        /*
-        Date date=new Date(148645645);
-        Time td=new Time(21849879);
-        Time tf=new Time(21849879);
-        Evenement event=new Evenement("je sais pas",date,td, tf, "Bejaia", "Medecin", "Souvent", 1);
-        CalendrierActivity.database.evenementDao().insert(event);*/
-
         List<Calendrier> calendrierList=CalendrierActivity.DATABASE.calendrierDao().loadAllCalendrier();
 
 
@@ -78,10 +61,12 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
         }
         t_listecalendrier.setText(chaine_daffichage);*/
 
-        recyclerView=view.findViewById(R.id.recyclerView);
-        CalendrierListeAdapter calendarList_adapter=new CalendrierListeAdapter(calendrierList);
+        // initialisation du rycycler view
+        recyclerView=(RecyclerView) view.findViewById(R.id.recyclerviewcal);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(calendarList_adapter);
+        adapter= new CalendrierAdapter(calendrierList,view.getContext());
+        recyclerView.setAdapter(adapter);
         return  view ;
     }
 

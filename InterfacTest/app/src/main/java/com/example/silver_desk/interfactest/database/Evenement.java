@@ -46,13 +46,14 @@ public class Evenement {
     @ColumnInfo(name = "lieu")
     private String lieu;
 
-
-
     @ColumnInfo(name = "description")
     private String description;
 
     @ColumnInfo(name = "recurrence")
     private boolean recurrence;
+
+    @ColumnInfo(name = "alerte")
+    private boolean alerte;
 
     @ColumnInfo(name="calendrierId")
     private int calendrierId;
@@ -62,8 +63,8 @@ public class Evenement {
     public Evenement() {
     }
 
-
-    public Evenement(@NonNull String libele, @NonNull long jour, @NonNull long heure_debut, long heure_fin, String lieu, String description, boolean recurrence, int calendrierId) {
+    public Evenement(int id, @NonNull String libele, @NonNull long jour, @NonNull long heure_debut, long heure_fin, String lieu, String description, boolean recurrence, boolean alerte, int calendrierId) {
+        this.id = id;
         this.libele = libele;
         this.jour = jour;
         this.heure_debut = heure_debut;
@@ -71,6 +72,19 @@ public class Evenement {
         this.lieu = lieu;
         this.description = description;
         this.recurrence = recurrence;
+        this.alerte = alerte;
+        this.calendrierId = calendrierId;
+    }
+
+    public Evenement(@NonNull String libele, @NonNull long jour, @NonNull long heure_debut, long heure_fin, String lieu, String description, boolean recurrence, boolean alerte, int calendrierId) {
+        this.libele = libele;
+        this.jour = jour;
+        this.heure_debut = heure_debut;
+        this.heure_fin = heure_fin;
+        this.lieu = lieu;
+        this.description = description;
+        this.recurrence = recurrence;
+        this.alerte = alerte;
         this.calendrierId = calendrierId;
     }
 
@@ -89,7 +103,7 @@ public class Evenement {
         return libele;
     }
 
-    public void setLibele(@NonNull String libelé) {
+    public void setLibele(@NonNull String libele) {
         this.libele = libele;
     }
 
@@ -145,6 +159,14 @@ public class Evenement {
 
     public int getCalendrierId() {
         return calendrierId;
+    }
+
+    public boolean getAlerte() {
+        return alerte;
+    }
+
+    public void setAlerte(boolean alerte) {
+        this.alerte = alerte;
     }
 
     public void setCalendrierId(int calendrierId) {
