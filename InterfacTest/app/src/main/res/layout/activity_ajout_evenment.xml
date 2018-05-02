@@ -8,7 +8,11 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/t_libele"
@@ -27,8 +31,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/t_recurrence"
-            android:layout_below="@+id/t_recurrence"
-            android:layout_marginTop="51dp"
+            android:layout_below="@+id/cb_alerte"
+            android:layout_marginTop="31dp"
             android:layout_weight="1"
             android:text="@string/lieu"
             android:textSize="20sp" />
@@ -50,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/t_lieu"
             android:layout_below="@+id/t_lieu"
-            android:layout_marginTop="17dp"
+            android:layout_marginTop="36dp"
             android:layout_weight="1"
             android:text="@string/description"
             android:textSize="20sp" />
@@ -127,6 +131,7 @@
             android:layout_alignBottom="@+id/b_fin"
             android:layout_centerHorizontal="true"
             android:text="joure" />
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_save_event"
             android:layout_width="wrap_content"
