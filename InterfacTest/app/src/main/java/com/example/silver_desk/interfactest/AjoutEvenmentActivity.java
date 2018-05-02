@@ -22,11 +22,14 @@ import com.example.silver_desk.interfactest.database.Evenement;
 import com.example.silver_desk.interfactest.fragment.DatePickerFragment;
 import com.example.silver_desk.interfactest.fragment.TimePickerFragment;
 
+import java.util.Calendar;
+
 public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnClickListener ,TimePickerDialog.OnTimeSetListener,DatePickerDialog.OnDateSetListener{
     EditText t_libele,t_description,t_lieu;
     CheckBox cb_recurrance ,cb_alerte ;
     Button b_debut,b_fin,b_joure;
     FloatingActionButton fab_save_event ;
+    private boolean modification ;
 
 
     @Override
@@ -53,7 +56,17 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         //les check bow
         cb_alerte=(CheckBox)findViewById(R.id.cb_alerte);
         cb_recurrance=(CheckBox)findViewById(R.id.cb_recurrence);
+        //
+        if (verifyIncomingIntent()){
+          Evenement evenement=  CalendrierActivity.DATABASE.evenementDao().selectEvenmentById(getincomingInten_idevenment());
+          t_libele.setText(evenement.getLibele().toString());
+          t_description.setText(evenement.getDescription().toString());
+          t_lieu.setText(evenement.getDescription().toString());
+          cb_recurrance.setChecked(evenement.getRecurrence());
+          cb_alerte.setChecked(evenement.getAlerte());
 
+
+        }
 
     }
 
@@ -73,29 +86,57 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
             datePickerFragment.show(getSupportFragmentManager(),"date picker");
         }
         if(view.getId()==R.id.fab_save_event){
-            Evenement evenement= new Evenement();
-            // recuperation des onformation de l evenment
-            evenement.setLibele(t_libele.getText().toString());
-            evenement.setDescription(t_description.getText().toString());
-            evenement.setLieu(t_lieu.getText().toString());
-            evenement.setRecurrence(cb_recurrance.isChecked());
-            evenement.setAlerte(cb_alerte.isChecked());
-            evenement.setCalendrierId(getincomingInten_idcal());
-            // le joure
-            evenement.setJour(0);
-            // heure debut
-            evenement.setHeure_debut(0);
-            // heure fin
-            evenement.setHeure_fin(0);
-            //lisertion dans la base
-            CalendrierActivity.DATABASE.evenementDao().insert(evenement);
-            Toast.makeText(this,"ajout avec succse",Toast.LENGTH_SHORT).show();
-            //onBackPressed();
-              Intent intent =new Intent (this,SelectedCalendrierActivity.class);
-             intent.putExtra("id_cal",getincomingInten_idcal());
-            startActivity(intent);
+            boolean modification ;
+            if(verifyIncomingIntent()) {  modification= true ;}
+            else { modification=false ;}
 
+            if (modification==true){
 
+                int id=getincomingInten_idevenment();
+                String libele=t_libele.getText().toString();
+                long jour=0;
+                long h_d=0;
+                long h_f=0;
+                String lieu=t_lieu.getText().toString();
+                String description=t_description.getText().toString() ;
+                boolean recurrence=cb_recurrance.isChecked() ;
+                boolean alerte=cb_alerte.isChecked() ;
+                int id_cal=getincomingInten_idcal();
+                Evenement evenement = new Evenement(id,libele,jour,h_d,h_f,lieu,description,recurrence,alerte,id_cal);
+                CalendrierActivity.DATABASE.evenementDao().upDateEvenment(evenement);
+                Toast.makeText(this, "modification avec succse", Toast.LENGTH_SHORT).show();
+                //onBackPressed();
+                Intent intent = new Intent(this, SelectedCalendrierActivity.class);
+                intent.putExtra("id_cal", getincomingInten_idcal());
+                startActivity(intent);
+
+            }else {
+                Evenement evenement = new Evenement();
+
+                // recuperation des onformation de l evenment
+                evenement.setLibele(t_libele.getText().toString());
+                evenement.setDescription(t_description.getText().toString());
+                evenement.setLieu(t_lieu.getText().toString());
+                evenement.setRecurrence(cb_recurrance.isChecked());
+                evenement.setAlerte(cb_alerte.isChecked());
+                evenement.setCalendrierId(getincomingInten_idcal());
+                // le joure
+
+                Calendar date = Calendar.getInstance();
+                date.set(Calendar.YEAR,Calendar.MONTH,Calendar.DAY_OF_MONTH);
+                evenement.setJour(date.getTimeInMillis());
+                // heure debut;
+                                evenement.setHeure_debut(0);
+                // heure fin
+                evenement.setHeure_fin(0);
+                //lisertion dans la base
+                CalendrierActivity.DATABASE.evenementDao().insert(evenement);
+                Toast.makeText(this, "ajout avec succse", Toast.LENGTH_SHORT).show();
+                //onBackPressed();
+                Intent intent = new Intent(this, SelectedCalendrierActivity.class);
+                intent.putExtra("id_cal", getincomingInten_idcal());
+                startActivity(intent);
+            }
         }
 
     }
@@ -111,11 +152,30 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
        Toast.makeText(this,"hour "+i+"minute "+i1,Toast.LENGTH_LONG).show();
+
+
     }
 
     @Override
     public void onDateSet(DatePicker datePicker, int Y, int M, int D) {
         Toast.makeText(this,"year "+Y+"month "+M+"day "+D,Toast.LENGTH_LONG).show();
+    }
+
+    // pour verifier si ond dois initialiser les champe ou non (modification)
+    private boolean verifyIncomingIntent(){
+        if (getincomingInten_idevenment()!=0)
+           return  true;
+        else
+        return false;
+    }
+    // verifer et recuperer lid _evenment apartire de lintent
+    private  int getincomingInten_idevenment() {
+        if (getIntent().hasExtra("id_evenment")) {
+            int id_evenment = getIntent().getIntExtra("id_evenment", 1);
+
+            return id_evenment;
+        }
+        return 0;
     }
 }
 

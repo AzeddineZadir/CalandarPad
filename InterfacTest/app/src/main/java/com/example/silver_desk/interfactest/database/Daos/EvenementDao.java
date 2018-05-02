@@ -14,6 +14,7 @@ import java.util.List;
 
 @Dao
 public interface EvenementDao {
+    // insertion,
     @Insert
     public void insert(Evenement evenement);
 
@@ -30,7 +31,19 @@ public interface EvenementDao {
     @Query("SELECT * FROM evenement_table WHERE calendrierId like :id")
     public  List<Evenement> loadEvenmentById(int id);
 
+
+    // selectiuoner un evenment donné
+    @Query("SELECT * FROM evenement_table WHERE id like :id")
+    public Evenement selectEvenmentById(int id);
+
+
+
     @Query("DELETE FROM evenement_table ")
     void deleteAllEvenement();
+
+    // la suppression dun evenment avec son id et li du calendrier parent
+    @Query("DELETE FROM evenement_table WHERE id like :id_event AND calendrierId like :id_cal")
+    void deleteEvenementByidCalAndIdEvent(int id_event,int id_cal);
+
 
 }

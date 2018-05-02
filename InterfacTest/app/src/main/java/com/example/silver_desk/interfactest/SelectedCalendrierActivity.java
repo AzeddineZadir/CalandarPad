@@ -47,14 +47,14 @@ public class SelectedCalendrierActivity extends AppCompatActivity implements Vie
 
     
 
-    private  int getincomingInten_idcal() {
-        if (getIntent().hasExtra("id_cal") && getIntent().hasExtra("titre_cal")) {
+   private  int getincomingInten_idcal() {
+        if (getIntent().hasExtra("id_cal") ) {
             int id_cal_selected = getIntent().getIntExtra("id_cal", 1);
 
             return id_cal_selected;
         }
         return 0;
-        }
+    }
         private  String getincomingInten_titrecal() {
         if (getIntent().hasExtra("id_cal") && getIntent().hasExtra("titre_cal")) {
             int id_cal_selected = getIntent().getIntExtra("id_cal", 1);
