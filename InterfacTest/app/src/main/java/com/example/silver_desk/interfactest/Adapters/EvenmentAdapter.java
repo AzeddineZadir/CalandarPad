@@ -48,7 +48,7 @@ public class EvenmentAdapter extends RecyclerView.Adapter<EvenmentAdapter.ViewHo
         c.setTimeInMillis(evenement.getJour());
 
         holder.tv_libel.setText(evenement.getLibele());
-        holder.tv_description.setText(c.fo);
+        holder.tv_description.setText(c.getTime().toString());
         //supprimer un evenment
         holder.imb_delete.setOnClickListener(new View.OnClickListener() {
             //recuperation des information pour la suppression

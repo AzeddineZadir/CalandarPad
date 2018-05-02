@@ -30,6 +30,8 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
     Button b_debut,b_fin,b_joure;
     FloatingActionButton fab_save_event ;
     private boolean modification ;
+    Calendar date ;
+    Calendar heur_deb,heure_fin ;
 
 
     @Override
@@ -56,6 +58,8 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         //les check bow
         cb_alerte=(CheckBox)findViewById(R.id.cb_alerte);
         cb_recurrance=(CheckBox)findViewById(R.id.cb_recurrence);
+         date=Calendar.getInstance();
+         heur_deb=Calendar.getInstance();
         //
         if (verifyIncomingIntent()){
           Evenement evenement=  CalendrierActivity.DATABASE.evenementDao().selectEvenmentById(getincomingInten_idevenment());
@@ -78,8 +82,8 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
             timepicker.show(getSupportFragmentManager(),"time picker");
         }
         if(view.getId()==R.id.b_fin){
-            DialogFragment timepicker=new TimePickerFragment();
-            timepicker.show(getSupportFragmentManager(),"time picker");
+            DialogFragment timepicker_fin=new TimePickerFragment();
+            timepicker_fin.show(getSupportFragmentManager(),"timepicker_fin");
         }
         if(view.getId()==R.id.b_joure){
             DialogFragment datePickerFragment=new DatePickerFragment();
@@ -121,12 +125,9 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
                 evenement.setAlerte(cb_alerte.isChecked());
                 evenement.setCalendrierId(getincomingInten_idcal());
                 // le joure
-
-                Calendar date = Calendar.getInstance();
-                date.set(Calendar.YEAR,Calendar.MONTH,Calendar.DAY_OF_MONTH);
                 evenement.setJour(date.getTimeInMillis());
                 // heure debut;
-                                evenement.setHeure_debut(0);
+                evenement.setHeure_debut(heur_deb.getTimeInMillis());
                 // heure fin
                 evenement.setHeure_fin(0);
                 //lisertion dans la base
@@ -152,13 +153,18 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
        Toast.makeText(this,"hour "+i+"minute "+i1,Toast.LENGTH_LONG).show();
-
-
+        heur_deb.set(Calendar.HOUR_OF_DAY,i);
+        heur_deb.set(Calendar.MINUTE,i1);
     }
+
+
 
     @Override
     public void onDateSet(DatePicker datePicker, int Y, int M, int D) {
         Toast.makeText(this,"year "+Y+"month "+M+"day "+D,Toast.LENGTH_LONG).show();
+        date.set(Calendar.YEAR,Y);
+        date.set(Calendar.MONTH,M);
+        date.set(Calendar.DAY_OF_MONTH,D);
     }
 
     // pour verifier si ond dois initialiser les champe ou non (modification)
