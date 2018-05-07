@@ -9,15 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.silver_desk.interfactest.Adapters.EvenmentAdapter;
-import com.example.silver_desk.interfactest.database.Calendrier;
 import com.example.silver_desk.interfactest.database.Evenement;
-import com.example.silver_desk.interfactest.fragment.AjoutCalendrierFragment;
-import com.example.silver_desk.interfactest.fragment.ListeCalendrierFragment;
 
 import java.util.List;
 
-import static com.example.silver_desk.interfactest.CalendrierActivity.fragmentManager;
-import static com.example.silver_desk.interfactest.CalendrierActivity.transaction;
+import static com.example.silver_desk.interfactest.HomeActivity.DATABASE;
 
 public class SelectedCalendrierActivity extends AppCompatActivity implements View.OnClickListener{
     private RecyclerView recyclerView ;
@@ -30,7 +26,7 @@ public class SelectedCalendrierActivity extends AppCompatActivity implements Vie
         //recuperation du titre du calendier selectioner et de son id
         //getincomingInten_idcal
         //la liste des evenment par raport au calendrier selectioner
-        List<Evenement> evenementList=CalendrierActivity.DATABASE.evenementDao().loadEvenmentById(getincomingInten_idcal());
+        List<Evenement> evenementList=DATABASE.evenementDao().loadEvenmentById(getincomingInten_idcal());
         //recycler view
         recyclerView=(RecyclerView) findViewById(R.id.recyclerview_evenment);
         recyclerView.setHasFixedSize(true);
@@ -55,7 +51,7 @@ public class SelectedCalendrierActivity extends AppCompatActivity implements Vie
         }
         return 0;
     }
-        private  String getincomingInten_titrecal() {
+    private  String getincomingInten_titrecal() {
         if (getIntent().hasExtra("id_cal") && getIntent().hasExtra("titre_cal")) {
             int id_cal_selected = getIntent().getIntExtra("id_cal", 1);
             String titre_cal_selected = getIntent().getStringExtra("titre_cal");
@@ -65,7 +61,9 @@ public class SelectedCalendrierActivity extends AppCompatActivity implements Vie
         return "";
     }
 
-
+    public static void refreshSelectedCalendrier (AppCompatActivity appCompatActivity){
+        appCompatActivity.recreate();
+    }
     @Override
     public void onClick(View view) {
         if(view.getId()==R.id.fab_add_event){

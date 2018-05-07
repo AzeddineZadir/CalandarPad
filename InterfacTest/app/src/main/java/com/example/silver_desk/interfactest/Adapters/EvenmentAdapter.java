@@ -7,19 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.silver_desk.interfactest.AjoutEvenmentActivity;
 import com.example.silver_desk.interfactest.CalendrierActivity;
 import com.example.silver_desk.interfactest.R;
-import com.example.silver_desk.interfactest.SelectedCalendrierActivity;
-import com.example.silver_desk.interfactest.database.Calendrier;
 import com.example.silver_desk.interfactest.database.Evenement;
 
 import java.util.Calendar;
 import java.util.List;
+
+import static com.example.silver_desk.interfactest.HomeActivity.DATABASE;
 
 /**
  * Created by silver-desk on 26/04/2018.
@@ -45,10 +44,12 @@ public class EvenmentAdapter extends RecyclerView.Adapter<EvenmentAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder,final int position) {
         final Evenement evenement = evenementList.get(position);
         Calendar c =Calendar.getInstance();
-        c.setTimeInMillis(evenement.getJour());
+        Calendar v =Calendar.getInstance();
+        c.setTimeInMillis(evenement.getHeure_debut());
+        v.setTimeInMillis(evenement.getHeure_fin());
 
         holder.tv_libel.setText(evenement.getLibele());
-        holder.tv_description.setText(c.getTime().toString());
+        holder.tv_description.setText(evenement.getDescription());
         //supprimer un evenment
         holder.imb_delete.setOnClickListener(new View.OnClickListener() {
             //recuperation des information pour la suppression
@@ -56,8 +57,9 @@ public class EvenmentAdapter extends RecyclerView.Adapter<EvenmentAdapter.ViewHo
             public  int id_cal = evenementList.get(position).getCalendrierId();
             @Override
             public void onClick(View view) {
-                CalendrierActivity.DATABASE.evenementDao().deleteEvenementByidCalAndIdEvent(id_evenment,id_cal);
+              DATABASE.evenementDao().deleteEvenementByidCalAndIdEvent(id_evenment,id_cal);
                 Toast.makeText(context, "suppression avec succse", Toast.LENGTH_SHORT).show();
+
 
             }
         });
@@ -75,6 +77,7 @@ public class EvenmentAdapter extends RecyclerView.Adapter<EvenmentAdapter.ViewHo
                 context.startActivity(intent);
             }
         });
+
     }
 
     @Override
@@ -85,7 +88,7 @@ public class EvenmentAdapter extends RecyclerView.Adapter<EvenmentAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tv_libel, tv_description ;
-        ImageButton imb_delete,imb_set;
+        ImageButton imb_delete,imb_set,imb_alert;
         public ViewHolder(View itemView) {
             super(itemView);
 
@@ -93,6 +96,7 @@ public class EvenmentAdapter extends RecyclerView.Adapter<EvenmentAdapter.ViewHo
             tv_description=(TextView)itemView.findViewById(R.id.tv_description_evenment);
             imb_delete=(ImageButton)itemView.findViewById(R.id.imb_delete);
             imb_set=(ImageButton)itemView.findViewById(R.id.imb_set);
+            imb_alert=(ImageButton)itemView.findViewById(R.id.imb_alerte);
 
 
         }

@@ -15,17 +15,16 @@ import org.w3c.dom.Text;
 public class CalendrierActivity extends AppCompatActivity  {
     public static FragmentManager fragmentManager ;
     public static android.support.v4.app.FragmentTransaction  transaction;
-    public static AppDatabase DATABASE;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendrier);
         fragmentManager = getSupportFragmentManager();
 
-        //inisialisation de la BDD
-        CalendrierActivity.DATABASE= Room.databaseBuilder(this,AppDatabase.class,"AppDatabase").allowMainThreadQueries().build();
+
         // ajout dun evenment pour le teste
-        Evenement evt= new Evenement("jesdsdsdsdeee",0,0,0,"erer","dfdfdsfdf",true,true,2);
+
        //CalendrierActivity.DATABASE.evenementDao().insert(evt);
 
 

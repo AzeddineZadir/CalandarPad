@@ -44,10 +44,12 @@ public class Alerte {
     private int evenementId;
 
 
+
     //Constructeurs
 
 
-
+    public Alerte() {
+    }
 
     public Alerte(String description, @NonNull long heure, String sonnerie, long delai, boolean etat, int evenementId) {
         this.description = description;

@@ -33,8 +33,12 @@ public interface EvenementDao {
 
 
     // selectiuoner un evenment donné
-    @Query("SELECT * FROM evenement_table WHERE id like :id")
+    @Query("SELECT * FROM evenement_table WHERE id =:id")
     public Evenement selectEvenmentById(int id);
+
+   // selectionner le dernier evenment
+   @Query("SELECT * FROM evenement_table WHERE libele =:libele")
+   public Evenement selectEvenmentByLibele(String libele);
 
 
 

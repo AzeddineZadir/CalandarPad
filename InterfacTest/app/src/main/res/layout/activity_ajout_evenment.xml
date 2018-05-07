@@ -30,9 +30,9 @@
             android:id="@+id/t_lieu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/t_recurrence"
-            android:layout_below="@+id/cb_alerte"
-            android:layout_marginTop="31dp"
+            android:layout_alignStart="@+id/t_alert"
+            android:layout_below="@+id/t_alert"
+            android:layout_marginTop="23dp"
             android:layout_weight="1"
             android:text="@string/lieu"
             android:textSize="20sp" />
@@ -75,8 +75,9 @@
             android:id="@+id/e_libele"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/t_libele"
-            android:layout_alignStart="@+id/cb_recurrence"
+            android:layout_above="@+id/t_recurrence"
+            android:layout_alignStart="@+id/t_titre"
+            android:layout_marginStart="15dp"
             android:ems="10"
             android:inputType="textPersonName" />
 
@@ -84,14 +85,16 @@
             android:id="@+id/cb_recurrence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/t_recurrence"
             android:layout_alignBottom="@+id/t_recurrence"
-            android:layout_alignStart="@+id/cb_alerte"
+            android:layout_alignEnd="@+id/spinner_delai"
             android:text="activé" />
 
         <EditText
             android:id="@+id/e_lieu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/t_lieu"
             android:layout_alignBottom="@+id/t_lieu"
             android:layout_alignStart="@+id/e_description"
             android:ems="10"
@@ -112,23 +115,24 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/t_titre"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="22dp"
             android:text="@string/debut" />
 
         <Button
             android:id="@+id/b_fin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/t_libele"
-            android:layout_toEndOf="@+id/t_titre"
+            android:layout_alignBaseline="@+id/b_joure"
+            android:layout_alignBottom="@+id/b_joure"
+            android:layout_alignParentEnd="true"
             android:text="@string/fin" />
 
         <Button
             android:id="@+id/b_joure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/b_fin"
-            android:layout_alignBottom="@+id/b_fin"
+            android:layout_alignBaseline="@+id/b_debut"
+            android:layout_alignBottom="@+id/b_debut"
             android:layout_centerHorizontal="true"
             android:text="joure" />
 
@@ -150,18 +154,18 @@
             android:id="@+id/t_alert"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/t_lieu"
+            android:layout_alignStart="@+id/t_recurrence"
             android:layout_centerVertical="true"
             android:text="alerte "
             android:textSize="20sp" />
 
-        <CheckBox
-            android:id="@+id/cb_alerte"
-            android:layout_width="wrap_content"
+        <Spinner
+            android:id="@+id/spinner_delai"
+            android:layout_width="197dp"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/t_alert"
-            android:layout_centerHorizontal="true"
-            android:text="activé" />
+
+            android:layout_alignBottom="@+id/t_alert"
+            android:layout_alignEnd="@+id/e_lieu" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

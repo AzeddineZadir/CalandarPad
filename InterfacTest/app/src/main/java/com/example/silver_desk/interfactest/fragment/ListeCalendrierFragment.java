@@ -21,6 +21,8 @@ import com.example.silver_desk.interfactest.database.Calendrier;
 
 import java.util.List;
 
+import static com.example.silver_desk.interfactest.HomeActivity.DATABASE;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -45,7 +47,7 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
         View view =inflater.inflate(R.layout.fragment_liste_calendrier, container, false);
         fab_add=(FloatingActionButton) view.findViewById(R.id.fab_add);
         fab_add.setOnClickListener(this);
-        List<Calendrier> calendrierList=CalendrierActivity.DATABASE.calendrierDao().loadAllCalendrier();
+        List<Calendrier> calendrierList=DATABASE.calendrierDao().loadAllCalendrier();
 
 
 
