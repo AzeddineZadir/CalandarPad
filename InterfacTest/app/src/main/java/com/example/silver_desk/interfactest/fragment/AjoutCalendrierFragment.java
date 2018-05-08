@@ -2,6 +2,9 @@ package com.example.silver_desk.interfactest.fragment;
 
 
 import android.content.DialogInterface;
+import android.graphics.LightingColorFilter;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -31,6 +34,8 @@ import java.sql.Date;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 
+import petrov.kristiyan.colorpicker.ColorPicker;
+
 import static com.example.silver_desk.interfactest.CalendrierActivity.fragmentManager;
 import static com.example.silver_desk.interfactest.HomeActivity.DATABASE;
 
@@ -41,9 +46,9 @@ public class AjoutCalendrierFragment extends Fragment implements View.OnClickLis
 // les compoansant manipuler dans ce fragmant
 Spinner spinner ;
 
-EditText e_titre,e_couleur ;
+EditText e_titre ;
 CheckBox c_activite,c_visibilite ;
-Button b_ajouter ;
+Button b_ajouter,b_couleur ;
 ArrayAdapter <CharSequence> arrayAdapter ;
 Evenement event;
 Alerte alerte;
@@ -61,11 +66,12 @@ Date date;
         View view=   inflater.inflate(R.layout.fragment_ajout_calendrier, container, false);
      spinner = (Spinner)view.findViewById(R.id.s_prio);
      e_titre=(EditText) view.findViewById(R.id.e_titre);
-     e_couleur=(EditText) view.findViewById(R.id.e_titre);
+     b_couleur=(Button) view.findViewById(R.id.b_couleur);
      c_activite=(CheckBox)view.findViewById(R.id.c_activite);
      c_visibilite=(CheckBox)view.findViewById(R.id.c_visibilite);
      b_ajouter=(Button)view.findViewById(R.id.b_ajouter);
      b_ajouter.setOnClickListener(this);
+     b_couleur.setOnClickListener(this);
         // configuration du spinner
         arrayAdapter=ArrayAdapter.createFromResource(view.getContext(),R.array.priorite,android.R.layout.simple_spinner_item);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -108,13 +114,14 @@ Date date;
                     builder.create().show();
                 }else{
                    String PRIORITE = spinner.getSelectedItem().toString();
+                    ColorDrawable b_couleurBackground=(ColorDrawable) b_couleur.getBackground();
 
                     Calendrier  cal= new Calendrier() ;
                     cal.setTitre(e_titre.getText().toString());
                    // cal.setVisibilite(c_clicked(c_visibilite));
                     cal.setActivite(c_clicked(c_activite)+"");
                     cal.setPriorite(PRIORITE);
-                   // cal.setCouleur(e_couleur.getText());
+                   cal.setCouleur(b_couleurBackground.getColor());
 
                     Toast.makeText(view.getContext()," ajout",Toast.LENGTH_LONG).show();
                    DATABASE.calendrierDao().insert(cal);
@@ -135,6 +142,22 @@ Date date;
 
 
 
+            }
+            if (view.getId()==R.id.b_couleur){
+                ColorPicker colorPicker=new ColorPicker(getActivity());
+                colorPicker.setRoundColorButton(true);
+                colorPicker.show();
+                colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
+                    @Override
+                    public void onChooseColor(int position, int color) {
+                        b_couleur.getBackground().setColorFilter(new LightingColorFilter(0xFFFFF,color));
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+                });
             }
 
 

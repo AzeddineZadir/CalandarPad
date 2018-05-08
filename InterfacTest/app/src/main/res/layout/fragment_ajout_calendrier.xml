@@ -135,14 +135,13 @@
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="171dp" />
 
-            <EditText
-                android:id="@+id/e_couleur"
-                android:layout_width="241dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="rouge"
-                android:inputType="textPersonName" />
+            <Button
+                android:id="@+id/b_couleur"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginRight="160dp"
+
+                android:background="@drawable/round_color" />
 
         </LinearLayout>
 

@@ -27,7 +27,7 @@ public class Calendrier {
     private String activite ;
 
     @ColumnInfo(name = "couleur")
-    private long couleur;
+    private int couleur;
 
     @ColumnInfo(name = "priorite")
     private String priorite ;
@@ -38,7 +38,7 @@ public class Calendrier {
     public Calendrier() {
     }
 
-    public Calendrier(int id, @NonNull String titre, @NonNull boolean visibilite, @NonNull String activite, long couleur, String priorite,String description) {
+    public Calendrier(int id, @NonNull String titre, @NonNull boolean visibilite, @NonNull String activite, int couleur, String priorite,String description) {
         this.id = id;
         this.titre = titre;
         this.visibilite = visibilite;
@@ -93,11 +93,11 @@ this.titre=titre;
     }
 
 
-    public long getCouleur() {
+    public int getCouleur() {
         return couleur;
     }
 
-    public void setCouleur(long couleur) {
+    public void setCouleur(int couleur) {
         this.couleur = couleur;
     }
 

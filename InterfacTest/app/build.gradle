@@ -38,4 +38,7 @@ dependencies {
     implementation 'com.android.support:cardview-v7:26.1.0'
     // week view
     implementation 'com.github.alamkanak:android-week-view:1.2.6'
+    //ColorPicker
+    implementation 'petrov.kristiyan:colorpicker-library:1.1.8'
+
 }
