@@ -32,6 +32,7 @@ import java.sql.Time;
 import java.text.SimpleDateFormat;
 
 import static com.example.silver_desk.interfactest.CalendrierActivity.fragmentManager;
+import static com.example.silver_desk.interfactest.HomeActivity.DATABASE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -116,7 +117,7 @@ Date date;
                    // cal.setCouleur(e_couleur.getText());
 
                     Toast.makeText(view.getContext()," ajout",Toast.LENGTH_LONG).show();
-                   CalendrierActivity.DATABASE.calendrierDao().insert(cal);
+                   DATABASE.calendrierDao().insert(cal);
                   /*
                   */
 

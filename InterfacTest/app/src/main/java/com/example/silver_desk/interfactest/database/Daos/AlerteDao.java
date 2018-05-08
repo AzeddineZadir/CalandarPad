@@ -32,4 +32,9 @@ public interface AlerteDao {
 
         @Query("DELETE FROM alerte_table ")
         void deleteAllAlerte();
+
+        // selectiuoner une alerte  donné grace a lid de son evenment
+        @Query("SELECT * FROM alerte_table WHERE evenementId =:id")
+        public Alerte selectAlerteByIdEvenment(int id);
+
 }
