@@ -150,7 +150,7 @@ Date date;
                 colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                     @Override
                     public void onChooseColor(int position, int color) {
-                        b_couleur.getBackground().setColorFilter(new LightingColorFilter(0xFFFFF,color));
+                        b_couleur.setBackgroundColor(color);
                     }
 
                     @Override
