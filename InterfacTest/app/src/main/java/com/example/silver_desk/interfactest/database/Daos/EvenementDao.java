@@ -28,7 +28,7 @@ public interface EvenementDao {
     public   List<Evenement> loadAllevenement();
 
     //selectioner tous les evenments d"un calendrier deonné
-    @Query("SELECT * FROM evenement_table WHERE calendrierId like :id")
+    @Query("SELECT * FROM evenement_table WHERE calendrierId =:id")
     public  List<Evenement> loadEvenmentById(int id);
 
 
@@ -40,6 +40,9 @@ public interface EvenementDao {
    @Query("SELECT * FROM evenement_table WHERE libele =:libele")
    public Evenement selectEvenmentByLibele(String libele);
 
+    // recuperer les evenment qui vont advenir a cette  minute
+    @Query("SELECT * FROM evenement_table WHERE heure_alerte =:heur")
+    public Evenement selectCurrentEvenment(long heur);
 
 
     @Query("DELETE FROM evenement_table ")

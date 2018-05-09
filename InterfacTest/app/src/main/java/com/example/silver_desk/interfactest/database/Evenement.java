@@ -100,7 +100,6 @@ public class Evenement {
         this.recurrence = recurrence;
         this.alerte = alerte;
         this.calendrierId = calendrierId;
-
         this.heure_alerte = heure_alerte;
         this.delai_alerte = delai_alerte;
 

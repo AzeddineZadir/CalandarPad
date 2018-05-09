@@ -34,6 +34,7 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
     private String chaine_daffichage ;
     private RecyclerView recyclerView;
     private  RecyclerView.Adapter adapter ;
+    public static  List<Calendrier> maliste;
 
     public ListeCalendrierFragment() {
         // Required empty public constructor
@@ -47,8 +48,8 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
         View view =inflater.inflate(R.layout.fragment_liste_calendrier, container, false);
         fab_add=(FloatingActionButton) view.findViewById(R.id.fab_add);
         fab_add.setOnClickListener(this);
-        List<Calendrier> calendrierList=DATABASE.calendrierDao().loadAllCalendrier();
-
+           List<Calendrier> calendrierList=DATABASE.calendrierDao().loadAllCalendrier();
+            maliste = calendrierList ;
 
 
        /* chaine_daffichage = "";

@@ -28,6 +28,16 @@ public interface CalendrierDao {
     @Query("SELECT * FROM calendrier_table")
     List<Calendrier>  loadAllCalendrier();
 
+    @Query("SELECT titre FROM calendrier_table")
+    List<String>  loadAllCalendrierTitels();
+
+    @Query("SELECT id FROM calendrier_table where titre =:titre")
+     int  getIdCalendrierByTitel(String titre);
+
+    // recuperer la couleure du ca l
+    @Query("SELECT couleur FROM calendrier_table where id =:id")
+    int  getIdCalendrierColorById(int id);
+
     @Query("DELETE FROM calendrier_table ")
     void deleteAll();
 

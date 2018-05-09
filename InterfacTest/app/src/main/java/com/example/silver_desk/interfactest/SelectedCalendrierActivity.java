@@ -1,5 +1,6 @@
 package com.example.silver_desk.interfactest;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -72,5 +73,9 @@ public class SelectedCalendrierActivity extends AppCompatActivity implements Vie
            startActivity(intent);
         }
 
+    }
+    public  void refreshSelectedCalendrierActivity (Context context){
+        Intent intent = new Intent(context, SelectedCalendrierActivity.class);
+        startActivity(intent);
     }
 }

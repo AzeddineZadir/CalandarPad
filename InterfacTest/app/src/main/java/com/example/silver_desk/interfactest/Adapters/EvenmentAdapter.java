@@ -2,6 +2,7 @@ package com.example.silver_desk.interfactest.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +14,13 @@ import android.widget.Toast;
 import com.example.silver_desk.interfactest.AjoutEvenmentActivity;
 import com.example.silver_desk.interfactest.CalendrierActivity;
 import com.example.silver_desk.interfactest.R;
+import com.example.silver_desk.interfactest.SelectedCalendrierActivity;
 import com.example.silver_desk.interfactest.database.Evenement;
 
 import java.util.Calendar;
 import java.util.List;
 
+import static android.support.v4.content.ContextCompat.startActivity;
 import static com.example.silver_desk.interfactest.HomeActivity.DATABASE;
 
 /**
@@ -96,9 +99,10 @@ public class EvenmentAdapter extends RecyclerView.Adapter<EvenmentAdapter.ViewHo
             tv_description=(TextView)itemView.findViewById(R.id.tv_description_evenment);
             imb_delete=(ImageButton)itemView.findViewById(R.id.imb_delete);
             imb_set=(ImageButton)itemView.findViewById(R.id.imb_set);
-            imb_alert=(ImageButton)itemView.findViewById(R.id.imb_alerte);
+
 
 
         }
     }
+
 }

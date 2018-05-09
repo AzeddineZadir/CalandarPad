@@ -21,21 +21,20 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/b_debut"
             android:layout_marginStart="14dp"
-            android:layout_marginTop="38dp"
+            android:layout_marginTop="26dp"
             android:layout_weight="1"
             android:text="libele :"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/t_lieu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/e_lieu"
             android:layout_alignStart="@+id/t_alert"
-            android:layout_below="@+id/t_alert"
-            android:layout_marginTop="23dp"
             android:layout_weight="1"
             android:text="@string/lieu"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/t_recurrence"
@@ -43,18 +42,18 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/t_libele"
             android:layout_below="@+id/t_libele"
-            android:layout_marginTop="19dp"
+            android:layout_marginTop="22dp"
             android:layout_weight="1"
             android:text="@string/recurrence"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/t_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/fab_save_event"
             android:layout_alignStart="@+id/t_lieu"
-            android:layout_below="@+id/t_lieu"
-            android:layout_marginTop="36dp"
+            android:layout_marginBottom="34dp"
             android:layout_weight="1"
             android:text="@string/description"
             android:textSize="20sp" />
@@ -69,15 +68,14 @@
             android:layout_marginTop="11dp"
             android:layout_weight="1"
             android:text="ajout evenment"
-            android:textSize="25sp" />
+            android:textSize="24sp" />
 
         <EditText
             android:id="@+id/e_libele"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/t_recurrence"
-            android:layout_alignStart="@+id/t_titre"
-            android:layout_marginStart="15dp"
+            android:layout_alignBottom="@+id/t_libele"
+            android:layout_alignStart="@+id/b_joure"
             android:ems="10"
             android:inputType="textPersonName" />
 
@@ -85,18 +83,17 @@
             android:id="@+id/cb_recurrence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/t_recurrence"
             android:layout_alignBottom="@+id/t_recurrence"
-            android:layout_alignEnd="@+id/spinner_delai"
+            android:layout_alignEnd="@+id/e_libele"
             android:text="activé" />
 
         <EditText
             android:id="@+id/e_lieu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/t_lieu"
-            android:layout_alignBottom="@+id/t_lieu"
-            android:layout_alignStart="@+id/e_description"
+            android:layout_alignEnd="@+id/spinner_delai"
+            android:layout_below="@+id/spinner_delai"
+            android:layout_marginTop="16dp"
             android:ems="10"
             android:inputType="textPersonName" />
 
@@ -105,7 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/t_description"
-            android:layout_alignStart="@+id/b_joure"
+            android:layout_alignStart="@+id/e_lieu"
             android:ems="10"
             android:inputType="textPersonName" />
 
@@ -155,9 +152,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/t_recurrence"
-            android:layout_centerVertical="true"
+            android:layout_below="@+id/t_recurrence"
+            android:layout_marginTop="16dp"
             android:text="alerte "
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <Spinner
             android:id="@+id/spinner_delai"
@@ -165,7 +163,25 @@
             android:layout_height="wrap_content"
 
             android:layout_alignBottom="@+id/t_alert"
-            android:layout_alignEnd="@+id/e_lieu" />
+            android:layout_alignEnd="@+id/cb_recurrence" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/e_description"
+            android:layout_alignStart="@+id/t_lieu"
+            android:layout_marginBottom="9dp"
+            android:text="dans :"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/spinner_calendrier_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/e_description"
+            android:layout_alignStart="@+id/spinner_delai"
+            android:layout_alignTop="@+id/textView7" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

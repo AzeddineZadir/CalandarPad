@@ -18,11 +18,15 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.silver_desk.interfactest.database.Alerte;
+import com.example.silver_desk.interfactest.database.Calendrier;
 import com.example.silver_desk.interfactest.database.Evenement;
 import com.example.silver_desk.interfactest.fragment.DatePickerFragment;
 import com.example.silver_desk.interfactest.fragment.TimePickerFragment;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 
 import static com.example.silver_desk.interfactest.HomeActivity.DATABASE;
@@ -39,8 +43,8 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
     Calendar date ;
     Calendar heure_deb,heure_fin ;
     TimePickerFragment timePickerFragment ;
-    Spinner spinner_delai;
-    ArrayAdapter arrayAdapter ;
+    Spinner spinner_delai,spinner_calendrier_parent;
+    ArrayAdapter arrayAdapterdelai,arrayAdaptercal ;
 
 
 
@@ -78,9 +82,16 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
         // le spinner
         spinner_delai=(Spinner)findViewById(R.id.spinner_delai);
-        arrayAdapter= ArrayAdapter.createFromResource(getApplicationContext(),R.array.delai_alerte,android.R.layout.simple_spinner_item);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_delai.setAdapter(arrayAdapter);
+        arrayAdapterdelai= ArrayAdapter.createFromResource(getApplicationContext(),R.array.delai_alerte,android.R.layout.simple_spinner_item);
+        arrayAdapterdelai.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_delai.setAdapter(arrayAdapterdelai);
+
+        // spinner cal
+        spinner_calendrier_parent=(Spinner)findViewById(R.id.spinner_calendrier_parent);
+        List<String> listecal = DATABASE.calendrierDao().loadAllCalendrierTitels();
+        arrayAdaptercal = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item,listecal);
+        spinner_calendrier_parent.setAdapter(arrayAdaptercal);
+
         if (verifyIncomingIntent()){
           Evenement evenement=  DATABASE.evenementDao().selectEvenmentById(getincomingInten_idevenment());
           t_libele.setText(evenement.getLibele().toString());
@@ -117,37 +128,57 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
             boolean modification ;
             if(verifyIncomingIntent()) {  modification= true ;}
             else { modification=false ;}
+            int id_cal = DATABASE.calendrierDao().getIdCalendrierByTitel(spinner_calendrier_parent.getSelectedItem().toString());
             // modification
             if (modification==true){
-
+                // id evenment
                 int id=getincomingInten_idevenment();
+                // libele evenment
                 String libele=t_libele.getText().toString();
+                //date evenment
                 long jour=date.getTimeInMillis();
+                // heure debut
                 long h_d=heure_deb.getTimeInMillis();
+                // heure fin
                 long h_f=heure_fin.getTimeInMillis();
+                // lieu
                 String lieu=t_lieu.getText().toString();
+                // description
                 String description=t_description.getText().toString() ;
+                //recurrance
                 boolean recurrence=cb_recurrance.isChecked() ;
-                boolean alerte=cb_alerte.isChecked() ;
-                int id_cal=getincomingInten_idcal();
-                Evenement evenement = new Evenement();
+                // alerte
+                boolean alerte=false ;
+                if (getdelaiFromSpiner(spinner_delai)==-1){
+                 alerte=false ;
+                }else{
+                alerte=true ;
+                }
+
+                // id calendrier parent
+                int id_calendrier=id_cal;
+                // heure alerte
+                long heure_alerte=generatAlertTime();
+                // delai alerte
+                long  delai = getdelaiFromSpiner(spinner_delai);
+
+                Evenement evenement = new Evenement(id,libele,jour,h_d,h_f,lieu,description,recurrence,alerte,id_calendrier,heure_alerte,delai);
+
                 DATABASE.evenementDao().upDateEvenment(evenement);
                 Toast.makeText(this, "modification avec succse", Toast.LENGTH_SHORT).show();
-                //onBackPressed();
-                Intent intent = new Intent(this, SelectedCalendrierActivity.class);
-                intent.putExtra("id_cal", getincomingInten_idcal());
-                startActivity(intent);
 
+              backToHome();
             }else {
                 // Ajout d'un evenment
                 Evenement evenement = new Evenement();
+
 
                 // recuperation des information de l évenement
                 evenement.setLibele(t_libele.getText().toString());
                 evenement.setDescription(t_description.getText().toString());
                 evenement.setLieu(t_lieu.getText().toString());
                 evenement.setRecurrence(cb_recurrance.isChecked());
-                evenement.setCalendrierId(getincomingInten_idcal());
+                evenement.setCalendrierId(id_cal);
                 // le joure
                 evenement.setJour(date.getTimeInMillis());
                 // heure debut;
@@ -168,10 +199,8 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
                 //lisertion dans la base
                 DATABASE.evenementDao().insert(evenement);
                 Toast.makeText(this, "ajout avec succse", Toast.LENGTH_SHORT).show();
-                //onBackPressed();
-                Intent intent = new Intent(this, SelectedCalendrierActivity.class);
-                intent.putExtra("id_cal", getincomingInten_idcal());
-                startActivity(intent);
+                backToHome();
+
             }
         }
 
@@ -253,6 +282,11 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
         }
         return  delai;
+    }
+    public void backToHome (){
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.putExtra("id_cal", getincomingInten_idcal());
+        startActivity(intent);
     }
 }
 
