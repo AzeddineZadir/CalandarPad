@@ -91,7 +91,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         // Set an action when any event is clicked.
         mWeekView.setOnEventClickListener(this);
-
+         //mWeekView.setWeekViewLoader();
         // The week view has infinite scrolling horizontally. We have to provide the events of a
         // month every time the month changes on the week view.
         mWeekView.setMonthChangeListener(this);
@@ -239,11 +239,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
         // Populate the week view with some events.
-        List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
+        //List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
         List<Evenement> evenementList = DATABASE.evenementDao().loadAllevenement();
          //recuperation des evenment apartire de la base de donneé
-        events=myEventToWeekEvents(evenementList);
-        return   events;
+        //  events=myEventToWeekEvents(evenementList);
+        List<WeekViewEvent> events =myEventToWeekEvents(evenementList,newYear,newMonth)  ;
+        return events ;
     }
 
     @Override
@@ -253,6 +254,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
+      int id_ev= (int) event.getId();
+        Intent intent = new Intent(this, AjoutEvenmentActivity.class);
+
+        intent.putExtra("id_evenment",id_ev);
+       // intent.putExtra("id_cal",id_cal);
+        startActivity(intent);
+
+
 
     }
 
@@ -272,50 +281,59 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return evenement.getLibele().toUpperCase() ;
                 //String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH)+1, time.get(Calendar.DAY_OF_MONTH));
     }
-
-    private List<WeekViewEvent> myEventToWeekEvents (List<Evenement> evenementList){
+     int comp= 0;
+    private List<WeekViewEvent> myEventToWeekEvents (List<Evenement> evenementList,int newYear, int newMonth){
         List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
+     comp++;
+     if (comp==1) {
+         for (int i = 0; i < evenementList.size(); i++) {
+             WeekViewEvent event;
+             Evenement evenement = new Evenement();
+             // recuperation dun evenment de la liste des evenment
+             evenement = evenementList.get(i);
+             // les heure debut et fin de levenment
+             Calendar mytimeDebut = Calendar.getInstance();
+             Calendar mytimeFin = Calendar.getInstance();
+             Calendar myDate = Calendar.getInstance();
+             mytimeDebut.setTimeInMillis(evenement.getHeure_debut());
+             mytimeFin.setTimeInMillis(evenement.getHeure_fin());
+             myDate.setTimeInMillis(evenement.getJour());
+             Calendar startTime = Calendar.getInstance();
 
-        for(int i=0;i<evenementList.size();i++){
-            WeekViewEvent event ;
-            Evenement evenement = new Evenement();
-            // recuperation dun evenment de la liste des evenment
-            evenement=evenementList.get(i);
-            // les heure debut et fin de levenment
-            Calendar mytimeDebut= Calendar.getInstance();
-            Calendar mytimeFin= Calendar.getInstance();
-            Calendar myDate= Calendar.getInstance();
-            mytimeDebut.setTimeInMillis(evenement.getHeure_debut());
-            mytimeFin.setTimeInMillis(evenement.getHeure_fin());
-            myDate.setTimeInMillis(evenement.getJour());
-            Calendar startTime = Calendar.getInstance();
+             startTime.set(Calendar.HOUR_OF_DAY, mytimeDebut.get(Calendar.HOUR_OF_DAY));
+             startTime.set(Calendar.MINUTE, mytimeDebut.get(Calendar.MINUTE));
+             startTime.set(Calendar.MONTH, myDate.get(Calendar.MONTH));
+             //  startTime.set(Calendar.MONTH,newMonth );
+             startTime.set(Calendar.DAY_OF_MONTH, myDate.get(Calendar.DAY_OF_MONTH));
+             startTime.set(Calendar.YEAR, myDate.get(Calendar.YEAR));
+             //startTime.set(Calendar.YEAR,newYear);
 
-            startTime.set(Calendar.HOUR_OF_DAY,mytimeDebut.get(Calendar.HOUR_OF_DAY) );
-            startTime.set(Calendar.MINUTE,mytimeDebut.get(Calendar.MINUTE) );
-            startTime.set(Calendar.MONTH,myDate.get(Calendar.MONTH) );
-            startTime.set(Calendar.DAY_OF_MONTH,myDate.get(Calendar.DAY_OF_MONTH) );
-            startTime.set(Calendar.YEAR,myDate.get(Calendar.YEAR) );
+             Calendar endTime = Calendar.getInstance();
 
-            Calendar endTime = Calendar.getInstance();
+             endTime.set(Calendar.HOUR_OF_DAY, mytimeFin.get(Calendar.HOUR_OF_DAY));
+             endTime.set(Calendar.MINUTE, mytimeFin.get(Calendar.MINUTE));
+             endTime.set(Calendar.MONTH, myDate.get(Calendar.MONTH));
+             //endTime.set(Calendar.MONTH,newMonth );
 
-            endTime.set(Calendar.HOUR_OF_DAY,mytimeFin.get(Calendar.HOUR_OF_DAY) );
-            endTime.set(Calendar.MINUTE,mytimeFin.get(Calendar.MINUTE) );
-            endTime.set(Calendar.MONTH,myDate.get(Calendar.MONTH) );
-            endTime.set(Calendar.DAY_OF_MONTH,myDate.get(Calendar.DAY_OF_MONTH) );
-            endTime.set(Calendar.YEAR,myDate.get(Calendar.YEAR) );
+             //endTime.set(Calendar.DAY_OF_MONTH,myDate.get(Calendar.DAY_OF_MONTH) );
+             endTime.set(Calendar.YEAR, myDate.get(Calendar.YEAR));
+             endTime.set(Calendar.YEAR, newYear);
 
-            // initialisation de weekviewevent grace a cet evenment
-            event= new WeekViewEvent(evenement.getId(),getEventTitle(evenement),startTime , endTime);
-            // recuperation de la color
-            int color = DATABASE.calendrierDao().getIdCalendrierColorById(evenement.getCalendrierId());
-            event.setColor(color);
-            events.add(event);
-        }
+             // initialisation de weekviewevent grace a cet evenment
+             event = new WeekViewEvent(evenement.getId(), getEventTitle(evenement), startTime, endTime);
+             // recuperation de la color
+             int color = DATABASE.calendrierDao().getIdCalendrierColorById(evenement.getCalendrierId());
+             event.setColor(color);
+             events.add(event);
+         }
+
+
+     }
+         return events;
+     }
 
 
 
-        return events;
-    }
     private void setupDateTimeInterpreter(final boolean shortDate) {
         mWeekView.setDateTimeInterpreter(new DateTimeInterpreter() {
             @Override

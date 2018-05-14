@@ -44,6 +44,11 @@ public interface EvenementDao {
     @Query("SELECT * FROM evenement_table WHERE heure_alerte =:heur")
     public Evenement selectCurrentEvenment(long heur);
 
+   // recuperer le delai dun evenment
+
+    @Query("SELECT delai_alerte FROM evenement_table WHERE  id =:id")
+    long loadAlertDelaiById(int id);
+
 
     @Query("DELETE FROM evenement_table ")
     void deleteAllEvenement();

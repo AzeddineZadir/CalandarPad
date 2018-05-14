@@ -38,7 +38,7 @@ public class TimerService extends Service {
     public void onCreate() {
         DATABASE= Room.databaseBuilder(this,AppDatabase.class,"AppDatabase").allowMainThreadQueries().build();
         Calendar now = Calendar.getInstance();
-        
+
         // cancel if already existed
         if(mTimer != null) {
             mTimer.cancel();
@@ -61,7 +61,7 @@ public class TimerService extends Service {
                 public void run() {
                     // display toast
                     showNotification("hello time is: " + getDateTime(), getApplicationContext());
-                    List<Evenement >evenementList = DATABASE.evenementDao().selectCurrentEvenment()
+                  //  List<Evenement >evenementList = DATABASE.evenementDao().selectCurrentEvenment() ;
 
                 }
 

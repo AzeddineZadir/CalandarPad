@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,13 +18,10 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.silver_desk.interfactest.database.Alerte;
-import com.example.silver_desk.interfactest.database.Calendrier;
 import com.example.silver_desk.interfactest.database.Evenement;
 import com.example.silver_desk.interfactest.fragment.DatePickerFragment;
 import com.example.silver_desk.interfactest.fragment.TimePickerFragment;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -45,6 +43,8 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
     TimePickerFragment timePickerFragment ;
     Spinner spinner_delai,spinner_calendrier_parent;
     ArrayAdapter arrayAdapterdelai,arrayAdaptercal ;
+    List<String> listecal ;
+    int heure_d ,minute_d,heure_f ,minute_f ;
 
 
 
@@ -88,19 +88,11 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
         // spinner cal
         spinner_calendrier_parent=(Spinner)findViewById(R.id.spinner_calendrier_parent);
-        List<String> listecal = DATABASE.calendrierDao().loadAllCalendrierTitels();
+         listecal = DATABASE.calendrierDao().loadAllCalendrierTitels();
         arrayAdaptercal = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item,listecal);
         spinner_calendrier_parent.setAdapter(arrayAdaptercal);
 
-        if (verifyIncomingIntent()){
-          Evenement evenement=  DATABASE.evenementDao().selectEvenmentById(getincomingInten_idevenment());
-          t_libele.setText(evenement.getLibele().toString());
-          t_description.setText(evenement.getDescription().toString());
-          t_lieu.setText(evenement.getDescription().toString());
-
-
-
-        }
+        viewSetInfo();
 
     }
 
@@ -110,6 +102,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         if(view.getId()==R.id.b_debut){
         timePickerFragment.setFlag(FLAG_START_TIME);
         timePickerFragment.show(getSupportFragmentManager(),"timepicker");
+
 
         }
         if(view.getId()==R.id.b_fin){
@@ -126,79 +119,18 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
         if(view.getId()==R.id.fab_save_event){
             boolean modification ;
-            if(verifyIncomingIntent()) {  modification= true ;}
-            else { modification=false ;}
             int id_cal = DATABASE.calendrierDao().getIdCalendrierByTitel(spinner_calendrier_parent.getSelectedItem().toString());
-            // modification
+
+            if(verifyIncomingIntent()) {  modification= true ;} else { modification=false ;}
+
             if (modification==true){
-                // id evenment
-                int id=getincomingInten_idevenment();
-                // libele evenment
-                String libele=t_libele.getText().toString();
-                //date evenment
-                long jour=date.getTimeInMillis();
-                // heure debut
-                long h_d=heure_deb.getTimeInMillis();
-                // heure fin
-                long h_f=heure_fin.getTimeInMillis();
-                // lieu
-                String lieu=t_lieu.getText().toString();
-                // description
-                String description=t_description.getText().toString() ;
-                //recurrance
-                boolean recurrence=cb_recurrance.isChecked() ;
-                // alerte
-                boolean alerte=false ;
-                if (getdelaiFromSpiner(spinner_delai)==-1){
-                 alerte=false ;
-                }else{
-                alerte=true ;
-                }
-
-                // id calendrier parent
-                int id_calendrier=id_cal;
-                // heure alerte
-                long heure_alerte=generatAlertTime();
-                // delai alerte
-                long  delai = getdelaiFromSpiner(spinner_delai);
-
-                Evenement evenement = new Evenement(id,libele,jour,h_d,h_f,lieu,description,recurrence,alerte,id_calendrier,heure_alerte,delai);
-
-                DATABASE.evenementDao().upDateEvenment(evenement);
-                Toast.makeText(this, "modification avec succse", Toast.LENGTH_SHORT).show();
-
-              backToHome();
+                // modification
+                updatEvenment(getincomingInten_idevenment(),id_cal);
+                backToHome();
             }else {
                 // Ajout d'un evenment
                 Evenement evenement = new Evenement();
-
-
-                // recuperation des information de l évenement
-                evenement.setLibele(t_libele.getText().toString());
-                evenement.setDescription(t_description.getText().toString());
-                evenement.setLieu(t_lieu.getText().toString());
-                evenement.setRecurrence(cb_recurrance.isChecked());
-                evenement.setCalendrierId(id_cal);
-                // le joure
-                evenement.setJour(date.getTimeInMillis());
-                // heure debut;
-                evenement.setHeure_debut(heure_deb.getTimeInMillis());
-                // heure fin
-                evenement.setHeure_fin(heure_fin.getTimeInMillis());
-                // alerte
-                if (getdelaiFromSpiner(spinner_delai)==-1){
-                    evenement.setAlerte(false);
-                }else{
-                    evenement.setAlerte(true);
-
-                }
-                //heure_alerte
-                    evenement.setHeure_alerte( generatAlertTime()-getdelaiFromSpiner(spinner_delai));
-                // delai alerte
-                    evenement.setDelai_alerte(getdelaiFromSpiner(spinner_delai));
-                //lisertion dans la base
-                DATABASE.evenementDao().insert(evenement);
-                Toast.makeText(this, "ajout avec succse", Toast.LENGTH_SHORT).show();
+                 inserEvenment(evenement,id_cal);
                 backToHome();
 
             }
@@ -229,15 +161,19 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onTimeSet(TimePicker timePicker, int hour, int minut) {
         Calendar calendar = Calendar.getInstance();
-
-
         if (flag == FLAG_START_TIME) {
-            heure_deb.set(Calendar.HOUR,hour);
+            heure_deb.set(Calendar.HOUR_OF_DAY,hour);
             heure_deb.set(Calendar.MINUTE,minut);
-
+             heure_d =heure_deb.get(Calendar.HOUR_OF_DAY);
+             minute_d =heure_deb.get(Calendar.MINUTE);
+            b_debut.setText("de "+heure_d+":"+minute_d);
+            //b_debut.setBackgroundColor(getResources().getColor(R.color.color14));
         } else if (flag == FLAG_END_TIME) {
-            heure_fin.set(Calendar.HOUR,hour);
+            heure_fin.set(Calendar.HOUR_OF_DAY,hour);
             heure_fin.set(Calendar.MINUTE,minut);
+            heure_f =heure_fin.get(Calendar.HOUR_OF_DAY);
+            minute_f =heure_fin.get(Calendar.MINUTE);
+            b_fin.setText("a "+heure_f+":"+minute_f);
         }
     }
 
@@ -247,6 +183,8 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         date.set(Calendar.YEAR,Y);
         date.set(Calendar.MONTH,M);
         date.set(Calendar.DAY_OF_MONTH,D);
+
+        b_joure.setText("le "+D+"/"+M+"/"+Y );
     }
 
     // pour verifier si ond dois initialiser les champe ou non (modification)
@@ -256,6 +194,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         else
         return false;
     }
+
     // verifer et recuperer lid _evenment apartire de lintent
     private  int getincomingInten_idevenment() {
         if (getIntent().hasExtra("id_evenment")) {
@@ -265,28 +204,188 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         }
         return 0;
     }
+
+    // recuperer la valeure du delai apritire de litem selectioner dans le spinner
     public long getdelaiFromSpiner(Spinner spinner){
-        long delai=0 ;
-        if (spinner.getSelectedItem().equals("non")){
-            delai=-1;
+        long d = 0 ;
+        if(spinner.getSelectedItemId()==0){
+            d=-1;
+        }else{
+        d=  5*60*1000*(spinner.getSelectedItemId()-1);
         }
-        if (spinner.getSelectedItem().equals("5 m")){
-            delai=5*60*1000;
-        }
-        if (spinner.getSelectedItem().equals("10 m")){
-            delai=10*60*1000;
-
-        }
-        if (spinner.getSelectedItem().equals("15 m")){
-            delai=15*60*1000;
-
-        }
-        return  delai;
+        return  d ;
     }
+
+    // revenire a la vue week view
     public void backToHome (){
         Intent intent = new Intent(this, HomeActivity.class);
         intent.putExtra("id_cal", getincomingInten_idcal());
         startActivity(intent);
+    }
+
+    // remplire les informations de levenment sur la vue apré click
+    public void viewSetInfo(){
+        if (verifyIncomingIntent()){
+            Evenement evenement=  DATABASE.evenementDao().selectEvenmentById(getincomingInten_idevenment());
+
+            t_libele.setText(evenement.getLibele().toString());
+            t_description.setText(evenement.getDescription().toString());
+            t_lieu.setText(evenement.getDescription().toString());
+            cb_recurrance.setChecked(evenement.isRecurrence());
+           // initialisation du spinner au calendrier parent de levenmùent
+            int id_cal= evenement.getCalendrierId();
+            String titre = DATABASE.calendrierDao().selecCalendrierTitreById(id_cal);
+             // recuperer la position du titrre dans le spinner
+            spinner_calendrier_parent.setSelection( getPositionOfitemByValu(titre,listecal));
+           // initialisation du spinner delait
+           long delai=DATABASE.evenementDao().loadAlertDelaiById(evenement.getId());
+            String[] stringArray=getResources().getStringArray(R.array.delai_alerte);
+            List<String>stringList = new ArrayList<String>();
+            stringList= stringArrayToList(stringArray);
+            int pos= getPositionOfitemByValu(longDelaiToStringItem(delai),stringList);
+            spinner_delai.setSelection(pos);
+
+            // initalisation du timepicker
+
+
+
+        }
+
+    }
+
+    // recuperer la position de litem grace a ca valeure textuel  pour  fair un setselection sur le spinner
+    public int getPositionOfitemByValu(String valu,List<String> stringList){
+        int position = 0 ;
+        for (int i=0 ;i < stringList.size();i++){
+            // si un element de la liste correspond a la valeure
+            // return his position
+            Log.d("dbg if teste ", "condition :  "+stringList.get(i)+ "="+valu);
+            if (stringList.get(i).equals(valu)){
+               position=i;
+
+            }
+
+        }
+        return position;
+
+
+    }
+
+   //mapper le delai recuperer de levenment pour corespondre a un item du spnner
+    public String longDelaiToStringItem(long delai ) {
+        String item = "";
+        long temp = (delai / 300000) + 1;
+        switch ((int) temp) {
+            case 0:
+                item = "pas dalerte";
+                break;
+
+            case 1:
+                item = "0 m";
+                break;
+
+            case 2:
+                item = "5 m";
+                break;
+
+            case 3:
+                item = "10 m";
+                break;
+
+            case 4:
+                item = "15 m ";
+                break;
+
+            default:
+                item = "5 m";
+
+        }
+
+        Log.d("dbg", "longDelaiToStringItem:  "+item);
+        return item;
+    }
+
+    // transformer un string array a une list string
+    public List<String> stringArrayToList(String [] strings){
+        List<String> stringList=new ArrayList<String>() ;
+        for (int i=0 ;i < strings.length ;i++){
+        stringList.add(i,strings[i]);
+        }
+
+
+        return stringList ;
+    }
+
+    // modfifer un evenment
+    public void updatEvenment ( int id_ev,int id_cal  ){
+
+        // id evenment
+            int id=id_ev;
+            // libele evenment
+            String libele=t_libele.getText().toString();
+            //date evenment
+            long jour=date.getTimeInMillis();
+            // heure debut
+            long h_d=heure_deb.getTimeInMillis();
+            // heure fin
+            long h_f=heure_fin.getTimeInMillis();
+            // lieu
+            String lieu=t_lieu.getText().toString();
+            // description
+            String description=t_description.getText().toString() ;
+            //recurrance
+            boolean recurrence=cb_recurrance.isChecked() ;
+            // alerte
+            boolean alerte=false ;
+            if (getdelaiFromSpiner(spinner_delai)==-1){
+                alerte=false ;
+            }else{
+                alerte=true ;
+            }
+
+            // id calendrier parent
+            int id_calendrier=id_cal;
+            // heure alerte
+            long heure_alerte=generatAlertTime();
+            // delai alerte
+            long  delai = getdelaiFromSpiner(spinner_delai);
+
+            Evenement evenementModifer = new Evenement(id,libele,jour,h_d,h_f,lieu,description,recurrence,alerte,id_calendrier,heure_alerte,delai);
+
+            DATABASE.evenementDao().upDateEvenment(evenementModifer);
+            Toast.makeText(this, "modification avec succse", Toast.LENGTH_SHORT).show();
+
+
+    }
+
+    //inser un evenment
+    public void inserEvenment(Evenement evenement , int id_cal){
+        // recuperation des information de l évenement
+        evenement.setLibele(t_libele.getText().toString());
+        evenement.setDescription(t_description.getText().toString());
+        evenement.setLieu(t_lieu.getText().toString());
+        evenement.setRecurrence(cb_recurrance.isChecked());
+        evenement.setCalendrierId(id_cal);
+        // le joure
+        evenement.setJour(date.getTimeInMillis());
+        // heure debut;
+        evenement.setHeure_debut(heure_deb.getTimeInMillis());
+        // heure fin
+        evenement.setHeure_fin(heure_fin.getTimeInMillis());
+        // alerte
+        if (getdelaiFromSpiner(spinner_delai)==-1){
+            evenement.setAlerte(false);
+        }else{
+            evenement.setAlerte(true);
+
+        }
+        //heure_alerte
+        evenement.setHeure_alerte( generatAlertTime()-getdelaiFromSpiner(spinner_delai));
+        // delai alerte
+        evenement.setDelai_alerte(getdelaiFromSpiner(spinner_delai));
+        //lisertion dans la base
+        DATABASE.evenementDao().insert(evenement);
+        Toast.makeText(this, "ajout avec succse", Toast.LENGTH_SHORT).show();
     }
 }
 
