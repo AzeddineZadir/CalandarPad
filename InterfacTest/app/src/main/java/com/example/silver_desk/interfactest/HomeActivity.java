@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,6 +43,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
  private  Animation ani_open,ani_close,ani_rotateclockwise,ani_rotateanticlockwise;
  boolean is_clicked = false ;
  public static AppDatabase DATABASE;
+private     List<Evenement> evenementList ;
 
  // wekke view variables
  private static final int TYPE_DAY_VIEW = 1;
@@ -49,6 +51,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private static final int TYPE_WEEK_VIEW = 3;
     private int mWeekViewType = TYPE_THREE_DAY_VIEW;
     private WeekView mWeekView;
+    int compteur_onmonth= 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +76,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         ani_rotateanticlockwise= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_roteatanticlockwis);
         //inisialisation de la BDD
         DATABASE= Room.databaseBuilder(this,AppDatabase.class,"AppDatabase").allowMainThreadQueries().build();
+       // si on a cliker sur un calendrier en qst
+        if (verifyIncomingIntent()){
+          int   id_calendrierAafficher= getincomingInten_idCalendrier();
+            evenementList = DATABASE.evenementDao().loadEvenmentById(id_calendrierAafficher);
+
+        }else{
+            evenementList=evenementList = DATABASE.evenementDao().loadAllevenement();
+        }
 
 
 
@@ -99,6 +111,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // Set long press listener for events.
         mWeekView.setEventLongPressListener(this);
     }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        if (verifyIncomingIntent()){
+            int   id_calendrierAafficher= getincomingInten_idCalendrier();
+
+
+            evenementList = DATABASE.evenementDao().loadEvenmentById(id_calendrierAafficher);
+
+        }else{
+            evenementList=evenementList = DATABASE.evenementDao().loadAllevenement();
+        }
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer);
@@ -126,10 +153,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setupDateTimeInterpreter(id == R.id.action_week_view);
         switch (id){
             case R.id.action_today:
+                compteur_onmonth=0;
                 mWeekView.goToToday();
                 return true;
             case R.id.action_day_view:
+
                 if (mWeekViewType != TYPE_DAY_VIEW) {
+                    compteur_onmonth=0;
                     item.setChecked(!item.isChecked());
                     mWeekViewType = TYPE_DAY_VIEW;
                     mWeekView.setNumberOfVisibleDays(1);
@@ -142,6 +172,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             case R.id.action_three_day_view:
                 if (mWeekViewType != TYPE_THREE_DAY_VIEW) {
+                    compteur_onmonth=0;
                     item.setChecked(!item.isChecked());
                     mWeekViewType = TYPE_THREE_DAY_VIEW;
                     mWeekView.setNumberOfVisibleDays(3);
@@ -154,6 +185,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             case R.id.action_week_view:
                 if (mWeekViewType != TYPE_WEEK_VIEW) {
+                    compteur_onmonth=0;
                     item.setChecked(!item.isChecked());
                     mWeekViewType = TYPE_WEEK_VIEW;
                     mWeekView.setNumberOfVisibleDays(7);
@@ -238,9 +270,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 // week view
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
+
         // Populate the week view with some events.
-        //List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
-        List<Evenement> evenementList = DATABASE.evenementDao().loadAllevenement();
+        // quels evenment a recuperer
+        // si id_calendrierAafficher= -1  on recupére tous
+        // sinon on recupere les evenment  du calendrier qui porte id_calendrierAafficher seulment ;
+       // List<Evenement> evenementList = DATABASE.evenementDao().loadAllevenement();
+
+
          //recuperation des evenment apartire de la base de donneé
         //  events=myEventToWeekEvents(evenementList);
         List<WeekViewEvent> events =myEventToWeekEvents(evenementList,newYear,newMonth)  ;
@@ -281,11 +318,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return evenement.getLibele().toUpperCase() ;
                 //String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH)+1, time.get(Calendar.DAY_OF_MONTH));
     }
-     int comp= 0;
     private List<WeekViewEvent> myEventToWeekEvents (List<Evenement> evenementList,int newYear, int newMonth){
         List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
-     comp++;
-     if (comp==1) {
+        compteur_onmonth++;
+     if (compteur_onmonth==1) {
          for (int i = 0; i < evenementList.size(); i++) {
              WeekViewEvent event;
              Evenement evenement = new Evenement();
@@ -361,4 +397,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
+    private int getincomingInten_idCalendrier() {
+        if (getIntent().hasExtra("id_cal")) {
+            int id_cal = getIntent().getIntExtra("id_cal", 1);
+
+            return id_cal;
+        }
+        return 0;
+    }
+    private boolean verifyIncomingIntent(){
+        if (getincomingInten_idCalendrier()!=0)
+            return  true;
+        else
+            return false;
+    }
+
 }

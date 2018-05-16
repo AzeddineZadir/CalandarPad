@@ -244,9 +244,18 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
             stringList= stringArrayToList(stringArray);
             int pos= getPositionOfitemByValu(longDelaiToStringItem(delai),stringList);
             spinner_delai.setSelection(pos);
+            // intialisation du temps
+            heure_deb.setTimeInMillis(evenement.getHeure_debut());
+            heure_fin.setTimeInMillis(evenement.getHeure_fin());
+            // init du jour
+            date.setTimeInMillis(evenement.getJour());
 
-            // initalisation du timepicker
+            // afficher lheure sur les button
+            b_debut.setText(genratTitelWithTime(heure_deb));
+            b_fin.setText(genratTitelWithTime(heure_fin));
 
+            // afficher la dat-e sur le button
+            b_joure.setText(genratTitelWithDate(date));
 
 
         }
@@ -386,6 +395,29 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         //lisertion dans la base
         DATABASE.evenementDao().insert(evenement);
         Toast.makeText(this, "ajout avec succse", Toast.LENGTH_SHORT).show();
+    }
+
+    // generer un titre avec heur_debu et heure fin
+    public  String genratTitelWithTime(Calendar h){
+        String titel="" ;
+
+    int     h_d =h.get(Calendar.HOUR_OF_DAY);
+    int    m_d =h.get(Calendar.MINUTE);
+        titel="de "+h_d+":"+m_d;
+
+        return  titel ;
+    }
+
+    // generer un tyitre avec date
+    public  String genratTitelWithDate(Calendar h){
+        String titel="" ;
+      int D ,M,Y;
+      D=h.get(Calendar.DAY_OF_MONTH);
+      M=h.get(Calendar.MONTH);
+      Y=h.get(Calendar.YEAR);
+
+        titel="le "+D+"/"+M+"/"+Y;
+        return  titel ;
     }
 }
 

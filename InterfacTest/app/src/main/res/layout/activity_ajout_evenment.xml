@@ -68,7 +68,7 @@
             android:layout_marginTop="11dp"
             android:layout_weight="1"
             android:text="ajout evenment"
-            android:textSize="24sp" />
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/e_libele"

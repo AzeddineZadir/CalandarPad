@@ -2,6 +2,7 @@ package com.example.silver_desk.interfactest.fragment;
 
 
 import android.arch.persistence.room.Room;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -12,8 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.silver_desk.interfactest.Adapters.CalendrierAdapter;
+import com.example.silver_desk.interfactest.AjoutCalendrierActivity;
 import com.example.silver_desk.interfactest.CalendrierActivity;
 import com.example.silver_desk.interfactest.R;
 import com.example.silver_desk.interfactest.database.AppDatabase;
@@ -81,11 +84,10 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
     @Override
     public void onClick(View view) {
         if(view.getId()==R.id.fab_add) {
+          // retour a la liste des calendrier
+            Intent intent = new Intent(getContext(), AjoutCalendrierActivity.class);
+            getContext().startActivity(intent);
 
-           android.support.v4.app.FragmentTransaction transaction= CalendrierActivity.fragmentManager.beginTransaction();
-            AjoutCalendrierFragment fragment = new AjoutCalendrierFragment();
-            transaction.replace(R.id.conteneur,fragment,null);
-            transaction.addToBackStack(null).commit();
 
         }
 

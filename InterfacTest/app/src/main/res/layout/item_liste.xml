@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
@@ -9,33 +11,49 @@
         android:layout_margin="@dimen/layout_margin">
 
         <LinearLayout
-            android:id="@+id/myitem"
-            android:orientation="vertical"
+            android:id="@+id/item_cal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/pading">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_idcal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_event_black_24dp" />
 
-            <TextView
-                android:id="@+id/tv_titrecal"
-                android:text="titre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+            <LinearLayout
+                android:id="@+id/myitem"
+                android:layout_width="294dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/pading">
 
-            <TextView
-                android:id="@+id/tv_descriptioncal"
-                android:text="description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-            />
+                <TextView
+                    android:id="@+id/tv_titrecal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="titre"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+                <TextView
+                    android:id="@+id/tv_descriptioncal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="description" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/imb_setting_cal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#ffffffff"
+                app:srcCompat="@drawable/ic_more_vert_black_24dp" />
 
         </LinearLayout>
-
 
 
     </android.support.v7.widget.CardView>

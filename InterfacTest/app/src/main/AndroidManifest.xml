@@ -24,6 +24,7 @@
         <service android:name=".service.Myservice" />
 
         <activity android:name=".SelectedCalendrierActivity" />
+        <activity android:name=".AjoutCalendrierActivity"></activity>
     </application>
 
 </manifest>
