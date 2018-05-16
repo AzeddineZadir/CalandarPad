@@ -41,6 +41,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
     Calendar date ;
     Calendar heure_deb,heure_fin ;
     TimePickerFragment timePickerFragment ;
+    DatePickerFragment datePickerFragment ;
     Spinner spinner_delai,spinner_calendrier_parent;
     ArrayAdapter arrayAdapterdelai,arrayAdaptercal ;
     List<String> listecal ;
@@ -99,20 +100,20 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onClick(View view) {
-        if(view.getId()==R.id.b_debut){
+         if(view.getId()==R.id.b_debut){
         timePickerFragment.setFlag(FLAG_START_TIME);
         timePickerFragment.show(getSupportFragmentManager(),"timepicker");
 
 
         }
-        if(view.getId()==R.id.b_fin){
+         if(view.getId()==R.id.b_fin){
 
             timePickerFragment.setFlag(TimePickerFragment.FLAG_END_TIME);
             timePickerFragment.show(getSupportFragmentManager(),"timepicker");;
 
         }
-        if(view.getId()==R.id.b_joure){
-            DialogFragment datePickerFragment=new DatePickerFragment();
+         if(view.getId()==R.id.b_joure){
+            datePickerFragment=new DatePickerFragment();
             datePickerFragment.show(getSupportFragmentManager(),"date picker");
         }
         // ajout d'un evenment  ou modification
@@ -160,7 +161,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onTimeSet(TimePicker timePicker, int hour, int minut) {
-        Calendar calendar = Calendar.getInstance();
+
         if (flag == FLAG_START_TIME) {
             heure_deb.set(Calendar.HOUR_OF_DAY,hour);
             heure_deb.set(Calendar.MINUTE,minut);
@@ -180,11 +181,12 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onDateSet(DatePicker datePicker, int Y, int M, int D) {
         Toast.makeText(this,"year "+Y+"month "+M+"day "+D,Toast.LENGTH_LONG).show();
+
         date.set(Calendar.YEAR,Y);
         date.set(Calendar.MONTH,M);
         date.set(Calendar.DAY_OF_MONTH,D);
 
-        b_joure.setText("le "+D+"/"+M+"/"+Y );
+        b_joure.setText("le "+D+"/"+M+"/"+Y);
     }
 
     // pour verifier si ond dois initialiser les champe ou non (modification)
@@ -268,7 +270,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         for (int i=0 ;i < stringList.size();i++){
             // si un element de la liste correspond a la valeure
             // return his position
-            Log.d("dbg if teste ", "condition :  "+stringList.get(i)+ "="+valu);
+            //   Log.d("dbg if teste ", "condition :  "+stringList.get(i)+ "="+valu);
             if (stringList.get(i).equals(valu)){
                position=i;
 
@@ -310,7 +312,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
         }
 
-        Log.d("dbg", "longDelaiToStringItem:  "+item);
+
         return item;
     }
 
@@ -377,10 +379,15 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         evenement.setCalendrierId(id_cal);
         // le joure
         evenement.setJour(date.getTimeInMillis());
+        Log.d("dbg date ", date.getTime().toString());
         // heure debut;
         evenement.setHeure_debut(heure_deb.getTimeInMillis());
+        Log.d("dbg date ", heure_deb.getTime().toString());
+
         // heure fin
         evenement.setHeure_fin(heure_fin.getTimeInMillis());
+        Log.d("dbg date ", heure_fin.getTime().toString());
+
         // alerte
         if (getdelaiFromSpiner(spinner_delai)==-1){
             evenement.setAlerte(false);
