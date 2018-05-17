@@ -2,6 +2,7 @@ package com.example.silver_desk.interfactest;
 
 import android.arch.persistence.room.Room;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -30,6 +31,7 @@ import com.example.silver_desk.interfactest.database.Evenement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -78,11 +80,14 @@ private     List<Evenement> evenementList ;
         DATABASE= Room.databaseBuilder(this,AppDatabase.class,"AppDatabase").allowMainThreadQueries().build();
        // si on a cliker sur un calendrier en qst
         if (verifyIncomingIntent()){
+
           int   id_calendrierAafficher= getincomingInten_idCalendrier();
             evenementList = DATABASE.evenementDao().loadEvenmentById(id_calendrierAafficher);
 
         }else{
-            evenementList=evenementList = DATABASE.evenementDao().loadAllevenement();
+
+            evenementList= DATABASE.evenementDao().loadAllevenement();
+
         }
 
 
@@ -110,6 +115,8 @@ private     List<Evenement> evenementList ;
 
         // Set long press listener for events.
         mWeekView.setEventLongPressListener(this);
+
+
     }
 
     @Override
@@ -150,19 +157,23 @@ private     List<Evenement> evenementList ;
             return true ;
         }
         int id = item.getItemId();
-        setupDateTimeInterpreter(id == R.id.action_week_view);
+       // setupDateTimeInterpreter(id == R.id.action_week_view);
         switch (id){
             case R.id.action_today:
+
                 compteur_onmonth=0;
                 mWeekView.goToToday();
                 return true;
             case R.id.action_day_view:
 
                 if (mWeekViewType != TYPE_DAY_VIEW) {
+
+
                     compteur_onmonth=0;
                     item.setChecked(!item.isChecked());
                     mWeekViewType = TYPE_DAY_VIEW;
                     mWeekView.setNumberOfVisibleDays(1);
+
 
                     // Lets change some dimensions to best fit the view.
                     mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
@@ -178,9 +189,9 @@ private     List<Evenement> evenementList ;
                     mWeekView.setNumberOfVisibleDays(3);
 
                     // Lets change some dimensions to best fit the view.
-                    mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
+                   mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
                     mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
-                    mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
+                   mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
                 }
                 return true;
             case R.id.action_week_view:
@@ -191,9 +202,9 @@ private     List<Evenement> evenementList ;
                     mWeekView.setNumberOfVisibleDays(7);
 
                     // Lets change some dimensions to best fit the view.
-                    mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics()));
-                    mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
-                    mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
+                   // mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics()));
+                    //mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
+                    //mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
                 }
                 return true;
         }
@@ -334,32 +345,32 @@ private     List<Evenement> evenementList ;
              mytimeDebut.setTimeInMillis(evenement.getHeure_debut());
              mytimeFin.setTimeInMillis(evenement.getHeure_fin());
              myDate.setTimeInMillis(evenement.getJour());
+             //initialisation de heur debut
              Calendar startTime = Calendar.getInstance();
 
              startTime.set(Calendar.HOUR_OF_DAY, mytimeDebut.get(Calendar.HOUR_OF_DAY));
              startTime.set(Calendar.MINUTE, mytimeDebut.get(Calendar.MINUTE));
              startTime.set(Calendar.MONTH, myDate.get(Calendar.MONTH));
-             //  startTime.set(Calendar.MONTH,newMonth );
              startTime.set(Calendar.DAY_OF_MONTH, myDate.get(Calendar.DAY_OF_MONTH));
              startTime.set(Calendar.YEAR, myDate.get(Calendar.YEAR));
-             //startTime.set(Calendar.YEAR,newYear);
 
+            //initalisation  de heure fin
              Calendar endTime = Calendar.getInstance();
 
              endTime.set(Calendar.HOUR_OF_DAY, mytimeFin.get(Calendar.HOUR_OF_DAY));
              endTime.set(Calendar.MINUTE, mytimeFin.get(Calendar.MINUTE));
              endTime.set(Calendar.MONTH, myDate.get(Calendar.MONTH));
-             //endTime.set(Calendar.MONTH,newMonth );
-
-             //endTime.set(Calendar.DAY_OF_MONTH,myDate.get(Calendar.DAY_OF_MONTH) );
+             endTime.set(Calendar.DAY_OF_MONTH,myDate.get(Calendar.DAY_OF_MONTH) );
              endTime.set(Calendar.YEAR, myDate.get(Calendar.YEAR));
-             endTime.set(Calendar.YEAR, newYear);
+
 
              // initialisation de weekviewevent grace a cet evenment
              event = new WeekViewEvent(evenement.getId(), getEventTitle(evenement), startTime, endTime);
              // recuperation de la color
              int color = DATABASE.calendrierDao().getIdCalendrierColorById(evenement.getCalendrierId());
              event.setColor(color);
+
+             // ajout de levenment dans la liste des events compatible au composents week view
              events.add(event);
          }
 

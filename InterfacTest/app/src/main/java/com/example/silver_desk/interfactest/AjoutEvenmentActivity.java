@@ -36,7 +36,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
     EditText t_libele,t_description,t_lieu;
     CheckBox cb_recurrance ,cb_alerte ;
     Button b_debut,b_fin,b_joure;
-    FloatingActionButton fab_save_event ;
+    FloatingActionButton fab_save_event , fab_delete_event;
     private boolean modification ;
     Calendar date ;
     Calendar heure_deb,heure_fin ;
@@ -70,6 +70,9 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         // fab fab_save event
         fab_save_event=(FloatingActionButton)findViewById(R.id.fab_save_event);
         fab_save_event.setOnClickListener(this);
+
+        fab_delete_event=(FloatingActionButton)findViewById(R.id.fab_delete_event);
+        fab_delete_event.setOnClickListener(this);
 
         //les check bow
 
@@ -133,6 +136,29 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
                 Evenement evenement = new Evenement();
                  inserEvenment(evenement,id_cal);
                 backToHome();
+
+            }
+
+            if (view.getId()==R.id.fab_delete_event){
+                // supprimer un evenment
+                 /*  if (e_titre.getText().toString().equals("")){
+                AlertDialog.Builder builder= new AlertDialog.Builder(view.getContext());
+                builder.setCancelable(false);
+                builder.setTitle("ajouts impossible");
+                builder.setMessage(" vous n'avez pas saisie de  Titre ");
+                builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                builder.create().show();*/
 
             }
         }
@@ -221,7 +247,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
     // revenire a la vue week view
     public void backToHome (){
         Intent intent = new Intent(this, HomeActivity.class);
-        intent.putExtra("id_cal", getincomingInten_idcal());
+       // intent.putExtra("id_cal", getincomingInten_idcal());
         startActivity(intent);
     }
 
