@@ -37,7 +37,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
     EditText e_titre,e_description ;
     CheckBox c_activite,c_visibilite ;
     Button b_couleur ;
-    FloatingActionButton fab_add_cal ;
+    FloatingActionButton fab_add_cal  ;
     ArrayAdapter<CharSequence> arrayAdapter ;
     Evenement event;
     Alerte alerte;
@@ -56,6 +56,10 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
         c_visibilite=(CheckBox)findViewById(R.id.c_visibilite);
         fab_add_cal=(FloatingActionButton)findViewById(R.id.fab_add_cal) ;
         fab_add_cal.setOnClickListener(this);
+
+
+
+
         b_couleur.setOnClickListener(this);
         // une couleure pardefaut
         //   b_couleur.setBackgroundColor();
@@ -93,6 +97,8 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
                 backCalendrierActivity();
 
             }
+
+
           /*  if (e_titre.getText().toString().equals("")){
                 AlertDialog.Builder builder= new AlertDialog.Builder(view.getContext());
                 builder.setCancelable(false);

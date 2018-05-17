@@ -30,6 +30,7 @@
             android:id="@+id/t_lieu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/e_lieu"
             android:layout_alignBottom="@+id/e_lieu"
             android:layout_alignStart="@+id/t_alert"
             android:layout_weight="1"
@@ -137,28 +138,29 @@
             android:id="@+id/fab_save_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/e_description"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
             android:layout_gravity="bottom|end"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginBottom="17dp"
+            android:layout_marginEnd="7dp"
             android:clickable="true"
+            app:backgroundTint="@color/accent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:srcCompat="@drawable/ic_save_event" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_delete_event"
+            android:id="@+id/fab_delet_ev"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom|start"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="17dp"
+            android:layout_marginStart="17dp"
             android:clickable="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:backgroundTint="@color/accent"
             app:srcCompat="@drawable/ic_delete" />
+
 
         <TextView
             android:id="@+id/t_alert"
@@ -172,9 +174,8 @@
 
         <Spinner
             android:id="@+id/spinner_delai"
-            android:layout_width="197dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_alignBottom="@+id/t_alert"
             android:layout_alignEnd="@+id/cb_recurrence" />
 
@@ -195,6 +196,7 @@
             android:layout_alignEnd="@+id/e_description"
             android:layout_alignStart="@+id/spinner_delai"
             android:layout_alignTop="@+id/textView7" />
+
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
