@@ -22,9 +22,7 @@
         <activity android:name=".CalendrierActivity" />
         <activity android:name=".EvenementActivity" />
         <activity android:name=".AjoutEvenmentActivity" />
-
-
-
+        
         <service android:name=".service.TimerService"
             android:enabled="true"
             android:exported="true"/>
