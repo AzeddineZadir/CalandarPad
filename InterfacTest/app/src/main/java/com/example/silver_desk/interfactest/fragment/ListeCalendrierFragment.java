@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.silver_desk.interfactest.Adapters.CalendrierAdapter;
 import com.example.silver_desk.interfactest.AjoutCalendrierActivity;
 import com.example.silver_desk.interfactest.CalendrierActivity;
+import com.example.silver_desk.interfactest.HomeActivity;
 import com.example.silver_desk.interfactest.R;
 import com.example.silver_desk.interfactest.database.AppDatabase;
 import com.example.silver_desk.interfactest.database.Calendrier;
@@ -33,7 +34,7 @@ import static com.example.silver_desk.interfactest.HomeActivity.DATABASE;
  * A simple {@link Fragment} subclass.
  */
 public class ListeCalendrierFragment extends Fragment implements View.OnClickListener {
-    FloatingActionButton fab_add ;
+    FloatingActionButton fab_add ,fab_back;
     Button b_evenment ;
 
     private TextView t_listecalendrier;
@@ -54,6 +55,10 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
         View view =inflater.inflate(R.layout.fragment_liste_calendrier, container, false);
         fab_add=(FloatingActionButton) view.findViewById(R.id.fab_add);
         fab_add.setOnClickListener(this);
+
+        fab_back=(FloatingActionButton)view.findViewById(R.id.fab_back);
+        fab_back.setOnClickListener(this);
+
         calendrierList =  new ArrayList<Calendrier>();
         maliste=  new ArrayList<Calendrier>();
 
@@ -65,17 +70,6 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
         maliste.addAll(1,calendrierList);
 
 
-       /* chaine_daffichage = "";
-        for  (Calendrier calendrier :calendrierList){
-            int id = calendrier.getId();
-            String titre= calendrier.getTitre();
-            String visibilite= calendrier.getVisibilite();
-            String activite= calendrier.getActivite();
-            String priorite= calendrier.getPriorite();
-            String couleur= calendrier.getCouleur();
-            chaine_daffichage= chaine_daffichage +"\n\n\n\n"+"id :"+id+"\n\n titre :"+titre;
-        }
-        t_listecalendrier.setText(chaine_daffichage);*/
 
         // initialisation du rycycler view
         recyclerView=(RecyclerView) view.findViewById(R.id.recyclerviewcal);
@@ -94,12 +88,24 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
     @Override
     public void onClick(View view) {
         if(view.getId()==R.id.fab_add) {
-          // retour a la liste des calendrier
+          //ajouter un calendrier
             Intent intent = new Intent(getContext(), AjoutCalendrierActivity.class);
             getContext().startActivity(intent);
 
 
         }
+
+        if(view.getId()==R.id.fab_back) {
+            // retour a  home activity
+          backHome();
+
+
+        }
+
+    }
+    public void backHome(){
+        Intent intent = new Intent(getContext(), HomeActivity.class);
+        getContext().startActivity(intent);
 
     }
 }

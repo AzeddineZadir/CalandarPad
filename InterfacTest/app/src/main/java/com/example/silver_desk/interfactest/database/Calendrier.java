@@ -38,7 +38,16 @@ public class Calendrier {
     public Calendrier() {
     }
 
-    public Calendrier(int id, @NonNull String titre, @NonNull boolean visibilite, @NonNull boolean activite, int couleur, String priorite,String description) {
+    public Calendrier(@NonNull String titre, @NonNull boolean visibilite, @NonNull boolean activite, int couleur, String priorite, String description) {
+        this.titre = titre;
+        this.visibilite = visibilite;
+        this.activite = activite;
+        this.couleur = couleur;
+        this.priorite = priorite;
+        this.description = description;
+    }
+
+    public Calendrier(int id, @NonNull String titre, @NonNull boolean visibilite, @NonNull boolean activite, int couleur, String priorite, String description) {
         this.id = id;
         this.titre = titre;
         this.visibilite = visibilite;

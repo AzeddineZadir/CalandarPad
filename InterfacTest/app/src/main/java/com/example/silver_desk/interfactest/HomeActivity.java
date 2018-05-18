@@ -1,6 +1,8 @@
 package com.example.silver_desk.interfactest;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
+import android.arch.persistence.room.RoomDatabase;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.RectF;
@@ -26,6 +28,7 @@ import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.example.silver_desk.interfactest.database.AppDatabase;
+import com.example.silver_desk.interfactest.database.Calendrier;
 import com.example.silver_desk.interfactest.database.Evenement;
 
 import java.text.SimpleDateFormat;
@@ -34,6 +37,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Executors;
+
+import static com.example.silver_desk.interfactest.database.AppDatabase.getInstance;
 
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener ,
@@ -76,13 +82,32 @@ private     List<Evenement> evenementList ;
         ani_close= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         ani_rotateclockwise= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_roteatclockwise);
         ani_rotateanticlockwise= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_roteatanticlockwis);
+
+
         //inisialisation de la BDD
-        DATABASE= Room.databaseBuilder(this,AppDatabase.class,"AppDatabase").allowMainThreadQueries().build();
+
+        DATABASE= Room.databaseBuilder(this,AppDatabase.class,"AppDatabase").allowMainThreadQueries().addCallback(new RoomDatabase.Callback() {
+            @Override
+            public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                super.onCreate(db);
+                Executors.newSingleThreadScheduledExecutor().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        Calendrier calendrier = new Calendrier("mon calendrier",true,true,R.color.color3,"moyenne","le calendrier par defaut ");
+                        getInstance(getApplicationContext()).calendrierDao().insert(calendrier);
+
+                    }
+                });
+            }
+        })
+                .build();
+
+
        // si on a cliker sur un calendrier en qst
         if (verifyIncomingIntent()){
 
           int   id_calendrierAafficher= getincomingInten_idCalendrier();
-            evenementList = DATABASE.evenementDao().loadEvenmentById(id_calendrierAafficher);
+            evenementList = DATABASE.evenementDao().loadEvenmentByIdCalendrier(id_calendrierAafficher);
 
         }else{
 
@@ -126,7 +151,7 @@ private     List<Evenement> evenementList ;
             int   id_calendrierAafficher= getincomingInten_idCalendrier();
 
 
-            evenementList = DATABASE.evenementDao().loadEvenmentById(id_calendrierAafficher);
+            evenementList = DATABASE.evenementDao().loadEvenmentByIdCalendrier(id_calendrierAafficher);
 
         }else{
             evenementList=evenementList = DATABASE.evenementDao().loadAllevenement();

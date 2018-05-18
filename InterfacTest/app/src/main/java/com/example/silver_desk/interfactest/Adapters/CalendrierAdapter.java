@@ -1,7 +1,10 @@
 package com.example.silver_desk.interfactest.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +21,8 @@ import com.example.silver_desk.interfactest.R;
 import com.example.silver_desk.interfactest.database.Calendrier;
 
 import java.util.List;
+
+import static com.example.silver_desk.interfactest.R.color.itemtous;
 
 /**
  * Created by silver-desk on 26/04/2018.
@@ -39,8 +44,14 @@ public class CalendrierAdapter extends RecyclerView.Adapter<CalendrierAdapter.Vi
      return new ViewHolder( view);
     }
 
+
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
+        if(position==0){
+            holder.imb_setting.setVisibility(View.INVISIBLE);
+            int i ;
+       //     holder.cardView.setBackgroundColor();
+        }
         final Calendrier calendrier = calendrierList.get(position);
         holder.tv_titre.setText(calendrier.getTitre());
         holder.tv_description.setText(calendrier.getDescription());
@@ -74,6 +85,7 @@ public class CalendrierAdapter extends RecyclerView.Adapter<CalendrierAdapter.Vi
                 context.startActivity(intent);
             }
         });
+
     }
 
     @Override
@@ -85,6 +97,7 @@ public class CalendrierAdapter extends RecyclerView.Adapter<CalendrierAdapter.Vi
         TextView tv_titre, tv_description ;
         LinearLayout myitem , item_cal ;
         ImageButton imb_setting ;
+        CardView cardView ;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -92,7 +105,7 @@ public class CalendrierAdapter extends RecyclerView.Adapter<CalendrierAdapter.Vi
             tv_description=(TextView)itemView.findViewById(R.id.tv_descriptioncal);
             myitem=(LinearLayout)itemView.findViewById(R.id.myitem);
             imb_setting=(ImageButton)itemView.findViewById(R.id.imb_setting_cal);
-
+            cardView=(CardView)itemView.findViewById(R.id.mycard);
         }
     }
 

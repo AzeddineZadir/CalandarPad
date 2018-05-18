@@ -8,10 +8,16 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.example.silver_desk.interfactest.R;
 import com.example.silver_desk.interfactest.database.Daos.AlerteDao;
 import com.example.silver_desk.interfactest.database.Daos.CalendrierDao;
 import com.example.silver_desk.interfactest.database.Daos.EvenementDao;
+
+import java.util.concurrent.Executors;
+
+import static android.appwidget.AppWidgetManager.getInstance;
 
 @Database(entities = {Calendrier.class,Evenement.class,Alerte.class},version = 1)
 public abstract class AppDatabase extends RoomDatabase {
@@ -20,20 +26,49 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract AlerteDao alerteDao();
 
     private static AppDatabase INSTANCE;
-    static AppDatabase getDatabase(final Context context) {
-        if (INSTANCE == null) {
-            synchronized (AppDatabase.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class, "AppDatabase")
-                            .build();
 
-                }
-            }
+    public synchronized static AppDatabase getInstance(Context context) {
+        Log.d("dbg", "avent la creation de la base");
+        if (INSTANCE == null) {
+            INSTANCE = buildDatabase(context);
+            Log.d("dbg        2", "pendent la creation de la base");
+
         }
         return INSTANCE;
     }
 
+    private static AppDatabase buildDatabase(final Context context) {
+        return Room.databaseBuilder(context,
+                AppDatabase.class,
+                "AppDatabase")
+                .addCallback(new Callback() {
+                    @Override
+                    public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                        super.onCreate(db);
+                        Executors.newSingleThreadScheduledExecutor().execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                Calendrier calendrier = new Calendrier("mon calendrier",true,true,R.color.color2,"moyenne","");
+                                getInstance(context).calendrierDao().insert(calendrier);
+                                Log.d("dbg", "run: yaaaaaaaaaaahhhhhhh");
+                            }
+                        });
+                    }
+                })
+                .build();
+    }
+
+
+
+
+
+
+
+
+
+
+
+/*
     private static RoomDatabase.Callback sRoomDatabaseCallback =
             new RoomDatabase.Callback(){
 
@@ -54,13 +89,10 @@ public abstract class AppDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(final Void... params) {
             mDao.deleteAll();
-          /*  Calendrier calendrier = new Calendrier(1,"rouge","important","Hello","rouge","rouge","description1");
-            mDao.insert(calendrier);
-            Calendrier calendrier1 = new Calendrier(2,"rouge","important","Hello","rouge","rouge","description2");
-            mDao.insert(calendrier1);
-            Calendrier calendrier2 = new Calendrier(3,"rouge","important","Hello","rouge","rouge","description3");
-            mDao.insert(calendrier2);*/
+
+
             return null;
         }
-    }
+    }*/
+
 }

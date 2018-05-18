@@ -24,6 +24,7 @@ import com.example.silver_desk.interfactest.database.Evenement;
 import com.example.silver_desk.interfactest.fragment.DatePickerFragment;
 import com.example.silver_desk.interfactest.fragment.TimePickerFragment;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -46,7 +47,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
     DatePickerFragment datePickerFragment;
     Spinner spinner_delai, spinner_calendrier_parent;
     ArrayAdapter arrayAdapterdelai, arrayAdaptercal;
-    List<String> listecal;
+    List<String> listecal,listedelai;
     int heure_d, minute_d, heure_f, minute_f;
     private boolean modification;
 
@@ -88,8 +89,9 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
         // le spinner
         spinner_delai = (Spinner) findViewById(R.id.spinner_delai);
-        arrayAdapterdelai = ArrayAdapter.createFromResource(getApplicationContext(), R.array.delai_alerte, android.R.layout.simple_spinner_dropdown_item);
-        arrayAdapterdelai.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+       listedelai=stringArrayToList(getResources().getStringArray(R.array.delai_alerte));
+        arrayAdapterdelai = new ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item,listedelai);
         spinner_delai.setAdapter(arrayAdapterdelai);
 
         // spinner cal

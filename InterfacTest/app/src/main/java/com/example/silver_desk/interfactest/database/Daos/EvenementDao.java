@@ -29,7 +29,7 @@ public interface EvenementDao {
 
     //selectioner tous les evenments d"un calendrier deonné
     @Query("SELECT * FROM evenement_table WHERE calendrierId =:id")
-    public  List<Evenement> loadEvenmentById(int id);
+    public  List<Evenement> loadEvenmentByIdCalendrier(int id);
 
 
     // selectiuoner un evenment donné
@@ -54,8 +54,15 @@ public interface EvenementDao {
     void deleteAllEvenement();
 
     // la suppression dun evenment avec son id et li du calendrier parent
-    @Query("DELETE FROM evenement_table WHERE id like :id_event AND calendrierId like :id_cal")
+    @Query("DELETE FROM evenement_table WHERE id =:id_event AND calendrierId =:id_cal")
     void deleteEvenementByidCalAndIdEvent(int id_event,int id_cal);
 
+    // modifier lid calendrier dun evenment
+    @Query("UPDATE  evenement_table SET calendrierId =:id_cal WHERE  id =:id_evenment")
+    void updateIdCalForEvenment(int id_evenment,int id_cal);
+
+    // supprimer les evenment qui son,t relier a un calendrier parent X
+    @Query("DELETE FROM evenement_table WHERE calendrierId=:id_cal")
+    void deleteAllEvenmentByIdCalendrier(int id_cal);
 
 }
