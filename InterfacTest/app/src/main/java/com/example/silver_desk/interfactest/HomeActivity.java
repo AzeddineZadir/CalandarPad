@@ -27,6 +27,7 @@ import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.example.silver_desk.interfactest.database.AppDatabase;
 import com.example.silver_desk.interfactest.database.Evenement;
+import com.example.silver_desk.interfactest.service.TimerService;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -117,6 +118,8 @@ private     List<Evenement> evenementList ;
         mWeekView.setEventLongPressListener(this);
 
 
+        //start Service
+        startService(new Intent(this, TimerService.class));
     }
 
     @Override
