@@ -29,7 +29,7 @@ public interface EvenementDao {
 
     //selectioner tous les evenments d"un calendrier deonné
     @Query("SELECT * FROM evenement_table WHERE calendrierId =:id")
-    public  List<Evenement> loadEvenmentById(int id);
+    public  List<Evenement> loadEvenmentByIdCalendrier(int id);
 
 
     // selectiuoner un evenment donné
@@ -40,17 +40,43 @@ public interface EvenementDao {
    @Query("SELECT * FROM evenement_table WHERE libele =:libele")
    public Evenement selectEvenmentByLibele(String libele);
 
+
     // recuperer les evenment qui vont advenir a cette  minute
     @Query("SELECT * FROM evenement_table WHERE heure_alerte =:heur")
     public Evenement selectCurrentEvenment(long heur);
+
+   // recuperer le delai dun evenment
+
+    @Query("SELECT delai_alerte FROM evenement_table WHERE  id =:id")
+    long loadAlertDelaiById(int id);
 
 
     @Query("DELETE FROM evenement_table ")
     void deleteAllEvenement();
 
     // la suppression dun evenment avec son id et li du calendrier parent
-    @Query("DELETE FROM evenement_table WHERE id like :id_event AND calendrierId like :id_cal")
+    @Query("DELETE FROM evenement_table WHERE id =:id_event AND calendrierId =:id_cal")
     void deleteEvenementByidCalAndIdEvent(int id_event,int id_cal);
+
+
+
+
+    // modifier lid calendrier dun evenment
+    @Query("UPDATE  evenement_table SET calendrierId =:id_cal WHERE  id =:id_evenment")
+    void updateIdCalForEvenment(int id_evenment,int id_cal);
+
+
+    // supprimer les evenment qui son,t relier a un calendrier parent X
+    @Query("DELETE FROM evenement_table WHERE calendrierId=:id_cal")
+    void deleteAllEvenmentByIdCalendrier(int id_cal);
+
+
+    //Requête selection pour le service
+    @Query("SELECT * FROM evenement_table WHERE heure_debut >=:currentTime AND heure_debut<=30000+:currentTime")
+    List<Evenement> selectCurrentEvenement(long currentTime);
+
+
+
 
 
 }

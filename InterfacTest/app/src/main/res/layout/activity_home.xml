@@ -69,18 +69,19 @@
         tools:layout_editor_absoluteY="374dp"
         android:visibility="invisible"
         />
+
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_nav"
         android:layout_width="wrap_content"
         android:layout_height="107dp"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="25dp"
         android:layout_marginRight="@dimen/fab_margin_right"
         android:elevation="10dp"
-        android:id="@+id/fab_nav"
-        app:pressedTranslationZ="12dp"
         android:src="@drawable/ic_action_name"
-        tools:layout_editor_absoluteY="374dp"
-        />
+        app:backgroundTint="@color/accent"
+        app:pressedTranslationZ="12dp"
+        tools:layout_editor_absoluteY="374dp" />
 </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView

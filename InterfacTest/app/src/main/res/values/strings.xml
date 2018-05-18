@@ -14,7 +14,8 @@
     </string-array>
 
     <string-array name="delai_alerte">
-        <item>non</item>
+        <item>pas dalerte</item>
+        <item>0 m</item>
         <item>5 m</item>
         <item>10 m</item>
         <item>15 m</item>

@@ -27,7 +27,7 @@ public class SelectedCalendrierActivity extends AppCompatActivity implements Vie
         //recuperation du titre du calendier selectioner et de son id
         //getincomingInten_idcal
         //la liste des evenment par raport au calendrier selectioner
-        List<Evenement> evenementList=DATABASE.evenementDao().loadEvenmentById(getincomingInten_idcal());
+        List<Evenement> evenementList=DATABASE.evenementDao().loadEvenmentByIdCalendrier(getincomingInten_idcal());
         //recycler view
         recyclerView=(RecyclerView) findViewById(R.id.recyclerview_evenment);
         recyclerView.setHasFixedSize(true);

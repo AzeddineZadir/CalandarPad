@@ -27,6 +27,13 @@ public interface CalendrierDao {
 
     @Query("SELECT * FROM calendrier_table")
     List<Calendrier>  loadAllCalendrier();
+    // selectioner un calendrier a partire de sont id
+    @Query("SELECT * FROM calendrier_table where id=:id")
+    Calendrier  selecCalendrierById(int id);
+
+
+    @Query("SELECT titre FROM calendrier_table where id=:id")
+    String  selecCalendrierTitreById(int id);
 
     @Query("SELECT titre FROM calendrier_table")
     List<String>  loadAllCalendrierTitels();
@@ -34,7 +41,7 @@ public interface CalendrierDao {
     @Query("SELECT id FROM calendrier_table where titre =:titre")
      int  getIdCalendrierByTitel(String titre);
 
-    // recuperer la couleure du ca l
+    // recuperer la couleure du cal
     @Query("SELECT couleur FROM calendrier_table where id =:id")
     int  getIdCalendrierColorById(int id);
 

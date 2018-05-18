@@ -9,179 +9,232 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.0"
+        >
 
-        <TextView
-            android:id="@+id/t_libele"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/b_debut"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="26dp"
-            android:layout_weight="1"
-            android:text="libele :"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/t_lieu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/e_lieu"
-            android:layout_alignStart="@+id/t_alert"
-            android:layout_weight="1"
-            android:text="@string/lieu"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/t_recurrence"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/t_libele"
-            android:layout_below="@+id/t_libele"
-            android:layout_marginTop="22dp"
-            android:layout_weight="1"
-            android:text="@string/recurrence"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/t_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/fab_save_event"
-            android:layout_alignStart="@+id/t_lieu"
-            android:layout_marginBottom="34dp"
-            android:layout_weight="1"
-            android:text="@string/description"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/t_titre"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_marginTop="11dp"
-            android:layout_weight="1"
-            android:text="ajout evenment"
-            android:textSize="24sp" />
-
-        <EditText
-            android:id="@+id/e_libele"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/t_libele"
-            android:layout_alignStart="@+id/b_joure"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-        <CheckBox
-            android:id="@+id/cb_recurrence"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/t_recurrence"
-            android:layout_alignEnd="@+id/e_libele"
-            android:text="activé" />
-
-        <EditText
-            android:id="@+id/e_lieu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/spinner_delai"
-            android:layout_below="@+id/spinner_delai"
-            android:layout_marginTop="16dp"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/e_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/t_description"
-            android:layout_alignStart="@+id/e_lieu"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-        <Button
-            android:id="@+id/b_debut"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/t_titre"
-            android:layout_marginTop="22dp"
-            android:text="@string/debut" />
-
-        <Button
-            android:id="@+id/b_fin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/b_joure"
-            android:layout_alignBottom="@+id/b_joure"
-            android:layout_alignParentEnd="true"
-            android:text="@string/fin" />
-
-        <Button
-            android:id="@+id/b_joure"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/b_debut"
-            android:layout_alignBottom="@+id/b_debut"
-            android:layout_centerHorizontal="true"
-            android:text="joure" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_save_event"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_gravity="bottom|end"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="16dp"
-            android:clickable="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:srcCompat="@drawable/ic_save_event" />
-
-        <TextView
-            android:id="@+id/t_alert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/t_recurrence"
-            android:layout_below="@+id/t_recurrence"
-            android:layout_marginTop="16dp"
-            android:text="alerte "
-            android:textSize="18sp" />
-
-        <Spinner
-            android:id="@+id/spinner_delai"
-            android:layout_width="197dp"
-            android:layout_height="wrap_content"
-
-            android:layout_alignBottom="@+id/t_alert"
-            android:layout_alignEnd="@+id/cb_recurrence" />
-
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/e_description"
-            android:layout_alignStart="@+id/t_lieu"
-            android:layout_marginBottom="9dp"
-            android:text="dans :"
-            android:textSize="18sp" />
-
-        <Spinner
-            android:id="@+id/spinner_calendrier_parent"
+        <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/e_description"
-            android:layout_alignStart="@+id/spinner_delai"
-            android:layout_alignTop="@+id/textView7" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/t_titre"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+
+                android:layout_gravity="center_horizontal|top"
+                android:layout_marginTop="11dp"
+                android:text="ajout evenment"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/b_debut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/debut" />
+
+                <Button
+                    android:id="@+id/b_joure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="joure"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/b_fin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="end"
+                    android:text="@string/fin" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/t_libele"
+                    android:layout_width="81dp"
+                    android:layout_height="wrap_content"
+                    android:text="libele :"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="5dp"/>
+
+                <EditText
+                    android:id="@+id/e_libele"
+                    android:layout_width="262dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="205dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="dans :"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/spinner_calendrier_parent"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="59dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/t_lieu"
+                    android:layout_width="81dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lieu"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="5dp"/>
+
+                <EditText
+                    android:id="@+id/e_lieu"
+                    android:layout_width="261dp"
+                    android:layout_height="wrap_content"
+
+                    android:inputType="textPersonName" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/t_recurrence"
+                    android:layout_width="227dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/recurrence"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="5dp"/>
+
+                <CheckBox
+                    android:id="@+id/cb_recurrence"
+                    android:layout_width="104dp"
+                    android:layout_height="wrap_content"
+
+                    android:text="activé" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="59dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/t_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/description"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="5dp"/>
+
+                <EditText
+                    android:id="@+id/e_description"
+                    android:layout_width="244dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/t_alert"
+                    android:layout_width="195dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/t_libele"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:text="alerte "
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/spinner_delai"
+                    android:layout_width="136dp"
+                    android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/linearLayout2">
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab_delet_ev"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignParentStart="true"
+                    android:layout_alignTop="@+id/fab_save_event"
+                    android:layout_marginStart="14dp"
+                    android:clickable="true"
+                    app:backgroundTint="@color/accent"
+                    app:srcCompat="@drawable/ic_delete" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab_save_event"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="14dp"
+                    android:clickable="true"
+                    app:backgroundTint="@color/accent"
+                    app:srcCompat="@drawable/ic_save_event" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
