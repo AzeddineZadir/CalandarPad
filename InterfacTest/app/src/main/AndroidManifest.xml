@@ -28,6 +28,7 @@
             android:exported="true"/>
 
 
+
         <activity android:name=".SelectedCalendrierActivity" />
         <activity android:name=".AjoutCalendrierActivity"></activity>
     </application>

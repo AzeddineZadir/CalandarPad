@@ -1,14 +1,22 @@
 package com.example.silver_desk.interfactest.service;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.example.silver_desk.interfactest.HomeActivity;
 import com.example.silver_desk.interfactest.R;
 import com.example.silver_desk.interfactest.database.AppDatabase;
 import com.example.silver_desk.interfactest.database.Evenement;
@@ -28,6 +36,9 @@ public class TimerService extends Service {
     private Handler mHandler = new Handler();
     // timer handling
     private Timer mTimer = null;
+
+    private String CHANNEL_ID="Alarme";
+    private final int NOTIFICATION_ID=1;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -59,39 +70,72 @@ public class TimerService extends Service {
 
                 @Override
                 public void run() {
-                    // display toast
-                    showNotification("hello time is: " + getDateTime(), getApplicationContext());
-                  //  List<Evenement >evenementList = DATABASE.evenementDao().selectCurrentEvenment() ;
+
+                    long currentTime=System.currentTimeMillis();
+
+
+
+                    List<Evenement> Event=DATABASE.evenementDao().selectCurrentEvenement(currentTime);
+                    Log.d("Test","Déclenchement!!!!!!!! "+currentTime);
+
+                    displayNotification(Event);
 
                 }
 
             });
         }
 
-        private String getDateTime() {
-            // get date time in custom format
-            SimpleDateFormat sdf = new SimpleDateFormat("[yyyy/MM/dd - HH:mm:ss]");
-            return sdf.format(new Date());
+
+
+
+
+    }
+    private void displayNotification(List<Evenement> event){
+
+        for (int i=0;i <event.size();i++){
+
+           /* Log.d("Description","Description :"+Event.get(0).getDescription());
+            //Toast.makeText(getApplicationContext(), "Descritpion :" + listEvent.get(0).getDescription(), Toast.LENGTH_LONG).show();*/
+
+           //Create channel if Android >= 8.0
+            createNotificationChannel();
+
+            Intent homeIntent=new Intent(this, HomeActivity.class);
+            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+            PendingIntent homePendingIntent=PendingIntent.getActivity(this,0,homeIntent,PendingIntent.FLAG_ONE_SHOT);
+
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this,CHANNEL_ID);
+            mBuilder.setSmallIcon(R.drawable.ic_event);
+            mBuilder.setContentTitle(event.get(i).getLibele());
+            mBuilder.setContentText(event.get(i).getDescription());
+            mBuilder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+            mBuilder.setAutoCancel(true);
+            mBuilder.setContentIntent(homePendingIntent);
+
+            NotificationManagerCompat notificationManagerCompat=NotificationManagerCompat.from(this);
+            notificationManagerCompat.notify(i,mBuilder.build());
+
+
+
         }
+    }
 
-        private NotificationCompat.Builder showNotification(String eventtext, Context ctx) {
-            //NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx);
-            //mBuilder.setSmallIcon(R.drawable.notification_icon);
-            //mBuilder.setContentTitle("Notification Alert, Click Me!");
-            //mBuilder.setContentText(eventtext);
+    //créer channel pour les versions Orea et ultérieure
+    private void createNotificationChannel(){
 
-            //NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        //Tester si la version de Android est supérieure ou égale à 8.0
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            //Name of the channel & description and its importance
+            String channelName="Event notification";
+            String channelDescription="Notification about your events";
+            int importance= NotificationManager.IMPORTANCE_DEFAULT;
 
-            // notificationID allows you to update the notification later on.
-            //mNotificationManager.notify(0, mBuilder.build());
-            Toast.makeText(getApplicationContext(), eventtext,
-                    Toast.LENGTH_SHORT).show();
-             return new NotificationCompat.Builder(getApplicationContext(), "Test")
-                    .setContentTitle("Test Alarm")
-                    .setContentText(eventtext)
-                    .setSmallIcon(R.drawable.ic_launcher_background);
+            NotificationChannel notificationChannel=new NotificationChannel(CHANNEL_ID,channelName,importance);
+            notificationChannel.setDescription(channelDescription);
 
+            NotificationManager notificationManager=(NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(notificationChannel);
         }
-
     }
 }

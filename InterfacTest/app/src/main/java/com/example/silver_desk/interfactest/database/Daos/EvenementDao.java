@@ -59,6 +59,8 @@ public interface EvenementDao {
     void deleteEvenementByidCalAndIdEvent(int id_event,int id_cal);
 
 
+
+
     // modifier lid calendrier dun evenment
     @Query("UPDATE  evenement_table SET calendrierId =:id_cal WHERE  id =:id_evenment")
     void updateIdCalForEvenment(int id_evenment,int id_cal);
@@ -72,5 +74,9 @@ public interface EvenementDao {
     //Requête selection pour le service
     @Query("SELECT * FROM evenement_table WHERE heure_debut >=:currentTime AND heure_debut<=30000+:currentTime")
     List<Evenement> selectCurrentEvenement(long currentTime);
+
+
+
+
 
 }
