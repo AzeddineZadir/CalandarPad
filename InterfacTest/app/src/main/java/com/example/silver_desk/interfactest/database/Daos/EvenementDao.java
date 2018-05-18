@@ -57,7 +57,5 @@ public interface EvenementDao {
     @Query("DELETE FROM evenement_table WHERE id like :id_event AND calendrierId like :id_cal")
     void deleteEvenementByidCalAndIdEvent(int id_event,int id_cal);
 
-    //Requête selection pour le service
-    @Query("SELECT * FROM evenement_table WHERE heure_debut >=:currentTime AND heure_debut<=30000+:currentTime")
-    List<Evenement> selectCurrentEvenement(long currentTime);
+
 }
