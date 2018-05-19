@@ -64,7 +64,7 @@ public class ListeCalendrierFragment extends Fragment implements View.OnClickLis
 
         // creation du calendrier par defaut
         Calendrier calendrier= new Calendrier();
-        calendrier.setTitre("tous ");
+        calendrier.setTitre("Vue globale");
         maliste.add(calendrier);
         calendrierList=DATABASE.calendrierDao().loadAllCalendrier();
         maliste.addAll(1,calendrierList);

@@ -46,13 +46,13 @@ import static com.example.silver_desk.interfactest.database.AppDatabase.getInsta
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener ,
         WeekView.EventClickListener, MonthLoader.MonthChangeListener,
         WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener{
- private DrawerLayout drawerLayout ;
- private ActionBarDrawerToggle actionBarDrawerToggle;
- private  FloatingActionButton fab_nav,fab_home,fab_calendrier,fab_aujourdhui;
- private  Animation ani_open,ani_close,ani_rotateclockwise,ani_rotateanticlockwise;
- boolean is_clicked = false ;
- public static AppDatabase DATABASE;
-private     List<Evenement> evenementList ;
+    private DrawerLayout drawerLayout ;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private  FloatingActionButton fab_nav,fab_home,fab_calendrier,fab_aujourdhui;
+    private  Animation ani_open,ani_close,ani_rotateclockwise,ani_rotateanticlockwise;
+     boolean is_clicked = false ;
+    public static AppDatabase DATABASE;
+    private     List<Evenement> evenementList ;
 
  // wekke view variables
  private static final int TYPE_DAY_VIEW = 1;
@@ -74,6 +74,9 @@ private     List<Evenement> evenementList ;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         NavigationView navigationView =(NavigationView)findViewById(R.id.nav);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // action bar
+            getSupportActionBar().setTitle("Vue globale");
        // le menus flotan
         fab_nav=(FloatingActionButton)findViewById(R.id.fab_nav);
         fab_home=(FloatingActionButton)findViewById(R.id.fab_home);
@@ -103,14 +106,17 @@ private     List<Evenement> evenementList ;
         })
                 .build();
 
-
+        // modification du contenu du week view en foncton de litem choisie dans calendrier activity
        // si on a cliker sur un calendrier en qst
         if (verifyIncomingIntent()){
 
           int   id_calendrierAafficher= getincomingInten_idCalendrier();
             evenementList = DATABASE.evenementDao().loadEvenmentByIdCalendrier(id_calendrierAafficher);
+           // le titre afficher sur la action bar sera se li du calendrier choisi
 
-        }else{
+            String titre_calendrier=DATABASE.calendrierDao().getCalendrierTitelmById(id_calendrierAafficher);
+            getSupportActionBar().setTitle(titre_calendrier);
+             }else{
 
             evenementList= DATABASE.evenementDao().loadAllevenement();
 
@@ -229,10 +235,10 @@ private     List<Evenement> evenementList ;
                     mWeekViewType = TYPE_WEEK_VIEW;
                     mWeekView.setNumberOfVisibleDays(7);
 
-                    // Lets change some dimensions to best fit the view.
-                   // mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics()));
-                    //mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
-                    //mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
+                    //Lets change some dimensions to best fit the view.
+                    mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics()));
+                    mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
+                    mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
                 }
                 return true;
         }
@@ -254,16 +260,13 @@ private     List<Evenement> evenementList ;
             Toast.makeText(this,"this is the dashboard activity",Toast.LENGTH_LONG).show();
          openCalendrierActivity();
         }
-        //affichage des alertes
-        if (id==R.id.alerte){
-            Toast.makeText(this,"this is the alert  activity",Toast.LENGTH_LONG).show();
 
-        }
+
         return false ;
 
     }
     // la methode daffichage du  menu flotan
-    public void fab_nav_bclik(){
+  /*  public void fab_nav_bclik(){
         if (is_clicked){
             fab_nav.startAnimation(ani_close);
             fab_nav.startAnimation(ani_rotateanticlockwise);
@@ -285,7 +288,7 @@ private     List<Evenement> evenementList ;
             fab_aujourdhui.isClickable();
             is_clicked = true;
         }
-    }
+    }*/
 
     //open calendrier activiti
     public void openCalendrierActivity(){
@@ -426,7 +429,7 @@ private     List<Evenement> evenementList ;
             }
 
             @Override
-            public String interpretTime(int hour) {
+            public String interpretTime(int hour,int minuts) {
                 return hour > 11 ? (hour - 12) + " PM" : (hour == 0 ? "12 AM" : hour + " AM");
             }
         });

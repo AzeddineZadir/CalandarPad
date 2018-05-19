@@ -73,6 +73,10 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_priorite.setAdapter(arrayAdapter);
 
+        // action bar
+        getSupportActionBar().setTitle("Ajoutez un calendrier");
+
+
 
         viewSetInfo();
     }
@@ -115,6 +119,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
             colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                 @Override
                 public void onChooseColor(int position, int color) {
+
                     b_couleur.setBackgroundColor(color);
                 }
 
