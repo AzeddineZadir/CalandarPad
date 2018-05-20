@@ -76,7 +76,7 @@ public class TimerService extends Service {
 
 
                     List<Evenement> Event=DATABASE.evenementDao().selectCurrentEvenement(currentTime);
-                    Log.d("Test","Déclenchement!!!!!!!! "+currentTime);
+                  //  Log.d("Test","Déclenchement!!!!!!!! "+currentTime);
 
                     displayNotification(Event);
 
@@ -106,10 +106,10 @@ public class TimerService extends Service {
             PendingIntent homePendingIntent=PendingIntent.getActivity(this,0,homeIntent,PendingIntent.FLAG_ONE_SHOT);
 
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this,CHANNEL_ID);
-            mBuilder.setSmallIcon(R.drawable.ic_event);
+            mBuilder.setSmallIcon(R.drawable.ic_eventnotification);
             mBuilder.setContentTitle(event.get(i).getLibele());
             mBuilder.setContentText(event.get(i).getDescription());
-            mBuilder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+            mBuilder.setPriority(NotificationCompat.PRIORITY_HIGH);
             mBuilder.setAutoCancel(true);
             mBuilder.setContentIntent(homePendingIntent);
 

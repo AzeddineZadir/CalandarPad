@@ -45,7 +45,7 @@ import static com.example.silver_desk.interfactest.database.AppDatabase.getInsta
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener ,
         WeekView.EventClickListener, MonthLoader.MonthChangeListener,
-        WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener{
+        WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, WeekView.EmptyViewClickListener {
     private DrawerLayout drawerLayout ;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private  FloatingActionButton fab_nav,fab_home,fab_calendrier,fab_aujourdhui;
@@ -147,6 +147,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         // Set long press listener for events.
         mWeekView.setEventLongPressListener(this);
+
+        mWeekView.setEmptyViewClickListener(this);
+        mWeekView.setEmptyViewLongPressListener(this);
 
 
         //start Service
@@ -327,8 +330,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void onEmptyViewLongPress(Calendar time) {
-
+    public void onEmptyViewLongPress(Calendar date) {
+        Intent   intent = new Intent(this,AjoutEvenmentActivity.class);
+        intent.putExtra("date",date.getTimeInMillis());
+        startActivity(intent);
     }
 
     @Override
@@ -454,4 +459,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             return false;
     }
 
+    @Override
+    public void onEmptyViewClicked(Calendar date) {
+  /* Intent   intent = new Intent(this,AjoutEvenmentActivity.class);
+    intent.putExtra("date",date.getTimeInMillis());
+    startActivity(intent);*/
+
+    }
 }

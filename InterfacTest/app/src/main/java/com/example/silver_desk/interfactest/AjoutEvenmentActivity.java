@@ -99,7 +99,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         listecal = DATABASE.calendrierDao().loadAllCalendrierTitels();
         arrayAdaptercal = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, listecal);
         spinner_calendrier_parent.setAdapter(arrayAdaptercal);
-        if (verifyIncomingIntent()==false){
+        if (verifyIncomingIntentIdEvenment()==false){
             // masquer le button supprimer
             fab_delet_event.setVisibility(View.INVISIBLE);
 
@@ -135,7 +135,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
             boolean modification;
             int id_cal = DATABASE.calendrierDao().getIdCalendrierByTitel(spinner_calendrier_parent.getSelectedItem().toString());
 
-            if (verifyIncomingIntent()) {
+            if (verifyIncomingIntentIdEvenment()&&verifyIncomingIntentDate()) {
                 modification = true;
             } else {
                 modification = false;
@@ -158,7 +158,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         //supprimer un evenment
         if (view.getId() == R.id.fab_delet_ev) {
 
-            if (verifyIncomingIntent()) {
+            if (verifyIncomingIntentDate()) {
                 final Evenement evenement = DATABASE.evenementDao().selectEvenmentById(getincomingInten_idevenment());
                 AlertDialog.Builder deleteDailog = new AlertDialog.Builder(this);
                 deleteDailog.setTitle("supprimer un evenmeent ");
@@ -193,17 +193,17 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
     }
 
-    private long generatAlertTime() {
+    private long generatAlertTime( Calendar heure_deb ,Spinner spinner) {
 
         Calendar timealerte = Calendar.getInstance();
-        long time;
-        timealerte.set(Calendar.YEAR, date.get(Calendar.YEAR));
-        timealerte.set(Calendar.MONTH, date.get(Calendar.MONTH));
-        timealerte.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));
-        timealerte.set(Calendar.HOUR_OF_DAY, date.get(Calendar.HOUR_OF_DAY));
-        timealerte.set(Calendar.MINUTE, date.get(Calendar.MINUTE));
-        time = timealerte.getTimeInMillis();
-        return time;
+        long time=0;
+        long delai = getdelaiFromSpiner(spinner);
+        if(delai==-1){
+            time=0 ;
+        }else{
+        timealerte.setTimeInMillis(heure_deb.getTimeInMillis()-delai);
+        time = timealerte.getTimeInMillis();}
+        return  time ;
     }
 
 
@@ -224,14 +224,14 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
             heure_deb.set(Calendar.MINUTE, minut);
             heure_d = heure_deb.get(Calendar.HOUR_OF_DAY);
             minute_d = heure_deb.get(Calendar.MINUTE);
-            b_debut.setText("de " + heure_d + ":" + minute_d);
-            //b_debut.setBackgroundColor(getResources().getColor(R.color.color14));
+            b_debut.setText( heure_d + ":" + minute_d);
+           // b_debut.setBackgroundColor(getResources().getColor(R.color.cardview_light_background));
         } else if (flag == FLAG_END_TIME) {
             heure_fin.set(Calendar.HOUR_OF_DAY, hour);
             heure_fin.set(Calendar.MINUTE, minut);
             heure_f = heure_fin.get(Calendar.HOUR_OF_DAY);
             minute_f = heure_fin.get(Calendar.MINUTE);
-            b_fin.setText("a " + heure_f + ":" + minute_f);
+            b_fin.setText( heure_f + ":" + minute_f);
         }
     }
 
@@ -247,8 +247,15 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
     }
 
     // pour verifier si ond dois initialiser les champe ou non (modification)
-    private boolean verifyIncomingIntent() {
+    private boolean verifyIncomingIntentIdEvenment() {
         if (getincomingInten_idevenment() != 0)
+            return true;
+        else
+            return false;
+    }
+
+    private boolean verifyIncomingIntentDate() {
+        if (getincomingInten_date() != 0)
             return true;
         else
             return false;
@@ -264,6 +271,16 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         return 0;
     }
 
+    // verifier et recuperer date pour initialiset le date de levenment
+    private long getincomingInten_date() {
+        long date;
+        if (getIntent().hasExtra("date")) {
+             date = getIntent().getLongExtra("date",0);
+
+            return date;
+        }
+        return 0;
+    }
     // recuperer la valeure du delai apritire de litem selectioner dans le spinner
     public long getdelaiFromSpiner(Spinner spinner) {
         long d = 0;
@@ -284,7 +301,32 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
     // remplire les informations de levenment sur la vue apré click
     public void viewSetInfo() {
-        if (verifyIncomingIntent()) {
+        if (verifyIncomingIntentDate()){
+            Calendar mdate= Calendar.getInstance();
+            mdate.setTimeInMillis(getincomingInten_date());
+
+            long uneheure=3600000;
+            // intialisation du temps
+            heure_deb.setTimeInMillis(mdate.getTimeInMillis());
+            heure_fin.setTimeInMillis(mdate.getTimeInMillis()+uneheure);
+            // init du jour
+            date.setTimeInMillis(mdate.getTimeInMillis());
+
+            // afficher lheure sur les button
+            b_debut.setText(genratTitelWithTime(heure_deb));
+            b_fin.setText(genratTitelWithTime(heure_fin));
+
+            // afficher la dat-e sur le button
+            b_joure.setText(genratTitelWithDate(date));
+
+
+
+        }
+
+
+
+
+        if (verifyIncomingIntentIdEvenment()) {
             Evenement evenement = DATABASE.evenementDao().selectEvenmentById(getincomingInten_idevenment());
 
             t_libele.setText(evenement.getLibele().toString());
@@ -414,7 +456,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         // id calendrier parent
         int id_calendrier = id_cal;
         // heure alerte
-        long heure_alerte = generatAlertTime();
+        long heure_alerte = generatAlertTime(heure_deb,spinner_delai);
         // delai alerte
         long delai = getdelaiFromSpiner(spinner_delai);
 
@@ -453,7 +495,8 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
         }
         //heure_alerte
-        evenement.setHeure_alerte(generatAlertTime() - getdelaiFromSpiner(spinner_delai));
+        evenement.setHeure_alerte(generatAlertTime(heure_deb,spinner_delai));
+        Log.d("dbg", "inserEvenment:" +evenement.getHeure_alerte());
         // delai alerte
         evenement.setDelai_alerte(getdelaiFromSpiner(spinner_delai));
         //lisertion dans la base
@@ -467,7 +510,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
         int h_d = h.get(Calendar.HOUR_OF_DAY);
         int m_d = h.get(Calendar.MINUTE);
-        titel = "de " + h_d + ":" + m_d;
+        titel = h_d + ":" + m_d;
 
         return titel;
     }
@@ -478,10 +521,31 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         int D, M, Y;
         D = h.get(Calendar.DAY_OF_MONTH);
         M = h.get(Calendar.MONTH);
+        M=M+1 ;
         Y = h.get(Calendar.YEAR);
 
-        titel = "le " + D + "/" + M + "/" + Y;
+       titel = "" + D + "/" + M + "/" + Y;
+       // titel=formatDate(D,M,Y);
         return titel;
     }
+
+
+    public String formatDate(int j,int m ,int y){
+        String date="";
+        String js="",ms="";
+        if (j<10){
+         js="0"+j ;
+        }
+        if (m<10){
+          ms="0"+m;
+
+        }
+        date=""+js+"/"+ms+"/"+y;
+
+        return  date ;
+    }
+
+
+
 }
 
