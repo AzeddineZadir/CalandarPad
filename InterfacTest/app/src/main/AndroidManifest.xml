@@ -20,7 +20,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".CalendrierActivity" />
-        <activity android:name=".EvenementActivity" />
         <activity android:name=".AjoutEvenmentActivity" />
         
         <service android:name=".service.TimerService"

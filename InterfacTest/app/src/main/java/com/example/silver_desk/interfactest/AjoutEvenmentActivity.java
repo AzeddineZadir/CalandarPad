@@ -161,21 +161,20 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
             if (verifyIncomingIntentDate()) {
                 final Evenement evenement = DATABASE.evenementDao().selectEvenmentById(getincomingInten_idevenment());
                 AlertDialog.Builder deleteDailog = new AlertDialog.Builder(this);
-                deleteDailog.setTitle("supprimer un evenmeent ");
-                deleteDailog.setMessage("voulez vous supprimer l'evenment intitulé : " + evenement.getLibele());
+                deleteDailog.setTitle("supprimer un événement ");
+                deleteDailog.setMessage("Voulez-vous supprimer l'événment intitulé : " + evenement.getLibele());
                 // positive button(confirm and delet)
-                deleteDailog.setPositiveButton("oui", new DialogInterface.OnClickListener() {
+                deleteDailog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         DATABASE.evenementDao().deletEvenment(evenement);
-                        Log.d("dbg", "onClick: event deleted ");
                         dialogInterface.dismiss();
                         backToHome();
                     }
                 });
 
                 // negative button  (dont delet)
-                deleteDailog.setNegativeButton("non", new DialogInterface.OnClickListener() {
+                deleteDailog.setNegativeButton("Non", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
@@ -225,7 +224,6 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
             heure_d = heure_deb.get(Calendar.HOUR_OF_DAY);
             minute_d = heure_deb.get(Calendar.MINUTE);
             b_debut.setText( heure_d + ":" + minute_d);
-           // b_debut.setBackgroundColor(getResources().getColor(R.color.cardview_light_background));
         } else if (flag == FLAG_END_TIME) {
             heure_fin.set(Calendar.HOUR_OF_DAY, hour);
             heure_fin.set(Calendar.MINUTE, minut);
@@ -369,7 +367,6 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         for (int i = 0; i < stringList.size(); i++) {
             // si un element de la liste correspond a la valeure
             // return his position
-            //   Log.d("dbg if teste ", "condition :  "+stringList.get(i)+ "="+valu);
             if (stringList.get(i).equals(valu)) {
                 position = i;
 
@@ -387,7 +384,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         long temp = (delai / 300000) + 1;
         switch ((int) temp) {
             case 0:
-                item = "pas dalerte";
+                item = "pas d'alerte";
                 break;
 
             case 1:
@@ -463,7 +460,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         Evenement evenementModifer = new Evenement(id, libele, jour, h_d, h_f, lieu, description, recurrence, alerte, id_calendrier, heure_alerte, delai);
 
         DATABASE.evenementDao().upDateEvenment(evenementModifer);
-        Toast.makeText(this, "modification avec succse", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Modification avec succès", Toast.LENGTH_SHORT).show();
 
 
     }
@@ -478,14 +475,11 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         evenement.setCalendrierId(id_cal);
         // le joure
         evenement.setJour(date.getTimeInMillis());
-        Log.d("dbg date ", date.getTime().toString());
         // heure debut;
         evenement.setHeure_debut(heure_deb.getTimeInMillis());
-        Log.d("dbg date ", heure_deb.getTime().toString());
 
         // heure fin
         evenement.setHeure_fin(heure_fin.getTimeInMillis());
-        Log.d("dbg date ", heure_fin.getTime().toString());
 
         // alerte
         if (getdelaiFromSpiner(spinner_delai) == -1) {
@@ -496,12 +490,11 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         }
         //heure_alerte
         evenement.setHeure_alerte(generatAlertTime(heure_deb,spinner_delai));
-        Log.d("dbg", "inserEvenment:" +evenement.getHeure_alerte());
         // delai alerte
         evenement.setDelai_alerte(getdelaiFromSpiner(spinner_delai));
-        //lisertion dans la base
+        //insertion dans la base
         DATABASE.evenementDao().insert(evenement);
-        Toast.makeText(this, "ajout avec succse", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Ajout avec succès", Toast.LENGTH_SHORT).show();
     }
 
     // generer un titre avec heur_debu et heure fin
@@ -525,7 +518,6 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         Y = h.get(Calendar.YEAR);
 
        titel = "" + D + "/" + M + "/" + Y;
-       // titel=formatDate(D,M,Y);
         return titel;
     }
 

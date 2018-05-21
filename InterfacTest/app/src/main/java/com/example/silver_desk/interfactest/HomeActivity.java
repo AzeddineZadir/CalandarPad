@@ -194,7 +194,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             return true ;
         }
         int id = item.getItemId();
-       // setupDateTimeInterpreter(id == R.id.action_week_view);
         switch (id){
             case R.id.action_today:
 
@@ -246,7 +245,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 return true;
         }
 
-       // return super.onOptionsItemSelected(item);
         return super.onOptionsItemSelected(item);
     }
 
@@ -255,12 +253,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         //affichage du dashboard
         if (id==R.id.db){
-            Toast.makeText(this,"this is the dashboard activity",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"This is the dashboard activity",Toast.LENGTH_LONG).show();
             refreshHome();
         }
         //affichage du calendrier
         if (id==R.id.calendrier){
-            Toast.makeText(this,"this is the dashboard activity",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"This is the dashboard activity",Toast.LENGTH_LONG).show();
          openCalendrierActivity();
         }
 
@@ -293,7 +291,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }*/
 
-    //open calendrier activiti
+    //open calendrier activity
     public void openCalendrierActivity(){
         Toast.makeText(HomeActivity.this,"calendrier",Toast.LENGTH_LONG).show();
         Intent intent_calendrier = new Intent(HomeActivity.this,CalendrierActivity.class);
@@ -363,7 +361,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         String titre = evenement.getLibele().toString().toUpperCase();
         String Titel = " "+titre+"\n"+"de ;"+h_d.get(Calendar.HOUR_OF_DAY)+":"+h_d.get(Calendar.MINUTE)+"\n a "+h_f.get(Calendar.HOUR_OF_DAY)+":"+h_f.get(Calendar.MINUTE);
         return evenement.getLibele().toUpperCase() ;
-                //String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH)+1, time.get(Calendar.DAY_OF_MONTH));
     }
     private List<WeekViewEvent> myEventToWeekEvents (List<Evenement> evenementList,int newYear, int newMonth){
         List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();

@@ -94,9 +94,6 @@ public class TimerService extends Service {
 
         for (int i=0;i <event.size();i++){
 
-           /* Log.d("Description","Description :"+Event.get(0).getDescription());
-            //Toast.makeText(getApplicationContext(), "Descritpion :" + listEvent.get(0).getDescription(), Toast.LENGTH_LONG).show();*/
-
            //Create channel if Android >= 8.0
             createNotificationChannel();
 

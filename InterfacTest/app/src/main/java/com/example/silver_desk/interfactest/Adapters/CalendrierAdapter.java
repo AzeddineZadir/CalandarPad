@@ -50,7 +50,7 @@ public class CalendrierAdapter extends RecyclerView.Adapter<CalendrierAdapter.Vi
         if(position==0){
             holder.imb_setting.setVisibility(View.INVISIBLE);
             int i ;
-       //     holder.cardView.setBackgroundColor();
+
         }
         final Calendrier calendrier = calendrierList.get(position);
         holder.tv_titre.setText(calendrier.getTitre());

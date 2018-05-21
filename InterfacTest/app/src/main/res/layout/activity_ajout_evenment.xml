@@ -24,7 +24,7 @@
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="490dp"
             android:orientation="vertical">
 
             <TextView
@@ -34,7 +34,7 @@
 
                 android:layout_gravity="center_horizontal|top"
                 android:layout_marginTop="11dp"
-                android:text="ajout evenment"
+                android:text="AJOUT EVENEMENT"
                 android:textAlignment="center"
                 android:textSize="18sp" />
 
@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:text="joure"
+                    android:text="jour"
                     android:textAlignment="center" />
 
                 <Button
@@ -78,9 +78,9 @@
                     android:id="@+id/t_libele"
                     android:layout_width="81dp"
                     android:layout_height="wrap_content"
-                    android:text="libele :"
-                    android:textSize="18sp"
-                    android:layout_marginLeft="5dp"/>
+                    android:layout_marginLeft="5dp"
+                    android:text="Libelé :"
+                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/e_libele"
@@ -100,7 +100,7 @@
                     android:layout_width="205dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="dans :"
+                    android:text="Dans :"
                     android:textSize="18sp" />
 
                 <Spinner
@@ -119,9 +119,9 @@
                     android:id="@+id/t_lieu"
                     android:layout_width="81dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:text="@string/lieu"
-                    android:textSize="18sp"
-                    android:layout_marginLeft="5dp"/>
+                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/e_lieu"
@@ -142,9 +142,9 @@
                     android:id="@+id/t_recurrence"
                     android:layout_width="227dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:text="@string/recurrence"
-                    android:textSize="18sp"
-                    android:layout_marginLeft="5dp"/>
+                    android:textSize="18sp" />
 
                 <CheckBox
                     android:id="@+id/cb_recurrence"
@@ -164,9 +164,9 @@
                     android:id="@+id/t_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:text="@string/description"
-                    android:textSize="18sp"
-                    android:layout_marginLeft="5dp"/>
+                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/e_description"
