@@ -97,7 +97,7 @@ public class TimerService extends Service {
 
         for (int i=0;i <event.size();i++){
             //Son de la notification
-            Uri soundURI= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            Uri soundURI= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
            //Create channel if Android >= 8.0
             createNotificationChannel();
 
