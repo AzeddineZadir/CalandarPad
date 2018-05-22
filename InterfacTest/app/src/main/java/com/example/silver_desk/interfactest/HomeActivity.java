@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -61,6 +62,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private int mWeekViewType = TYPE_THREE_DAY_VIEW;
     private WeekView mWeekView;
     int compteur_onmonth= 0;
+    Toolbar toolbar ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +73,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         actionBarDrawerToggle= new ActionBarDrawerToggle(this ,drawerLayout,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         NavigationView navigationView =(NavigationView)findViewById(R.id.nav);
         navigationView.setNavigationItemSelectedListener(this);
 
         // action bar
-            getSupportActionBar().setTitle("Vue globale");
+         getSupportActionBar().setTitle("Vue globale");
        // le menus flotan
         fab_nav=(FloatingActionButton)findViewById(R.id.fab_nav);
         fab_home=(FloatingActionButton)findViewById(R.id.fab_home);
@@ -149,6 +152,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         mWeekView.setEventLongPressListener(this);
 
         mWeekView.setEmptyViewClickListener(this);
+
         mWeekView.setEmptyViewLongPressListener(this);
 
 

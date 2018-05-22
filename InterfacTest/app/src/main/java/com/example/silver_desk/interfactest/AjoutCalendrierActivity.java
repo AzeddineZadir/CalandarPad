@@ -8,6 +8,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -45,6 +47,11 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajout_calendrier);
+        // action bar
+
+
+
+
         spinner_priorite = (Spinner)findViewById(R.id.s_prio);
         e_titre=(EditText)findViewById(R.id.e_titre);
         e_description=(EditText)findViewById(R.id.et_descritpion);
@@ -78,6 +85,27 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
 
         viewSetInfo();
     }
+// action bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu  menu) {
+        getMenuInflater().inflate(R.menu.nav_lmenu,menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+   // action bar  onclik
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.close_action :
+                backCalendrierActivity();
+            return  true ;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     //traitment des chek box pour  l'enregistremant dans  la base
     public int c_clicked (CheckBox checkBox){
         if (checkBox.isChecked())

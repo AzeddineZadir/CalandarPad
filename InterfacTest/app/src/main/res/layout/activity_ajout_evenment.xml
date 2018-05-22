@@ -208,13 +208,14 @@
                 android:layout_below="@+id/linearLayout2">
 
                 <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab_delet_ev"
+                    android:id="@+id/fab_delet_event"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
+                    android:layout_alignParentBottom="true"
                     android:layout_alignParentStart="true"
-                    android:layout_alignTop="@+id/fab_save_event"
-                    android:layout_marginStart="14dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="13dp"
                     android:clickable="true"
                     app:backgroundTint="@color/accent"
                     app:srcCompat="@drawable/ic_delete" />
@@ -223,9 +224,9 @@
                     android:id="@+id/fab_save_event"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
 
-                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignTop="@+id/fab_delet_event"
                     android:layout_marginEnd="14dp"
                     android:clickable="true"
                     app:backgroundTint="@color/accent"
