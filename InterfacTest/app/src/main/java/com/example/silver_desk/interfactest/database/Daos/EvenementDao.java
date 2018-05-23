@@ -72,7 +72,7 @@ public interface EvenementDao {
 
 
     //Requête selection pour le service
-    @Query("SELECT * FROM evenement_table WHERE heure_alerte >=:currentTime AND heure_debut<=30000+:currentTime ")
+    @Query("SELECT * FROM evenement_table WHERE heure_alerte >=:currentTime AND heure_alerte<=30000+:currentTime ")
     List<Evenement> selectCurrentEvenement(long currentTime);
 
 

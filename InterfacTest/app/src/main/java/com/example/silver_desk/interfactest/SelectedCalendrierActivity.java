@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.example.silver_desk.interfactest.Adapters.EvenmentAdapter;
 import com.example.silver_desk.interfactest.database.Evenement;
 
 import java.util.List;
@@ -28,12 +27,7 @@ public class SelectedCalendrierActivity extends AppCompatActivity implements Vie
         //getincomingInten_idcal
         //la liste des evenment par raport au calendrier selectioner
         List<Evenement> evenementList=DATABASE.evenementDao().loadEvenmentByIdCalendrier(getincomingInten_idcal());
-        //recycler view
-        recyclerView=(RecyclerView) findViewById(R.id.recyclerview_evenment);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        adapter=new EvenmentAdapter( evenementList,getApplicationContext());
-        recyclerView.setAdapter(adapter);
+
         // fab_add_event
         fab_add_event=(FloatingActionButton)findViewById(R.id.fab_add_event);
         fab_add_event.setOnClickListener(this);

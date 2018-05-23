@@ -25,7 +25,6 @@ public class CalendrierActivity extends AppCompatActivity  {
 
         // ajout dun evenment pour le teste
 
-       //CalendrierActivity.DATABASE.evenementDao().insert(evt);
 
 
        //l affichage de la liste des calendrier sur un frag

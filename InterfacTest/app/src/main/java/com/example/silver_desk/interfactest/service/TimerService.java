@@ -8,9 +8,12 @@ import android.app.Service;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
@@ -93,10 +96,8 @@ public class TimerService extends Service {
     private void displayNotification(List<Evenement> event){
 
         for (int i=0;i <event.size();i++){
-
-           /* Log.d("Description","Description :"+Event.get(0).getDescription());
-            //Toast.makeText(getApplicationContext(), "Descritpion :" + listEvent.get(0).getDescription(), Toast.LENGTH_LONG).show();*/
-
+            //Son de la notification
+            Uri soundURI= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
            //Create channel if Android >= 8.0
             createNotificationChannel();
 
@@ -109,6 +110,7 @@ public class TimerService extends Service {
             mBuilder.setSmallIcon(R.drawable.ic_eventnotification);
             mBuilder.setContentTitle(event.get(i).getLibele());
             mBuilder.setContentText(event.get(i).getDescription());
+            mBuilder.setSound(soundURI);
             mBuilder.setPriority(NotificationCompat.PRIORITY_HIGH);
             mBuilder.setAutoCancel(true);
             mBuilder.setContentIntent(homePendingIntent);

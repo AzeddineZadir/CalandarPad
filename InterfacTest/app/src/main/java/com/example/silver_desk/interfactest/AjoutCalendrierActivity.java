@@ -8,6 +8,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,10 +18,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.silver_desk.interfactest.database.Alerte;
 import com.example.silver_desk.interfactest.database.Calendrier;
 import com.example.silver_desk.interfactest.database.Evenement;
-import com.example.silver_desk.interfactest.fragment.ListeCalendrierFragment;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -40,13 +40,18 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
     FloatingActionButton fab_add_cal ,fab_delete_cal ;
     ArrayAdapter<CharSequence> arrayAdapter ;
     Evenement event;
-    Alerte alerte;
+
     Time td,tf;
     Date date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajout_calendrier);
+        // action bar
+
+
+
+
         spinner_priorite = (Spinner)findViewById(R.id.s_prio);
         e_titre=(EditText)findViewById(R.id.e_titre);
         e_description=(EditText)findViewById(R.id.et_descritpion);
@@ -66,7 +71,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
 
         b_couleur.setOnClickListener(this);
         // une couleure pardefaut
-        //   b_couleur.setBackgroundColor();
+
 
         // configuration du spinner
         arrayAdapter=ArrayAdapter.createFromResource(this,R.array.priorite,android.R.layout.simple_spinner_item);
@@ -80,6 +85,27 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
 
         viewSetInfo();
     }
+// action bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu  menu) {
+        getMenuInflater().inflate(R.menu.nav_lmenu,menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+   // action bar  onclik
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.close_action :
+                backCalendrierActivity();
+            return  true ;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     //traitment des chek box pour  l'enregistremant dans  la base
     public int c_clicked (CheckBox checkBox){
         if (checkBox.isChecked())
@@ -106,8 +132,8 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
 
             }
 
-            Toast.makeText(view.getContext()," ajout",Toast.LENGTH_LONG).show();
-            Toast.makeText(this,"calendrier",Toast.LENGTH_LONG).show();
+            Toast.makeText(view.getContext(),"Ajout",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Calendrier",Toast.LENGTH_LONG).show();
             Intent intent_calendrier = new Intent(this,CalendrierActivity.class);
             startActivity(intent_calendrier);
 
@@ -135,14 +161,13 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
             if (verifyIncomingIntent()) {
                 final Calendrier calendrier = DATABASE.calendrierDao().selecCalendrierById(getincomingInten_idCalendrier());
                 final Calendrier calendrierDefault=DATABASE.calendrierDao().selecCalendrierById(1);
-                Log.d("dbg", "calendrier default titre : "+calendrierDefault.getTitre());
 
                 AlertDialog.Builder deleteDailog = new AlertDialog.Builder(this);
                 deleteDailog.setIcon(R.drawable.ic_event_black_24dp);
-                deleteDailog.setTitle("supprimer un calendrier");
-                deleteDailog.setMessage("voulez vous supprimer le calendrier intitulé : " + calendrier.getTitre());
+                deleteDailog.setTitle("Suppression du calendrier");
+                deleteDailog.setMessage("Voulez-vous supprimer le calendrier intitulé : " + calendrier.getTitre()+" ?");
                 // positive button(confirm and delet) s supprimer le calendrier et les evenments de ce calendrier
-                deleteDailog.setPositiveButton("oui", new DialogInterface.OnClickListener() {
+                deleteDailog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // si click sur oui on va lui demander si il veux garder les evenment de ce calendrier  ou les suppprimer avec le calendrer
@@ -153,7 +178,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
                 });
                 // supprimer uniquement le calendrier et garder les autres evenments pour les mettre dans le calendrier par defaut
 
-                deleteDailog.setNeutralButton("transférer les evenment", new DialogInterface.OnClickListener() {
+                deleteDailog.setNeutralButton("Transférer les evénéments", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         transfertEvenment(calendrier,calendrierDefault);
@@ -164,7 +189,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
                     }
                 });
                 // negative button  (dont delet)
-                deleteDailog.setNegativeButton("non", new DialogInterface.OnClickListener() {
+                deleteDailog.setNegativeButton("Non", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
@@ -244,7 +269,6 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
         for (int i=0 ;i < stringList.size();i++){
             // si un element de la liste correspond a la valeure
             // return his position
-            Log.d("dbg if teste ", "condition :  "+stringList.get(i)+ "="+valu);
             if (stringList.get(i).equals(valu)){
                 position=i;
 
@@ -268,7 +292,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
         calendrier.setDescription(e_description.getText().toString());
         calendrier.setCouleur(b_couleurBackground.getColor());
         DATABASE.calendrierDao().insert(calendrier);
-        Toast.makeText(this, "ajout avec succse", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Ajout avec succès", Toast.LENGTH_SHORT).show();
     }
     // modifier un calendrier
     private void updatCalendrier (int id_cal){
@@ -285,7 +309,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
 
         Calendrier calendrier= new Calendrier(id_cal,titer,visibilite,activite,couleur,priorite,description) ;
        DATABASE.calendrierDao().upDateCalendrier(calendrier);
-        Toast.makeText(this, "modification avec succse", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Modification avec succès", Toast.LENGTH_SHORT).show();
 
 
     }
@@ -307,7 +331,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
             int id_newParentCal= calendrier2.getId();
             // id de lencien calendrier parent
             int id_oldParentCal=calendrier1.getId();
-            // odification
+            // modification
             DATABASE.evenementDao().updateIdCalForEvenment(id_evenment,id_newParentCal);
 
         }

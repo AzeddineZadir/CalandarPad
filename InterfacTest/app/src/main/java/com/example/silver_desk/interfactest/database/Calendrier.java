@@ -109,8 +109,8 @@ this.titre=titre;
         return priorite;
     }
 
-    public void setPriorite(String priorité) {
-        this.priorite = priorité;
+    public void setPriorite(String priorite) {
+        this.priorite = priorite;
     }
 
     public String getDescription() {

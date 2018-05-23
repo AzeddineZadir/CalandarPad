@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -61,6 +62,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private int mWeekViewType = TYPE_THREE_DAY_VIEW;
     private WeekView mWeekView;
     int compteur_onmonth= 0;
+    Toolbar toolbar ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +73,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         actionBarDrawerToggle= new ActionBarDrawerToggle(this ,drawerLayout,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         NavigationView navigationView =(NavigationView)findViewById(R.id.nav);
         navigationView.setNavigationItemSelectedListener(this);
 
         // action bar
-            getSupportActionBar().setTitle("Vue globale");
+         getSupportActionBar().setTitle("Vue globale");
        // le menus flotan
         fab_nav=(FloatingActionButton)findViewById(R.id.fab_nav);
         fab_home=(FloatingActionButton)findViewById(R.id.fab_home);
@@ -149,6 +152,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         mWeekView.setEventLongPressListener(this);
 
         mWeekView.setEmptyViewClickListener(this);
+
         mWeekView.setEmptyViewLongPressListener(this);
 
 
@@ -194,7 +198,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             return true ;
         }
         int id = item.getItemId();
-       // setupDateTimeInterpreter(id == R.id.action_week_view);
         switch (id){
             case R.id.action_today:
 
@@ -246,7 +249,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 return true;
         }
 
-       // return super.onOptionsItemSelected(item);
         return super.onOptionsItemSelected(item);
     }
 
@@ -255,12 +257,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         //affichage du dashboard
         if (id==R.id.db){
-            Toast.makeText(this,"this is the dashboard activity",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"This is the dashboard activity",Toast.LENGTH_LONG).show();
             refreshHome();
         }
         //affichage du calendrier
         if (id==R.id.calendrier){
-            Toast.makeText(this,"this is the dashboard activity",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"This is the dashboard activity",Toast.LENGTH_LONG).show();
          openCalendrierActivity();
         }
 
@@ -293,7 +295,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }*/
 
-    //open calendrier activiti
+    //open calendrier activity
     public void openCalendrierActivity(){
         Toast.makeText(HomeActivity.this,"calendrier",Toast.LENGTH_LONG).show();
         Intent intent_calendrier = new Intent(HomeActivity.this,CalendrierActivity.class);
@@ -363,7 +365,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         String titre = evenement.getLibele().toString().toUpperCase();
         String Titel = " "+titre+"\n"+"de ;"+h_d.get(Calendar.HOUR_OF_DAY)+":"+h_d.get(Calendar.MINUTE)+"\n a "+h_f.get(Calendar.HOUR_OF_DAY)+":"+h_f.get(Calendar.MINUTE);
         return evenement.getLibele().toUpperCase() ;
-                //String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH)+1, time.get(Calendar.DAY_OF_MONTH));
     }
     private List<WeekViewEvent> myEventToWeekEvents (List<Evenement> evenementList,int newYear, int newMonth){
         List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
