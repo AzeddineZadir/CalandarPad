@@ -122,18 +122,20 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
-
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id){
             case R.id.close_action :
-             backToHome();
+                backToHome();
                 return  true ;
         }
-
-
-        return super.onContextItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
+
+
+
+
+
 
     @Override
     public void onClick(View view) {
