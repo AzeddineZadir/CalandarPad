@@ -6,10 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer"
+
     tools:context="com.example.silver_desk.interfactest.HomeActivity">
-<android.support.design.widget.CoordinatorLayout
+
+    <android.support.design.widget.CoordinatorLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
+
 
     <com.alamkanak.weekview.WeekView
         android:id="@+id/weekView"
@@ -26,7 +29,9 @@
         app:headerRowBackgroundColor="#ffefefef"
         app:dayBackgroundColor="#05000000"
         app:todayBackgroundColor="#1848adff"
-        app:headerColumnBackground="#ffffffff"/>
+        app:headerColumnBackground="#ffffffff"
+
+        />
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"

@@ -9,7 +9,10 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -55,6 +58,8 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajout_evenment);
+        // toole bar
+
         // les Button
         b_debut = (Button) findViewById(R.id.b_debut);
         b_debut.setOnClickListener(this);
@@ -74,7 +79,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         fab_save_event.setOnClickListener(this);
 
         //fab delete event
-        fab_delet_event = (FloatingActionButton) findViewById(R.id.fab_delet_ev);
+        fab_delet_event = (FloatingActionButton) findViewById(R.id.fab_delet_event);
         fab_delet_event.setOnClickListener(this);
 
         //les check box
@@ -109,6 +114,28 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.nav_lmenu,menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.close_action :
+                backToHome();
+                return  true ;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+
+
 
     @Override
     public void onClick(View view) {
@@ -135,7 +162,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
             boolean modification;
             int id_cal = DATABASE.calendrierDao().getIdCalendrierByTitel(spinner_calendrier_parent.getSelectedItem().toString());
 
-            if (verifyIncomingIntentIdEvenment()&&verifyIncomingIntentDate()) {
+            if (verifyIncomingIntentIdEvenment()) {
                 modification = true;
             } else {
                 modification = false;
@@ -156,9 +183,9 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         }
 
         //supprimer un evenment
-        if (view.getId() == R.id.fab_delet_ev) {
+        if (view.getId() == R.id.fab_delet_event) {
 
-            if (verifyIncomingIntentDate()) {
+            if (verifyIncomingIntentIdEvenment()) {
                 final Evenement evenement = DATABASE.evenementDao().selectEvenmentById(getincomingInten_idevenment());
                 AlertDialog.Builder deleteDailog = new AlertDialog.Builder(this);
                 deleteDailog.setTitle(getString(R.string.deleteTitleDialogEvent));
@@ -178,7 +205,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
-                        backToHome();
+
                     }
                 });
 
@@ -298,6 +325,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
     // remplire les informations de levenment sur la vue apré click
     public void viewSetInfo() {
+        // la vue doit etre formater suite a un onlong click emty view
         if (verifyIncomingIntentDate()){
             Calendar mdate= Calendar.getInstance();
             mdate.setTimeInMillis(getincomingInten_date());
@@ -316,12 +344,14 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
             // afficher la dat-e sur le button
             b_joure.setText(genratTitelWithDate(date));
 
+            //
 
 
         }
 
 
 
+        // la vue doit etre formater suit au click sur un evenment
 
         if (verifyIncomingIntentIdEvenment()) {
             Evenement evenement = DATABASE.evenementDao().selectEvenmentById(getincomingInten_idevenment());
@@ -399,7 +429,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
                 break;
 
             case 4:
-                item = "15 m ";
+                item = "15 m";
                 break;
 
             default:
