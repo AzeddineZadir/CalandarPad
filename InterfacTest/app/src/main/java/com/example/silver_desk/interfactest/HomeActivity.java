@@ -79,11 +79,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         // action bar
-<<<<<<< HEAD
             getSupportActionBar().setTitle(getString(R.string.globalView));
-=======
-         getSupportActionBar().setTitle("Vue globale");
->>>>>>> 16da6ef8e0ee3823b688bb376528382e5f0713c3
+
        // le menus flotan
         fab_nav=(FloatingActionButton)findViewById(R.id.fab_nav);
         fab_home=(FloatingActionButton)findViewById(R.id.fab_home);
