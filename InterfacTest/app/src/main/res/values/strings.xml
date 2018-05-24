@@ -5,7 +5,8 @@
     <string name="Bienvenus">Bienvenue</string>
     <string name="open">open</string>
     <string name="close">close</string>
-    <string name="title_activity_ajout__calendrier">Ajout_Calendrier</string>
+    <string name="title_activity_ajout__calendrier">Ajout Calendrier</string>
+
 
     <string-array name="priorite">
         <item>faible</item>
@@ -31,4 +32,27 @@
     <string name="action_day_view">Jour</string>
     <string name="action_three_day_view">3 Jours</string>
     <string name="action_week_view">Semaine</string>
+    <string name="titre">  Titre</string>
+    <string name="activite">  Activité</string>
+    <string name="visibilite">  Visibilité</string>
+    <string name="priorite">  Priorité</string>
+    <string name="couleur">Couleur</string>
+    <string name="libele">Libelé :</string>
+    <string name="dans">Dans :</string>
+    <string name="alerte">Alerte:</string>
+    <string name="deleteTitleDialogCalendar">Suppression du calendrier</string>
+    <string name="deleteMessageDialogCalendar">Voulez-vous supprimer le calendrier intitulé :</string>
+    <string name="eventTransfer">Transférer les événements</string>
+    <string name="oui">Oui</string>
+    <string name="non">Non</string>
+    <string name="addSuccess">Ajout avec succès</string>
+    <string name="updateSuccess">Modification avec succès</string>
+    <string name="addCalendarToast">Ajout d\'un calendrier</string>
+    <string name="deleteTitleDialogEvent">Suppression de l\'événement</string>
+    <string name="deleteMessageDialogEvent">Voulez-vous supprimer l\'événement intitulé : </string>
+    <string name="home">Accueil</string>
+    <string name="globalView">VUE GLOBALE</string>
+    <string name="calendar">Calendrier</string>
+    <string name="options">Paramètres</string>
+    <string name="about">A Propos</string>
 </resources>

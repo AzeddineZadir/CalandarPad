@@ -3,6 +3,9 @@ package com.example.silver_desk.interfactest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -72,7 +75,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
         spinner_priorite.setAdapter(arrayAdapter);
 
         // action bar
-        getSupportActionBar().setTitle("Ajoutez un calendrier");
+        getSupportActionBar().setTitle(getString(R.string.title_activity_ajout__calendrier));
 
 
 
@@ -104,8 +107,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
 
             }
 
-            Toast.makeText(view.getContext(),"Ajout",Toast.LENGTH_LONG).show();
-            Toast.makeText(this,"Calendrier",Toast.LENGTH_LONG).show();
+            Toast.makeText(view.getContext(),getString(R.string.addCalendarToast),Toast.LENGTH_LONG).show();
             Intent intent_calendrier = new Intent(this,CalendrierActivity.class);
             startActivity(intent_calendrier);
 
@@ -136,10 +138,10 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
 
                 AlertDialog.Builder deleteDailog = new AlertDialog.Builder(this);
                 deleteDailog.setIcon(R.drawable.ic_event_black_24dp);
-                deleteDailog.setTitle("Suppression du calendrier");
-                deleteDailog.setMessage("Voulez-vous supprimer le calendrier intitulé : " + calendrier.getTitre()+" ?");
+                deleteDailog.setTitle(getString(R.string.deleteTitleDialogCalendar));
+                deleteDailog.setMessage(getString(R.string.deleteMessageDialogCalendar) + calendrier.getTitre()+" ?");
                 // positive button(confirm and delet) s supprimer le calendrier et les evenments de ce calendrier
-                deleteDailog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                deleteDailog.setPositiveButton(getString(R.string.oui), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // si click sur oui on va lui demander si il veux garder les evenment de ce calendrier  ou les suppprimer avec le calendrer
@@ -150,7 +152,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
                 });
                 // supprimer uniquement le calendrier et garder les autres evenments pour les mettre dans le calendrier par defaut
 
-                deleteDailog.setNeutralButton("Transférer les evénéments", new DialogInterface.OnClickListener() {
+                deleteDailog.setNeutralButton(getString(R.string.eventTransfer), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         transfertEvenment(calendrier,calendrierDefault);
@@ -161,7 +163,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
                     }
                 });
                 // negative button  (dont delet)
-                deleteDailog.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                deleteDailog.setNegativeButton(getString(R.string.non), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
@@ -255,6 +257,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
     // inserer un calendrier
     private void inserCalendrier(Calendrier calendrier){
         // recuperer la couleure
+       // GradientDrawable gradient=(GradientDrawable) b_couleur.getBackground();
         ColorDrawable b_couleurBackground=(ColorDrawable) b_couleur.getBackground();
         // recuperation des information du calendrier
         calendrier.setTitre(e_titre.getText().toString());
@@ -263,8 +266,10 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
         calendrier.setPriorite(spinner_priorite.getSelectedItem().toString());
         calendrier.setDescription(e_description.getText().toString());
         calendrier.setCouleur(b_couleurBackground.getColor());
+
+
         DATABASE.calendrierDao().insert(calendrier);
-        Toast.makeText(this, "Ajout avec succès", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.addSuccess), Toast.LENGTH_SHORT).show();
     }
     // modifier un calendrier
     private void updatCalendrier (int id_cal){
@@ -281,7 +286,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
 
         Calendrier calendrier= new Calendrier(id_cal,titer,visibilite,activite,couleur,priorite,description) ;
        DATABASE.calendrierDao().upDateCalendrier(calendrier);
-        Toast.makeText(this, "Modification avec succès", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.updateSuccess), Toast.LENGTH_SHORT).show();
 
 
     }

@@ -64,8 +64,6 @@ public class CalendrierAdapter extends RecyclerView.Adapter<CalendrierAdapter.Vi
 
             @Override
             public void onClick(View view) {
-               Toast.makeText(context,"youclicked"+calendrier.getId(),Toast.LENGTH_LONG).show();
-               Log.d("dbg", "position :  "+ id_clecked);
                 Intent intent = new Intent(context, HomeActivity.class);
                 intent.putExtra("id_cal",id_clecked);
                 context.startActivity(intent);
@@ -77,9 +75,7 @@ public class CalendrierAdapter extends RecyclerView.Adapter<CalendrierAdapter.Vi
 
             @Override
             public void onClick(View view) {
-                Log.d("dbg", "position :  "+ id_clecked);
 
-                Toast.makeText(context,"youclicked"+calendrier.getId(),Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(context, AjoutCalendrierActivity.class);
                 intent.putExtra("id_cal",id_clecked);
                 context.startActivity(intent);

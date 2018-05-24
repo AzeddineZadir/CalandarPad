@@ -76,7 +76,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         // action bar
-            getSupportActionBar().setTitle("Vue globale");
+            getSupportActionBar().setTitle(getString(R.string.globalView));
        // le menus flotan
         fab_nav=(FloatingActionButton)findViewById(R.id.fab_nav);
         fab_home=(FloatingActionButton)findViewById(R.id.fab_home);
@@ -253,12 +253,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         //affichage du dashboard
         if (id==R.id.db){
-            Toast.makeText(this,"This is the dashboard activity",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,getString(R.string.home),Toast.LENGTH_LONG).show();
             refreshHome();
         }
         //affichage du calendrier
         if (id==R.id.calendrier){
-            Toast.makeText(this,"This is the dashboard activity",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,getString(R.string.calendar),Toast.LENGTH_LONG).show();
          openCalendrierActivity();
         }
 
@@ -293,14 +293,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     //open calendrier activity
     public void openCalendrierActivity(){
-        Toast.makeText(HomeActivity.this,"calendrier",Toast.LENGTH_LONG).show();
         Intent intent_calendrier = new Intent(HomeActivity.this,CalendrierActivity.class);
         startActivity(intent_calendrier);
 
     }
     //open EvenmentActivity
     public void openEvenmentActivity(){
-        Toast.makeText(HomeActivity.this,"Evenment",Toast.LENGTH_LONG).show();
         Intent intent_Evenment = new Intent(HomeActivity.this,EvenementActivity.class);
         startActivity(intent_Evenment);
 
