@@ -6,7 +6,6 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.RectF;
-import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -86,7 +85,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView =(NavigationView)findViewById(R.id.nav);
         navigationView.setNavigationItemSelectedListener(this);
 
-        
 
        // le menus flotan
         fab_nav=(FloatingActionButton)findViewById(R.id.fab_nav);
@@ -120,13 +118,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if (verifyIncomingIntent()){
 
           int   id_calendrierAafficher= getincomingInten_idCalendrier();
-         Calendrier calendrier = DATABASE.calendrierDao().selecCalendrierById(getincomingInten_idCalendrier());
             evenementList = DATABASE.evenementDao().loadEvenmentByIdCalendrier(id_calendrierAafficher);
            // le titre afficher sur la action bar sera se li du calendrier choisi
 
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(calendrier.getCouleur()));
-            getSupportActionBar().setTitle(calendrier.getTitre());
-
+            String titre_calendrier=DATABASE.calendrierDao().getCalendrierTitelmById(id_calendrierAafficher);
+            getSupportActionBar().setTitle(titre_calendrier);
              }else{
 
             evenementList= DATABASE.evenementDao().loadAllevenement();
