@@ -68,24 +68,28 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        // toolbar
+        toolbar=(Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.globalView);
         //le drawer menu
         drawerLayout=(DrawerLayout)findViewById(R.id.drawer);
-        actionBarDrawerToggle= new ActionBarDrawerToggle(this ,drawerLayout,R.string.open,R.string.close);
+        actionBarDrawerToggle= new ActionBarDrawerToggle(this ,drawerLayout,toolbar,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         NavigationView navigationView =(NavigationView)findViewById(R.id.nav);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // action bar
-            getSupportActionBar().setTitle(getString(R.string.globalView));
+        
 
        // le menus flotan
         fab_nav=(FloatingActionButton)findViewById(R.id.fab_nav);
-        fab_home=(FloatingActionButton)findViewById(R.id.fab_home);
-        fab_calendrier=(FloatingActionButton)findViewById(R.id.fab_calendrier);
-        fab_aujourdhui=(FloatingActionButton)findViewById(R.id.fab_aujoudhui);
+
         ani_open= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_open);
         ani_close= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         ani_rotateclockwise= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_roteatclockwise);
