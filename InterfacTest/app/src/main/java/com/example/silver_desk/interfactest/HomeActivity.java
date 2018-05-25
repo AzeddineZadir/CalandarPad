@@ -6,7 +6,6 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.RectF;
-import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -69,23 +68,28 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        // toolbar
+        toolbar=(Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.globalView);
         //le drawer menu
         drawerLayout=(DrawerLayout)findViewById(R.id.drawer);
-        actionBarDrawerToggle= new ActionBarDrawerToggle(this ,drawerLayout,R.string.open,R.string.close);
+        actionBarDrawerToggle= new ActionBarDrawerToggle(this ,drawerLayout,toolbar,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         NavigationView navigationView =(NavigationView)findViewById(R.id.nav);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // action bar
-         getSupportActionBar().setTitle("Vue globale");
+
+
        // le menus flotan
         fab_nav=(FloatingActionButton)findViewById(R.id.fab_nav);
-        fab_home=(FloatingActionButton)findViewById(R.id.fab_home);
-        fab_calendrier=(FloatingActionButton)findViewById(R.id.fab_calendrier);
-        fab_aujourdhui=(FloatingActionButton)findViewById(R.id.fab_aujoudhui);
+
         ani_open= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_open);
         ani_close= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         ani_rotateclockwise= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_roteatclockwise);
@@ -115,13 +119,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if (verifyIncomingIntent()){
 
           int   id_calendrierAafficher= getincomingInten_idCalendrier();
-         Calendrier calendrier = DATABASE.calendrierDao().selecCalendrierById(getincomingInten_idCalendrier());
             evenementList = DATABASE.evenementDao().loadEvenmentByIdCalendrier(id_calendrierAafficher);
            // le titre afficher sur la action bar sera se li du calendrier choisi
 
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(calendrier.getCouleur()));
-            getSupportActionBar().setTitle(calendrier.getTitre());
-
+            String titre_calendrier=DATABASE.calendrierDao().getCalendrierTitelmById(id_calendrierAafficher);
+            getSupportActionBar().setTitle(titre_calendrier);
              }else{
 
             evenementList= DATABASE.evenementDao().loadAllevenement();
@@ -260,12 +262,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         //affichage du dashboard
         if (id==R.id.db){
-            Toast.makeText(this,"This is the dashboard activity",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,getString(R.string.home),Toast.LENGTH_LONG).show();
             refreshHome();
         }
         //affichage du calendrier
         if (id==R.id.calendrier){
-            Toast.makeText(this,"This is the dashboard activity",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,getString(R.string.calendar),Toast.LENGTH_LONG).show();
          openCalendrierActivity();
         }
 
@@ -300,14 +302,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     //open calendrier activity
     public void openCalendrierActivity(){
-        Toast.makeText(HomeActivity.this,"calendrier",Toast.LENGTH_LONG).show();
         Intent intent_calendrier = new Intent(HomeActivity.this,CalendrierActivity.class);
         startActivity(intent_calendrier);
 
     }
     //open EvenmentActivity
     public void openEvenmentActivity(){
-        Toast.makeText(HomeActivity.this,"Evenment",Toast.LENGTH_LONG).show();
         Intent intent_Evenment = new Intent(HomeActivity.this,EvenementActivity.class);
         startActivity(intent_Evenment);
 
