@@ -65,6 +65,10 @@ public interface EvenementDao {
     @Query("UPDATE  evenement_table SET calendrierId =:id_cal WHERE  id =:id_evenment")
     void updateIdCalForEvenment(int id_evenment,int id_cal);
 
+    // modifier lid calendrier dun evenment
+    @Query("UPDATE  evenement_table SET calendrierId =:id_newCal WHERE  calendrierId=:id_oldCal")
+    void transfertEventsToCalendrier(int id_oldCal,int id_newCal);
+
 
     // supprimer les evenment qui son,t relier a un calendrier parent X
     @Query("DELETE FROM evenement_table WHERE calendrierId=:id_cal")

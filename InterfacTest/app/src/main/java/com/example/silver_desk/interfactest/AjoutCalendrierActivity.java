@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -160,9 +161,41 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
 
             if (verifyIncomingIntent()) {
                 final Calendrier calendrier = DATABASE.calendrierDao().selecCalendrierById(getincomingInten_idCalendrier());
-                final Calendrier calendrierDefault=DATABASE.calendrierDao().selecCalendrierById(1);
+
 
                 AlertDialog.Builder deleteDailog = new AlertDialog.Builder(this);
+
+
+
+                View view1= getLayoutInflater().inflate(R.layout.suppression_dialoge,null);
+                Button b_oui,b_non;
+                final CheckBox cb_transfert;
+                final Spinner spinner ;
+                // traitment sur la vue
+                cb_transfert=(CheckBox) view1.findViewById(R.id.cb_transfert);
+
+                spinner=(Spinner)view1.findViewById(R.id.spinner_list_cal) ;
+                spinner.setVisibility(View.INVISIBLE);
+                List<String>listcal=DATABASE.calendrierDao().loadAllCalendrierTitels();
+
+                ArrayAdapter arrayAdapter= new ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item,enlevéUnTitre(listcal,calendrier.getTitre()));
+                spinner.setAdapter(arrayAdapter);
+
+                cb_transfert.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (cb_transfert.isChecked()){
+                            spinner.setVisibility(View.VISIBLE);
+
+                        }else{
+                            spinner.setVisibility(View.INVISIBLE);
+                        }
+
+
+                    }
+                });
+
+                deleteDailog.setView(view1);
                 deleteDailog.setIcon(R.drawable.ic_event_black_24dp);
                 deleteDailog.setTitle("Suppression du calendrier");
                 deleteDailog.setMessage("Voulez-vous supprimer le calendrier intitulé : " + calendrier.getTitre()+" ?");
@@ -170,24 +203,24 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
                 deleteDailog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        // si click sur oui on va lui demander si il veux garder les evenment de ce calendrier  ou les suppprimer avec le calendrer
-                       DATABASE.calendrierDao().deletCalendrier(calendrier);
-                        dialogInterface.dismiss();
-                        backCalendrierActivity();
-                    }
-                });
-                // supprimer uniquement le calendrier et garder les autres evenments pour les mettre dans le calendrier par defaut
+                        // on verifie si lutilisateur veux transferer ses evenment vers un autre calendrier
+                        if (cb_transfert.isChecked()){
 
-                deleteDailog.setNeutralButton("Transférer les evénéments", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        transfertEvenment(calendrier,calendrierDefault);
+                    // recuperer le tirtre du calen,drier destination
+                       String  titre_cal_destination  =  spinner.getSelectedItem().toString();
+                    // recuperer lid du calendrier grace au titre
+                        int id_cal_destination = DATABASE.calendrierDao().getIdCalendrierByTitel(titre_cal_destination);
+                        Calendrier calendrier_destination = DATABASE.calendrierDao().selecCalendrierById(id_cal_destination);
+
+                            transfertEvenment(calendrier,calendrier_destination);
+                        }
                         DATABASE.calendrierDao().deletCalendrier(calendrier);
                         dialogInterface.dismiss();
                         backCalendrierActivity();
-
                     }
                 });
+
+
                 // negative button  (dont delet)
                 deleteDailog.setNegativeButton("Non", new DialogInterface.OnClickListener() {
                     @Override
@@ -196,7 +229,6 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
 
                     }
                 });
-
                 AlertDialog alertDialog = deleteDailog.create();
                 alertDialog.show();
             }
@@ -322,20 +354,31 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
     }
 
     public void transfertEvenment(Calendrier calendrier1 , Calendrier calendrier2){
-        List<Evenement>evenementList1 =DATABASE.evenementDao().loadEvenmentByIdCalendrier(calendrier1.getId());
-        for (int i=0;i<evenementList1.size();i++){
+
+
             // modifier la valeuridcalendrie dans les evenment contenus dans cette liste
-            // id de levenment a transferer
-            int id_evenment=evenementList1.get(i).getId();
+
             // id du nouv calendrier parent
             int id_newParentCal= calendrier2.getId();
             // id de lencien calendrier parent
             int id_oldParentCal=calendrier1.getId();
             // modification
-            DATABASE.evenementDao().updateIdCalForEvenment(id_evenment,id_newParentCal);
+            DATABASE.evenementDao().transfertEventsToCalendrier(id_oldParentCal,id_newParentCal);
+
+
+
+
+    }
+
+    public List<String> enlevéUnTitre(List<String> stringList,String s){
+
+        for (int i= 0 ;i<stringList.size();i++){
+            if (stringList.get(i).equals(s)){
+                stringList.remove(i);
+            }
 
         }
 
-
+        return stringList ;
     }
 }

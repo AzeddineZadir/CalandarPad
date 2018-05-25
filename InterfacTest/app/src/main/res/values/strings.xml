@@ -31,4 +31,7 @@
     <string name="action_day_view">Jour</string>
     <string name="action_three_day_view">3 Jours</string>
     <string name="action_week_view">Semaine</string>
+    <string name="titretransfert">deplacer les evenments de ce calendrier vers un autre</string>
+    <string name="non">non</string>
+    <string name="oui">oui</string>
 </resources>

@@ -41,6 +41,10 @@ public interface CalendrierDao {
     @Query("SELECT id FROM calendrier_table where titre =:titre")
      int  getIdCalendrierByTitel(String titre);
 
+    //selectioner un calendrer grace a son titre
+    @Query("SELECT * FROM calendrier_table where titre =:titre")
+    Calendrier getCalendrierByTitel(String titre);
+
     // recuperer la couleure du cal
     @Query("SELECT couleur FROM calendrier_table where id =:id")
     int  getIdCalendrierColorById(int id);
