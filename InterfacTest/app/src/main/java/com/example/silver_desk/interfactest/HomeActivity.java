@@ -86,7 +86,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
        // le menus flotan
         fab_nav=(FloatingActionButton)findViewById(R.id.fab_nav);
 

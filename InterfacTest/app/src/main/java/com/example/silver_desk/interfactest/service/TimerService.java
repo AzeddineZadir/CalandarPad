@@ -75,12 +75,7 @@ public class TimerService extends Service {
                 public void run() {
 
                     long currentTime=System.currentTimeMillis();
-
-
-
                     List<Evenement> Event=DATABASE.evenementDao().selectCurrentEvenement(currentTime);
-                  //  Log.d("Test","Déclenchement!!!!!!!! "+currentTime);
-
                     displayNotification(Event);
 
                 }
@@ -123,7 +118,7 @@ public class TimerService extends Service {
         }
     }
 
-    //créer channel pour les versions Orea et ultérieure
+    //créer channel pour les versions Oreo et ultérieure
     private void createNotificationChannel(){
 
         //Tester si la version de Android est supérieure ou égale à 8.0

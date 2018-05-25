@@ -6,74 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer"
-
+    tools:openDrawer="start"
+    android:fitsSystemWindows="true"
     tools:context="com.example.silver_desk.interfactest.HomeActivity">
 
-    <android.support.design.widget.CoordinatorLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
 
-
-    <com.alamkanak.weekview.WeekView
-        android:id="@+id/weekView"
+    <include layout="@layout/app_bar_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:eventTextColor="@android:color/white"
-        app:textSize="12sp"
-        app:hourHeight="60dp"
-        app:headerColumnPadding="8dp"
-        app:headerColumnTextColor="#8f000000"
-        app:headerRowPadding="12dp"
-        app:columnGap="8dp"
-        app:noOfVisibleDays="3"
-        app:headerRowBackgroundColor="#ffefefef"
-        app:dayBackgroundColor="#05000000"
-        app:todayBackgroundColor="#1848adff"
-        app:headerColumnBackground="#ffffffff"
+        android:layout_height="match_parent"/>
 
-        />
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="107dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="75dp"
-        android:layout_marginRight="70dp"
-        android:elevation="10dp"
-        android:id="@+id/fab_aujoudhui"
-        app:pressedTranslationZ="12dp"
-        android:src="@drawable/ic_aujourdhui"
-        tools:layout_editor_absoluteY="374dp"
-        android:visibility="invisible"
-
-        />
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="107dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="90dp"
-        android:layout_marginRight="@dimen/fab_margin_right"
-        android:elevation="10dp"
-        android:id="@+id/fab_calendrier"
-        app:pressedTranslationZ="12dp"
-        android:src="@drawable/ic_calendrier"
-        tools:layout_editor_absoluteY="374dp"
-        android:visibility="invisible"
-
-        />
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="107dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="25dp"
-        android:layout_marginRight="90dp"
-        android:elevation="10dp"
-        android:id="@+id/fab_home"
-        app:pressedTranslationZ="12dp"
-        android:src="@drawable/ic_home"
-        tools:layout_editor_absoluteY="374dp"
-        android:visibility="invisible"
-        />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_nav"
@@ -87,7 +28,7 @@
         app:backgroundTint="@color/accent"
         app:pressedTranslationZ="12dp"
         tools:layout_editor_absoluteY="374dp" />
-</android.support.design.widget.CoordinatorLayout>
+
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav"
@@ -100,5 +41,5 @@
         android:background="@color/whit"
         app:headerLayout="@layout/header"
         app:itemTextColor="@color/darkgray"
-        app:menu="@menu/drawermenu"/>
+        app:menu="@menu/drawermenu" />
 </android.support.v4.widget.DrawerLayout >

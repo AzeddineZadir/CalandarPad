@@ -188,10 +188,10 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
             if (verifyIncomingIntentIdEvenment()) {
                 final Evenement evenement = DATABASE.evenementDao().selectEvenmentById(getincomingInten_idevenment());
                 AlertDialog.Builder deleteDailog = new AlertDialog.Builder(this);
-                deleteDailog.setTitle("supprimer un événement ");
-                deleteDailog.setMessage("Voulez-vous supprimer l'événment intitulé : " + evenement.getLibele());
+                deleteDailog.setTitle(getString(R.string.deleteTitleDialogEvent));
+                deleteDailog.setMessage(getString(R.string.deleteMessageDialogEvent) + evenement.getLibele()+" ?");
                 // positive button(confirm and delet)
-                deleteDailog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                deleteDailog.setPositiveButton(getString(R.string.oui), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         DATABASE.evenementDao().deletEvenment(evenement);
@@ -201,7 +201,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
                 });
 
                 // negative button  (dont delet)
-                deleteDailog.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                deleteDailog.setNegativeButton(getString(R.string.non), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
@@ -262,13 +262,12 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onDateSet(DatePicker datePicker, int Y, int M, int D) {
-        Toast.makeText(this, "year " + Y + "month " + M + "day " + D, Toast.LENGTH_LONG).show();
 
         date.set(Calendar.YEAR, Y);
         date.set(Calendar.MONTH, M);
         date.set(Calendar.DAY_OF_MONTH, D);
 
-        b_joure.setText("le " + D + "/" + M + "/" + Y);
+        b_joure.setText( D + "/" + M + "/" + Y);
     }
 
     // pour verifier si ond dois initialiser les champe ou non (modification)
@@ -490,7 +489,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         Evenement evenementModifer = new Evenement(id, libele, jour, h_d, h_f, lieu, description, recurrence, alerte, id_calendrier, heure_alerte, delai);
 
         DATABASE.evenementDao().upDateEvenment(evenementModifer);
-        Toast.makeText(this, "Modification avec succès", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.updateSuccess), Toast.LENGTH_SHORT).show();
 
 
     }
@@ -524,7 +523,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         evenement.setDelai_alerte(getdelaiFromSpiner(spinner_delai));
         //insertion dans la base
         DATABASE.evenementDao().insert(evenement);
-        Toast.makeText(this, "Ajout avec succès", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.addSuccess), Toast.LENGTH_SHORT).show();
     }
 
     // generer un titre avec heur_debu et heure fin

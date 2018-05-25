@@ -23,7 +23,7 @@ public class CalendrierActivity extends AppCompatActivity  {
         fragmentManager = getSupportFragmentManager();
 
 
-        // ajout dun evenment pour le teste
+
 
 
 
