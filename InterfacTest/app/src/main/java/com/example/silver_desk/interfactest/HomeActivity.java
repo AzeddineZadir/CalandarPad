@@ -6,6 +6,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.RectF;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -121,8 +122,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             evenementList = DATABASE.evenementDao().loadEvenmentByIdCalendrier(id_calendrierAafficher);
            // le titre afficher sur la action bar sera se li du calendrier choisi
 
-            String titre_calendrier=DATABASE.calendrierDao().getCalendrierTitelmById(id_calendrierAafficher);
-            getSupportActionBar().setTitle(titre_calendrier);
+            Calendrier calendrier=DATABASE.calendrierDao().selecCalendrierById(getincomingInten_idCalendrier());
+             getSupportActionBar().setTitle(calendrier.getTitre());
+             toolbar.setBackground(new ColorDrawable(calendrier.getCouleur()));
              }else{
 
             evenementList= DATABASE.evenementDao().loadAllevenement();
