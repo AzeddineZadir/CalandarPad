@@ -47,9 +47,9 @@ import static com.example.silver_desk.interfactest.database.AppDatabase.getInsta
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener ,
         WeekView.EventClickListener, MonthLoader.MonthChangeListener,
-        WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, WeekView.EmptyViewClickListener {
-    private DrawerLayout drawerLayout ;
-    private ActionBarDrawerToggle actionBarDrawerToggle;
+      WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, WeekView.EmptyViewClickListener {
+   public static DrawerLayout drawerLayout ;
+    public static ActionBarDrawerToggle actionBarDrawerToggle;
     private  FloatingActionButton fab_nav,fab_home,fab_calendrier,fab_aujourdhui;
     private  Animation ani_open,ani_close,ani_rotateclockwise,ani_rotateanticlockwise;
      boolean is_clicked = false ;
@@ -71,8 +71,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_home);
         // toolbar
         toolbar=(Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.globalView);
+        setSupportActionBar(toolbar);
+
         //le drawer menu
         drawerLayout=(DrawerLayout)findViewById(R.id.drawer);
         actionBarDrawerToggle= new ActionBarDrawerToggle(this ,drawerLayout,toolbar,R.string.open,R.string.close);

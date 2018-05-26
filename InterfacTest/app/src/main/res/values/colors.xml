@@ -2,10 +2,12 @@
 <resources>
     <color name="colorPrimary">#1ca1b2</color>
     <color name="colorPrimaryDark">#44bcca</color>
+
+
     <color name="whit">#ffffff</color>
     <color name="colorAccent">#FF4081</color>
     <color name="darkgray">#6c6c6c</color>
-    <color name="b_nav">#fd4080</color>
+    <color name="b_nav">#4a6946</color>
 
     <color name="event_color_01">#59dbe0</color>
     <color name="event_color_02">#f57f68</color>
@@ -17,4 +19,6 @@
     <color name="toolbar">#efefef</color>
     <color name="toolbar_text">#8f000000</color>
     <color name="accent">#2789e4</color>
+    <color name="button_back">#e3e04f</color>
+
 </resources>
