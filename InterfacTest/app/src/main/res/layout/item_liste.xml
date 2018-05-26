@@ -50,9 +50,10 @@
                 android:id="@+id/imb_setting_cal"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="#ffffffff"
-                app:srcCompat="@drawable/ic_more_vert_black_24dp" />
+                app:srcCompat="@drawable/ic_settings_black_24dp" />
 
         </LinearLayout>
 

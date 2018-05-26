@@ -202,18 +202,20 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // on verifie si lutilisateur veux transferer ses evenment vers un autre calendrier
                         if (cb_transfert.isChecked()){
-            // recuperer le tirtre du calen,drier destination
+                         // recuperer le tirtre du calen,drier destination
                        String  titre_cal_destination  =  spinner.getSelectedItem().toString();
-                    // recuperer lid du calendrier grace au titre
+                         // recuperer lid du calendrier grace au titre
                         int id_cal_destination = DATABASE.calendrierDao().getIdCalendrierByTitel(titre_cal_destination);
                         Calendrier calendrier_destination = DATABASE.calendrierDao().selecCalendrierById(id_cal_destination);
 
                             transfertEvenment(calendrier,calendrier_destination);
+                            DATABASE.calendrierDao().deletCalendrier(calendrier);
+                            dialogInterface.dismiss();
+                            backCalendrierActivity();
+
                         }
 
-                        DATABASE.calendrierDao().deletCalendrier(calendrier);
-                        dialogInterface.dismiss();
-                        backCalendrierActivity();
+
                     }
                 });
 

@@ -56,8 +56,8 @@
     <string name="options">Paramètres</string>
     <string name="about">A Propos</string>
     <string name="titretransfert">deplacer les evenments de ce calendrier vers un autre</string>
-    <string name="yes">non</string>
-    <string name="no">oui</string>
+    <string name="yes">oui</string>
+    <string name="no">non</string>
     <string name="addcalendar">Ajoutez un calendrier </string>
 
 </resources>

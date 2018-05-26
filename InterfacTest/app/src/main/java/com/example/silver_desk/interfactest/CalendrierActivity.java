@@ -1,6 +1,7 @@
 package com.example.silver_desk.interfactest;
 
 import android.arch.persistence.room.Room;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -61,9 +62,39 @@ public class CalendrierActivity extends AppCompatActivity implements NavigationV
     }
 
 
-    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+        int id = item.getItemId();
+        //affichage du dashboard
+        if (id==R.id.db){
+            Toast.makeText(this,getString(R.string.home),Toast.LENGTH_LONG).show();
+            goHome();
+        }
+        //affichage du calendrier
+        if (id==R.id.calendrier){
+            Toast.makeText(this,getString(R.string.calendar),Toast.LENGTH_LONG).show();
+           refresCalendrierActivity();
+        }
+
+
+        return false ;
+
     }
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    public void refresCalendrierActivity (){
+        onRestart();
+    }
+
+    public void goHome (){
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+
+
 }
 

@@ -4,6 +4,7 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.RectF;
 import android.graphics.drawable.ColorDrawable;
@@ -116,16 +117,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 .build();
 
         // modification du contenu du week view en foncton de litem choisie dans calendrier activity
-       // si on a cliker sur un calendrier en qst
+         // si on a cliker sur un calendrier en qst
         if (verifyIncomingIntent()){
 
           int   id_calendrierAafficher= getincomingInten_idCalendrier();
             evenementList = DATABASE.evenementDao().loadEvenmentByIdCalendrier(id_calendrierAafficher);
-           // le titre afficher sur la action bar sera se li du calendrier choisi
+
+             // le titre afficher sur la action bar sera se li du calendrier choisi
 
             Calendrier calendrier=DATABASE.calendrierDao().selecCalendrierById(getincomingInten_idCalendrier());
              getSupportActionBar().setTitle(calendrier.getTitre());
              toolbar.setBackground(new ColorDrawable(calendrier.getCouleur()));
+
+             // modification de la couleur du boutton dajout pour que il soit de la memee couleure que le calenrier
+            fab_nav.setBackgroundTintList(ColorStateList.valueOf(calendrier.getCouleur()));
              }else{
 
             evenementList= DATABASE.evenementDao().loadAllevenement();
@@ -173,9 +178,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if (verifyIncomingIntent()){
             int   id_calendrierAafficher= getincomingInten_idCalendrier();
 
-
             evenementList = DATABASE.evenementDao().loadEvenmentByIdCalendrier(id_calendrierAafficher);
-
         }else{
             evenementList=evenementList = DATABASE.evenementDao().loadAllevenement();
         }
@@ -277,30 +280,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return false ;
 
     }
-    // la methode daffichage du  menu flotan
-  /*  public void fab_nav_bclik(){
-        if (is_clicked){
-            fab_nav.startAnimation(ani_close);
-            fab_nav.startAnimation(ani_rotateanticlockwise);
-            fab_home.startAnimation(ani_close);
-            fab_calendrier.startAnimation(ani_close);
-             fab_aujourdhui.startAnimation(ani_close);
-            fab_home.setClickable(false);
-            fab_calendrier.setClickable(false);
-            fab_aujourdhui.setClickable(false);
-            is_clicked= false;
-        }else {
-            fab_nav.startAnimation(ani_open);
-            fab_nav.startAnimation(ani_rotateclockwise);
-            fab_home.startAnimation(ani_open);
-            fab_calendrier.startAnimation(ani_open);
-            fab_aujourdhui.startAnimation(ani_open);
-            fab_home.isClickable();
-            fab_calendrier.isClickable();
-            fab_aujourdhui.isClickable();
-            is_clicked = true;
-        }
-    }*/
+
 
     //open calendrier activity
     public void openCalendrierActivity(){
