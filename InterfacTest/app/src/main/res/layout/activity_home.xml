@@ -16,18 +16,6 @@
         android:layout_height="match_parent"/>
 
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_nav"
-        android:layout_width="wrap_content"
-        android:layout_height="107dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="25dp"
-        android:layout_marginRight="@dimen/fab_margin_right"
-        android:elevation="10dp"
-        android:src="@drawable/ic_action_name"
-        app:backgroundTint="@color/accent"
-        app:pressedTranslationZ="12dp"
-        tools:layout_editor_absoluteY="374dp" />
 
 
     <android.support.design.widget.NavigationView

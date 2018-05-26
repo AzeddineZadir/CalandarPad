@@ -44,8 +44,7 @@
     <string name="deleteTitleDialogCalendar">Suppression du calendrier</string>
     <string name="deleteMessageDialogCalendar">Voulez-vous supprimer le calendrier intitulé :</string>
     <string name="eventTransfer">Transférer les événements</string>
-    <string name="oui">Oui</string>
-    <string name="non">Non</string>
+
     <string name="addSuccess">Ajout avec succès</string>
     <string name="updateSuccess">Modification avec succès</string>
     <string name="addCalendarToast">Ajout d\'un calendrier</string>
@@ -57,6 +56,12 @@
     <string name="options">Paramètres</string>
     <string name="about">A Propos</string>
     <string name="titretransfert">deplacer les evenments de ce calendrier vers un autre</string>
+<<<<<<< HEAD
 
+=======
+    <string name="yes">oui</string>
+    <string name="no">non</string>
+    <string name="addcalendar">Ajoutez un calendrier </string>
+>>>>>>> master
 
 </resources>

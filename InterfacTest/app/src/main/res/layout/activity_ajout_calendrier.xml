@@ -96,6 +96,7 @@
                 android:layout_width="121dp"
                 android:layout_height="wrap_content"
 
+                android:text="@string/priorite"
                 android:textSize="18sp"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="199dp" />
@@ -134,7 +135,7 @@
             android:layout_width="match_parent"
             android:layout_height="66dp"
 
-            android:layout_above="@+id/fab_add_cal"
+            android:layout_above="@+id/fab_save_event"
             android:layout_alignParentStart="true"
             android:orientation="horizontal">
 
@@ -164,15 +165,15 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_add_cal"
+        android:id="@+id/fab_save_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="21dp"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
         android:clickable="true"
-        app:backgroundTint="@color/accent"
-        android:layout_marginBottom="20dp"
+        app:backgroundTint="@color/button_back"
         app:srcCompat="@drawable/ic_save_event" />
 
     <android.support.design.widget.FloatingActionButton
@@ -180,10 +181,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
-        android:layout_marginStart="21dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:layout_marginStart="@dimen/fab_margin"
         android:clickable="true"
-        app:backgroundTint="@color/accent"
+        app:backgroundTint="@color/button_back"
         app:srcCompat="@drawable/ic_delete" />
 
 </android.support.v7.widget.ContentFrameLayout>

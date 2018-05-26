@@ -191,7 +191,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
                 deleteDailog.setTitle(getString(R.string.deleteTitleDialogEvent));
                 deleteDailog.setMessage(getString(R.string.deleteMessageDialogEvent) + evenement.getLibele()+" ?");
                 // positive button(confirm and delet)
-                deleteDailog.setPositiveButton(getString(R.string.oui), new DialogInterface.OnClickListener() {
+                deleteDailog.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         DATABASE.evenementDao().deletEvenment(evenement);
@@ -201,7 +201,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
                 });
 
                 // negative button  (dont delet)
-                deleteDailog.setNegativeButton(getString(R.string.non), new DialogInterface.OnClickListener() {
+                deleteDailog.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();

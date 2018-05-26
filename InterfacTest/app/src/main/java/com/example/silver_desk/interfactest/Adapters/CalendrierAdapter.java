@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -55,6 +56,7 @@ public class CalendrierAdapter extends RecyclerView.Adapter<CalendrierAdapter.Vi
         final Calendrier calendrier = calendrierList.get(position);
         holder.tv_titre.setText(calendrier.getTitre());
         holder.tv_description.setText(calendrier.getDescription());
+        holder.b_couleurcal.setBackgroundColor(calendrier.getCouleur());
        final int id_clecked = calendrierList.get(position).getId();
 
 
@@ -91,9 +93,10 @@ public class CalendrierAdapter extends RecyclerView.Adapter<CalendrierAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView tv_titre, tv_description ;
-        LinearLayout myitem , item_cal ;
+        LinearLayout myitem  ;
         ImageButton imb_setting ;
         CardView cardView ;
+        Button b_couleurcal ;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -102,6 +105,7 @@ public class CalendrierAdapter extends RecyclerView.Adapter<CalendrierAdapter.Vi
             myitem=(LinearLayout)itemView.findViewById(R.id.myitem);
             imb_setting=(ImageButton)itemView.findViewById(R.id.imb_setting_cal);
             cardView=(CardView)itemView.findViewById(R.id.mycard);
+            b_couleurcal=(Button)itemView.findViewById(R.id.b_couleurcal);
         }
     }
 

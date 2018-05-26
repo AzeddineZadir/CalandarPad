@@ -3,21 +3,16 @@ package com.example.silver_desk.interfactest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -64,7 +59,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
         c_activite=(CheckBox)findViewById(R.id.c_activite);
         c_visibilite=(CheckBox)findViewById(R.id.c_visibilite);
 
-        fab_add_cal=(FloatingActionButton)findViewById(R.id.fab_add_cal) ;
+        fab_add_cal=(FloatingActionButton)findViewById(R.id.fab_save_event) ;
         fab_add_cal.setOnClickListener(this);
 
         fab_delete_cal =(FloatingActionButton)findViewById(R.id.fab_delete_cal);
@@ -120,7 +115,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
 
     @Override
     public void onClick(View view) {
-        if (view.getId()==R.id.fab_add_cal){
+        if (view.getId()==R.id.fab_save_event){
          Boolean modification ;
             if(verifyIncomingIntent()) {  modification= true ;} else { modification=false ;}
 
@@ -202,29 +197,31 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
                 deleteDailog.setTitle(getString(R.string.deleteTitleDialogCalendar));
                 deleteDailog.setMessage(getString(R.string.deleteMessageDialogCalendar) + calendrier.getTitre()+" ?");
                 // positive button(confirm and delet) s supprimer le calendrier et les evenments de ce calendrier
-                deleteDailog.setPositiveButton(getString(R.string.oui), new DialogInterface.OnClickListener() {
+                deleteDailog.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // on verifie si lutilisateur veux transferer ses evenment vers un autre calendrier
                         if (cb_transfert.isChecked()){
-            // recuperer le tirtre du calen,drier destination
+                         // recuperer le tirtre du calen,drier destination
                        String  titre_cal_destination  =  spinner.getSelectedItem().toString();
-                    // recuperer lid du calendrier grace au titre
+                         // recuperer lid du calendrier grace au titre
                         int id_cal_destination = DATABASE.calendrierDao().getIdCalendrierByTitel(titre_cal_destination);
                         Calendrier calendrier_destination = DATABASE.calendrierDao().selecCalendrierById(id_cal_destination);
 
                             transfertEvenment(calendrier,calendrier_destination);
+                            DATABASE.calendrierDao().deletCalendrier(calendrier);
+                            dialogInterface.dismiss();
+                            backCalendrierActivity();
+
                         }
 
-                        DATABASE.calendrierDao().deletCalendrier(calendrier);
-                        dialogInterface.dismiss();
-                        backCalendrierActivity();
+
                     }
                 });
 
 
                 // negative button  (dont delet)
-                deleteDailog.setNegativeButton(getString(R.string.non), new DialogInterface.OnClickListener() {
+                deleteDailog.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
