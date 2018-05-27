@@ -63,7 +63,11 @@ public class CalendrierActivity extends AppCompatActivity implements NavigationV
 
 
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)){
+            return true ;
+        }
         int id = item.getItemId();
+
         //affichage du dashboard
         if (id==R.id.db){
             Toast.makeText(this,getString(R.string.home),Toast.LENGTH_LONG).show();
@@ -72,7 +76,7 @@ public class CalendrierActivity extends AppCompatActivity implements NavigationV
         //affichage du calendrier
         if (id==R.id.calendrier){
             Toast.makeText(this,getString(R.string.calendar),Toast.LENGTH_LONG).show();
-           refresCalendrierActivity();
+         onRestart();
         }
 
 
@@ -86,15 +90,16 @@ public class CalendrierActivity extends AppCompatActivity implements NavigationV
         super.onRestart();
     }
 
-    public void refresCalendrierActivity (){
-        onRestart();
-    }
 
+    // les methodes de navigation
     public void goHome (){
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
-
+    public void goCalendrerActivity (){
+        Intent intent = new Intent(this, CalendrierActivity.class);
+        startActivity(intent);
+    }
 
 }
 

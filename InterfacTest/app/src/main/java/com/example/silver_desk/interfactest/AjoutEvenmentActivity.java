@@ -4,8 +4,12 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,12 +38,14 @@ import java.util.List;
 
 
 import static com.example.silver_desk.interfactest.HomeActivity.DATABASE;
+import static com.example.silver_desk.interfactest.HomeActivity.actionBarDrawerToggle;
+import static com.example.silver_desk.interfactest.HomeActivity.drawerLayout;
 import static com.example.silver_desk.interfactest.fragment.TimePickerFragment.FLAG_END_TIME;
 import static com.example.silver_desk.interfactest.fragment.TimePickerFragment.FLAG_START_TIME;
 import static com.example.silver_desk.interfactest.fragment.TimePickerFragment.flag;
 
-public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnClickListener, TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
-    EditText t_libele, t_description, t_lieu;
+public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnClickListener, TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener, NavigationView.OnNavigationItemSelectedListener {
+    EditText e_libele, e_description, e_lieu;
     CheckBox cb_recurrance;
     Button b_debut, b_fin, b_joure;
     FloatingActionButton fab_save_event;
@@ -58,7 +64,18 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajout_evenment);
-        // toole bar
+        // taction bar
+        getSupportActionBar().setTitle(R.string.addevent);
+
+        // le drawer menu
+
+        drawerLayout=(DrawerLayout)findViewById(R.id.ajout_evenment_drawer);
+        actionBarDrawerToggle= new ActionBarDrawerToggle(this ,drawerLayout,R.string.open,R.string.close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        NavigationView navigationView =(NavigationView)findViewById(R.id.nav);
+        navigationView.setNavigationItemSelectedListener(this);
 
         // les Button
         b_debut = (Button) findViewById(R.id.b_debut);
@@ -70,9 +87,9 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
 
         // les edittext
-        t_libele = (EditText) findViewById(R.id.e_libele);
-        t_description = (EditText) findViewById(R.id.e_description);
-        t_lieu = (EditText) findViewById(R.id.e_lieu);
+        e_libele = (EditText) findViewById(R.id.e_libele);
+        e_description = (EditText) findViewById(R.id.e_description);
+        e_lieu = (EditText) findViewById(R.id.e_lieu);
 
         // fab fab_save event
         fab_save_event = (FloatingActionButton) findViewById(R.id.fab_save_event);
@@ -123,6 +140,9 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)){
+            return true ;
+        }
         int id = item.getItemId();
         switch (id){
             case R.id.close_action :
@@ -323,40 +343,14 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
     // remplire les informations de levenment sur la vue apré click
     public void viewSetInfo() {
-        // la vue doit etre formater suite a un onlong click emty view
-        /*if (verifyIncomingIntentDate()){
-            Calendar mdate= Calendar.getInstance();
-            mdate.setTimeInMillis(getincomingInten_date());
-
-            long uneheure=3600000;
-            // intialisation du temps
-            heure_deb.setTimeInMillis(mdate.getTimeInMillis());
-            heure_fin.setTimeInMillis(mdate.getTimeInMillis()+uneheure);
-            // init du jour
-            date.setTimeInMillis(mdate.getTimeInMillis());
-
-            // afficher lheure sur les button
-            b_debut.setText(genratTitelWithTime(heure_deb));
-            b_fin.setText(genratTitelWithTime(heure_fin));
-
-            // afficher la dat-e sur le button
-            b_joure.setText(genratTitelWithDate(date));
-
-            //
-
-
-        }*/
-
-
-
         // la vue doit etre formater suit au click sur un evenment
 
         if (verifyIncomingIntentIdEvenment()) {
             Evenement evenement = DATABASE.evenementDao().selectEvenmentById(getincomingInten_idevenment());
 
-            t_libele.setText(evenement.getLibele().toString());
-            t_description.setText(evenement.getDescription().toString());
-            t_lieu.setText(evenement.getDescription().toString());
+            e_libele.setText(evenement.getLibele().toString());
+            e_description.setText(evenement.getDescription().toString());
+            e_lieu.setText(evenement.getLieu().toString());
             cb_recurrance.setChecked(evenement.isRecurrence());
             // initialisation du spinner au calendrier parent de levenmùent
             int id_cal = evenement.getCalendrierId();
@@ -448,7 +442,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         // id evenment
         int id = id_ev;
         // libele evenment
-        String libele = t_libele.getText().toString();
+        String libele = e_libele.getText().toString();
         //date evenment
         long jour = date.getTimeInMillis();
         // heure debut
@@ -456,9 +450,9 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         // heure fin
         long h_f = heure_fin.getTimeInMillis();
         // lieu
-        String lieu = t_lieu.getText().toString();
+        String lieu = e_lieu.getText().toString();
         // description
-        String description = t_description.getText().toString();
+        String description = e_description.getText().toString();
         //recurrance
         boolean recurrence = cb_recurrance.isChecked();
         // alerte
@@ -487,9 +481,9 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
     //inser un evenment
     public void inserEvenment(Evenement evenement, int id_cal) {
         // recuperation des information de l évenement
-        evenement.setLibele(t_libele.getText().toString());
-        evenement.setDescription(t_description.getText().toString());
-        evenement.setLieu(t_lieu.getText().toString());
+        evenement.setLibele(e_libele.getText().toString());
+        evenement.setDescription(e_description.getText().toString());
+        evenement.setLieu(e_lieu.getText().toString());
         evenement.setRecurrence(cb_recurrance.isChecked());
         evenement.setCalendrierId(id_cal);
         // le joure
@@ -614,5 +608,37 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
 
     }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        //affichage du dashboard
+        if (id==R.id.db){
+            Toast.makeText(this,getString(R.string.home),Toast.LENGTH_LONG).show();
+                goHome();
+        }
+        //affichage du calendrier
+        if (id==R.id.calendrier){
+            Toast.makeText(this,getString(R.string.calendar),Toast.LENGTH_LONG).show();
+            goCalendrierActivity();
+        }
+
+
+        return false;
+    }
+
+
+    public void goHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+
+    //open calendrier activity
+    public void goCalendrierActivity() {
+        Intent intent_calendrier = new Intent(this, CalendrierActivity.class);
+        startActivity(intent_calendrier);
+
+    }
+
 }
 

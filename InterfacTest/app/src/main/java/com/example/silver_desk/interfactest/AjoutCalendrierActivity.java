@@ -3,7 +3,11 @@ package com.example.silver_desk.interfactest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,8 +34,10 @@ import java.util.List;
 import petrov.kristiyan.colorpicker.ColorPicker;
 
 import static com.example.silver_desk.interfactest.HomeActivity.DATABASE;
+import static com.example.silver_desk.interfactest.HomeActivity.actionBarDrawerToggle;
+import static com.example.silver_desk.interfactest.HomeActivity.drawerLayout;
 
-public class AjoutCalendrierActivity extends AppCompatActivity implements View.OnClickListener {
+public class AjoutCalendrierActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     // les compoansant manipuler dans ce fragmant
     Spinner spinner_priorite ;
 
@@ -51,7 +57,15 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
         // action bar
 
 
+        // le drawer menu
 
+        drawerLayout=(DrawerLayout)findViewById(R.id.ajout_cal_drawer);
+        actionBarDrawerToggle= new ActionBarDrawerToggle(this ,drawerLayout,R.string.open,R.string.close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        NavigationView navigationView =(NavigationView)findViewById(R.id.nav);
+        navigationView.setNavigationItemSelectedListener(this);
 
         spinner_priorite = (Spinner)findViewById(R.id.s_prio);
         e_titre=(EditText)findViewById(R.id.e_titre);
@@ -98,6 +112,9 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)){
+            return true ;
+        }
         int id = item.getItemId();
         switch (id){
             case R.id.close_action :
@@ -107,13 +124,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
         return super.onOptionsItemSelected(item);
     }
 
-    //traitment des chek box pour  l'enregistremant dans  la base
-    public int c_clicked (CheckBox checkBox){
-        if (checkBox.isChecked())
-            return 1 ;
-        else
-            return 0 ;
-    }
+
 
     @Override
     public void onClick(View view) {
@@ -386,4 +397,32 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
         return stringList ;
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        //affichage du dashboard
+        if (id==R.id.db){
+            Toast.makeText(this,getString(R.string.home),Toast.LENGTH_LONG).show();
+            goHome();
+        }
+        //affichage du calendrier
+        if (id==R.id.calendrier){
+            Toast.makeText(this,getString(R.string.calendar),Toast.LENGTH_LONG).show();
+            goCalendrierActivity();
+        }
+
+        return false;
+    }
+
+    public void goHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+
+    //open calendrier activity
+    public void goCalendrierActivity() {
+        Intent intent_calendrier = new Intent(this, CalendrierActivity.class);
+        startActivity(intent_calendrier);
+
+    }
 }

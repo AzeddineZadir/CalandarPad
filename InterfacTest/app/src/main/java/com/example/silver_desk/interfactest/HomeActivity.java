@@ -46,68 +46,66 @@ import java.util.concurrent.Executors;
 import static com.example.silver_desk.interfactest.database.AppDatabase.getInstance;
 
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener ,
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         WeekView.EventClickListener, MonthLoader.MonthChangeListener,
-      WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, WeekView.EmptyViewClickListener {
-   public static DrawerLayout drawerLayout ;
+        WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, WeekView.EmptyViewClickListener {
+    public static DrawerLayout drawerLayout;
     public static ActionBarDrawerToggle actionBarDrawerToggle;
-    private  FloatingActionButton fab_nav,fab_home,fab_calendrier,fab_aujourdhui;
-    private  Animation ani_open,ani_close,ani_rotateclockwise,ani_rotateanticlockwise;
-     boolean is_clicked = false ;
+    private FloatingActionButton fab_nav, fab_home, fab_calendrier, fab_aujourdhui;
+    private Animation ani_open, ani_close, ani_rotateclockwise, ani_rotateanticlockwise;
+    boolean is_clicked = false;
     public static AppDatabase DATABASE;
-    private     List<Evenement> evenementList ;
+    private List<Evenement> evenementList;
 
- // wekke view variables
- private static final int TYPE_DAY_VIEW = 1;
+    // wekke view variables
+    private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
     private static final int TYPE_WEEK_VIEW = 3;
     private int mWeekViewType = TYPE_THREE_DAY_VIEW;
     private WeekView mWeekView;
-    int compteur_onmonth= 0;
-    Toolbar toolbar ;
+    int compteur_onmonth = 0;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         // toolbar
-        toolbar=(Toolbar)findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.globalView);
         setSupportActionBar(toolbar);
 
         //le drawer menu
-        drawerLayout=(DrawerLayout)findViewById(R.id.drawer);
-        actionBarDrawerToggle= new ActionBarDrawerToggle(this ,drawerLayout,toolbar,R.string.open,R.string.close);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
 
-
-
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        NavigationView navigationView =(NavigationView)findViewById(R.id.nav);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav);
         navigationView.setNavigationItemSelectedListener(this);
 
 
-       // le menus flotan
-        fab_nav=(FloatingActionButton)findViewById(R.id.fab_nav);
+        // le menus flotan
+        fab_nav = (FloatingActionButton) findViewById(R.id.fab_nav);
 
-        ani_open= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_open);
-        ani_close= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
-        ani_rotateclockwise= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_roteatclockwise);
-        ani_rotateanticlockwise= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_roteatanticlockwis);
+        ani_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        ani_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
+        ani_rotateclockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_roteatclockwise);
+        ani_rotateanticlockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_roteatanticlockwis);
 
 
         //inisialisation de la BDD
 
-        DATABASE= Room.databaseBuilder(this,AppDatabase.class,"AppDatabase").allowMainThreadQueries().addCallback(new RoomDatabase.Callback() {
+        DATABASE = Room.databaseBuilder(this, AppDatabase.class, "AppDatabase").allowMainThreadQueries().addCallback(new RoomDatabase.Callback() {
             @Override
             public void onCreate(@NonNull SupportSQLiteDatabase db) {
                 super.onCreate(db);
                 Executors.newSingleThreadScheduledExecutor().execute(new Runnable() {
                     @Override
                     public void run() {
-                        Calendrier calendrier = new Calendrier("mon calendrier",true,true,R.color.color3,"moyenne","le calendrier par defaut ");
+                        Calendrier calendrier = new Calendrier("mon calendrier", true, true, R.color.color3, "moyenne", "le calendrier par defaut ");
                         getInstance(getApplicationContext()).calendrierDao().insert(calendrier);
 
                     }
@@ -117,34 +115,33 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 .build();
 
         // modification du contenu du week view en foncton de litem choisie dans calendrier activity
-         // si on a cliker sur un calendrier en qst
-        if (verifyIncomingIntent()){
+        // si on a cliker sur un calendrier en qst
+        if (verifyIncomingIntent()) {
 
-          int   id_calendrierAafficher= getincomingInten_idCalendrier();
+            int id_calendrierAafficher = getincomingInten_idCalendrier();
             evenementList = DATABASE.evenementDao().loadEvenmentByIdCalendrier(id_calendrierAafficher);
 
-             // le titre afficher sur la action bar sera se li du calendrier choisi
+            // le titre afficher sur la action bar sera se li du calendrier choisi
 
-            Calendrier calendrier=DATABASE.calendrierDao().selecCalendrierById(getincomingInten_idCalendrier());
-             getSupportActionBar().setTitle(calendrier.getTitre());
-             toolbar.setBackground(new ColorDrawable(calendrier.getCouleur()));
+            Calendrier calendrier = DATABASE.calendrierDao().selecCalendrierById(getincomingInten_idCalendrier());
+            getSupportActionBar().setTitle(calendrier.getTitre());
+            toolbar.setBackground(new ColorDrawable(calendrier.getCouleur()));
 
-             // modification de la couleur du boutton dajout pour que il soit de la memee couleure que le calenrier
+            // modification de la couleur du boutton dajout pour que il soit de la memee couleure que le calenrier
             fab_nav.setBackgroundTintList(ColorStateList.valueOf(calendrier.getCouleur()));
-             }else{
+        } else {
 
-            evenementList= DATABASE.evenementDao().loadAllevenement();
+            evenementList = DATABASE.evenementDao().loadAllevenement();
 
         }
-
 
 
         //le boutton  fab
         fab_nav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // ajouter un evenment
-                openAjoutEvenment();
+                // ajouter un evenment
+                goAjoutEvenment();
             }
         });
 
@@ -155,7 +152,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         // Set an action when any event is clicked.
         mWeekView.setOnEventClickListener(this);
-         //mWeekView.setWeekViewLoader();
+        //mWeekView.setWeekViewLoader();
         // The week view has infinite scrolling horizontally. We have to provide the events of a
         // month every time the month changes on the week view.
         mWeekView.setMonthChangeListener(this);
@@ -175,12 +172,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        if (verifyIncomingIntent()){
-            int   id_calendrierAafficher= getincomingInten_idCalendrier();
+        if (verifyIncomingIntent()) {
+            int id_calendrierAafficher = getincomingInten_idCalendrier();
 
             evenementList = DATABASE.evenementDao().loadEvenmentByIdCalendrier(id_calendrierAafficher);
-        }else{
-            evenementList=evenementList = DATABASE.evenementDao().loadAllevenement();
+        } else {
+            evenementList = evenementList = DATABASE.evenementDao().loadAllevenement();
         }
     }
 
@@ -193,6 +190,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
+
     // option menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -204,14 +202,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     // hamburger
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (actionBarDrawerToggle.onOptionsItemSelected(item)){
-            return true ;
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
         }
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.action_today:
 
-                compteur_onmonth=0;
+                compteur_onmonth = 0;
                 mWeekView.goToToday();
                 return true;
             case R.id.action_day_view:
@@ -219,7 +217,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 if (mWeekViewType != TYPE_DAY_VIEW) {
 
 
-                    compteur_onmonth=0;
+                    compteur_onmonth = 0;
                     item.setChecked(!item.isChecked());
                     mWeekViewType = TYPE_DAY_VIEW;
                     mWeekView.setNumberOfVisibleDays(1);
@@ -233,20 +231,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             case R.id.action_three_day_view:
                 if (mWeekViewType != TYPE_THREE_DAY_VIEW) {
-                    compteur_onmonth=0;
+                    compteur_onmonth = 0;
                     item.setChecked(!item.isChecked());
                     mWeekViewType = TYPE_THREE_DAY_VIEW;
                     mWeekView.setNumberOfVisibleDays(3);
 
                     // Lets change some dimensions to best fit the view.
-                   mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
+                    mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
                     mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
-                   mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
+                    mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
                 }
                 return true;
             case R.id.action_week_view:
                 if (mWeekViewType != TYPE_WEEK_VIEW) {
-                    compteur_onmonth=0;
+                    compteur_onmonth = 0;
                     item.setChecked(!item.isChecked());
                     mWeekViewType = TYPE_WEEK_VIEW;
                     mWeekView.setNumberOfVisibleDays(7);
@@ -266,40 +264,27 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         //affichage du dashboard
-        if (id==R.id.db){
-            Toast.makeText(this,getString(R.string.home),Toast.LENGTH_LONG).show();
-            refreshHome();
+        if (id == R.id.db) {
+            Toast.makeText(this, getString(R.string.home), Toast.LENGTH_LONG).show();
+            goHome();
         }
         //affichage du calendrier
-        if (id==R.id.calendrier){
-            Toast.makeText(this,getString(R.string.calendar),Toast.LENGTH_LONG).show();
-         openCalendrierActivity();
+        if (id == R.id.calendrier) {
+            Toast.makeText(this, getString(R.string.calendar), Toast.LENGTH_LONG).show();
+            goCalendrierActivity();
         }
 
 
-        return false ;
+        return false;
 
     }
 
 
-    //open calendrier activity
-    public void openCalendrierActivity(){
-        Intent intent_calendrier = new Intent(HomeActivity.this,CalendrierActivity.class);
-        startActivity(intent_calendrier);
 
-    }
-    //open EvenmentActivity
-    public void openEvenmentActivity(){
-        Intent intent_Evenment = new Intent(HomeActivity.this,EvenementActivity.class);
-        startActivity(intent_Evenment);
 
-    }
-    // open ajout evenment
-    public void openAjoutEvenment (){
-        Intent intent = new Intent( this ,AjoutEvenmentActivity.class);
-        startActivity(intent);
-    }
-// week view
+
+
+    // week view
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
 
@@ -307,31 +292,30 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // quels evenment a recuperer
         // si id_calendrierAafficher= -1  on recupére tous
         // sinon on recupere les evenment  du calendrier qui porte id_calendrierAafficher seulment ;
-       // List<Evenement> evenementList = DATABASE.evenementDao().loadAllevenement();
+        // List<Evenement> evenementList = DATABASE.evenementDao().loadAllevenement();
 
 
-         //recuperation des evenment apartire de la base de donneé
+        //recuperation des evenment apartire de la base de donneé
         //  events=myEventToWeekEvents(evenementList);
-        List<WeekViewEvent> events =myEventToWeekEvents(evenementList,newYear,newMonth)  ;
-        return events ;
+        List<WeekViewEvent> events = myEventToWeekEvents(evenementList, newYear, newMonth);
+        return events;
     }
 
     @Override
     public void onEmptyViewLongPress(Calendar date) {
-        Intent   intent = new Intent(this,AjoutEvenmentActivity.class);
-        intent.putExtra("date",date.getTimeInMillis());
+        Intent intent = new Intent(this, AjoutEvenmentActivity.class);
+        intent.putExtra("date", date.getTimeInMillis());
         startActivity(intent);
     }
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
-      int id_ev= (int) event.getId();
+        int id_ev = (int) event.getId();
         Intent intent = new Intent(this, AjoutEvenmentActivity.class);
 
-        intent.putExtra("id_evenment",id_ev);
-       // intent.putExtra("id_cal",id_cal);
+        intent.putExtra("id_evenment", id_ev);
+        // intent.putExtra("id_cal",id_cal);
         startActivity(intent);
-
 
 
     }
@@ -343,64 +327,64 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
     protected String getEventTitle(Evenement evenement) {
-        Calendar h_d = Calendar.getInstance() ;
-        Calendar h_f = Calendar.getInstance() ;
+        Calendar h_d = Calendar.getInstance();
+        Calendar h_f = Calendar.getInstance();
         h_d.setTimeInMillis(evenement.getHeure_debut());
         h_f.setTimeInMillis(evenement.getHeure_fin());
         String titre = evenement.getLibele().toString().toUpperCase();
-        String Titel = " "+titre+"\n"+"de ;"+h_d.get(Calendar.HOUR_OF_DAY)+":"+h_d.get(Calendar.MINUTE)+"\n a "+h_f.get(Calendar.HOUR_OF_DAY)+":"+h_f.get(Calendar.MINUTE);
-        return evenement.getLibele().toUpperCase() ;
+        String Titel = " " + titre + "\n" + "de ;" + h_d.get(Calendar.HOUR_OF_DAY) + ":" + h_d.get(Calendar.MINUTE) + "\n a " + h_f.get(Calendar.HOUR_OF_DAY) + ":" + h_f.get(Calendar.MINUTE);
+        return evenement.getLibele().toUpperCase();
     }
-    private List<WeekViewEvent> myEventToWeekEvents (List<Evenement> evenementList,int newYear, int newMonth){
+
+    private List<WeekViewEvent> myEventToWeekEvents(List<Evenement> evenementList, int newYear, int newMonth) {
         List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
         compteur_onmonth++;
-     if (compteur_onmonth==1) {
-         for (int i = 0; i < evenementList.size(); i++) {
-             WeekViewEvent event;
-             Evenement evenement = new Evenement();
-             // recuperation dun evenment de la liste des evenment
-             evenement = evenementList.get(i);
-             // les heure debut et fin de levenment
-             Calendar mytimeDebut = Calendar.getInstance();
-             Calendar mytimeFin = Calendar.getInstance();
-             Calendar myDate = Calendar.getInstance();
-             mytimeDebut.setTimeInMillis(evenement.getHeure_debut());
-             mytimeFin.setTimeInMillis(evenement.getHeure_fin());
-             myDate.setTimeInMillis(evenement.getJour());
-             //initialisation de heur debut
-             Calendar startTime = Calendar.getInstance();
+        if (compteur_onmonth == 1) {
+            for (int i = 0; i < evenementList.size(); i++) {
+                WeekViewEvent event;
+                Evenement evenement = new Evenement();
+                // recuperation dun evenment de la liste des evenment
+                evenement = evenementList.get(i);
+                // les heure debut et fin de levenment
+                Calendar mytimeDebut = Calendar.getInstance();
+                Calendar mytimeFin = Calendar.getInstance();
+                Calendar myDate = Calendar.getInstance();
+                mytimeDebut.setTimeInMillis(evenement.getHeure_debut());
+                mytimeFin.setTimeInMillis(evenement.getHeure_fin());
+                myDate.setTimeInMillis(evenement.getJour());
+                //initialisation de heur debut
+                Calendar startTime = Calendar.getInstance();
 
-             startTime.set(Calendar.HOUR_OF_DAY, mytimeDebut.get(Calendar.HOUR_OF_DAY));
-             startTime.set(Calendar.MINUTE, mytimeDebut.get(Calendar.MINUTE));
-             startTime.set(Calendar.MONTH, myDate.get(Calendar.MONTH));
-             startTime.set(Calendar.DAY_OF_MONTH, myDate.get(Calendar.DAY_OF_MONTH));
-             startTime.set(Calendar.YEAR, myDate.get(Calendar.YEAR));
+                startTime.set(Calendar.HOUR_OF_DAY, mytimeDebut.get(Calendar.HOUR_OF_DAY));
+                startTime.set(Calendar.MINUTE, mytimeDebut.get(Calendar.MINUTE));
+                startTime.set(Calendar.MONTH, myDate.get(Calendar.MONTH));
+                startTime.set(Calendar.DAY_OF_MONTH, myDate.get(Calendar.DAY_OF_MONTH));
+                startTime.set(Calendar.YEAR, myDate.get(Calendar.YEAR));
 
-            //initalisation  de heure fin
-             Calendar endTime = Calendar.getInstance();
+                //initalisation  de heure fin
+                Calendar endTime = Calendar.getInstance();
 
-             endTime.set(Calendar.HOUR_OF_DAY, mytimeFin.get(Calendar.HOUR_OF_DAY));
-             endTime.set(Calendar.MINUTE, mytimeFin.get(Calendar.MINUTE));
-             endTime.set(Calendar.MONTH, myDate.get(Calendar.MONTH));
-             endTime.set(Calendar.DAY_OF_MONTH,myDate.get(Calendar.DAY_OF_MONTH) );
-             endTime.set(Calendar.YEAR, myDate.get(Calendar.YEAR));
-
-
-             // initialisation de weekviewevent grace a cet evenment
-             event = new WeekViewEvent(evenement.getId(), getEventTitle(evenement), startTime, endTime);
-             // recuperation de la color
-             int color = DATABASE.calendrierDao().getIdCalendrierColorById(evenement.getCalendrierId());
-             event.setColor(color);
-
-             // ajout de levenment dans la liste des events compatible au composents week view
-             events.add(event);
-         }
+                endTime.set(Calendar.HOUR_OF_DAY, mytimeFin.get(Calendar.HOUR_OF_DAY));
+                endTime.set(Calendar.MINUTE, mytimeFin.get(Calendar.MINUTE));
+                endTime.set(Calendar.MONTH, myDate.get(Calendar.MONTH));
+                endTime.set(Calendar.DAY_OF_MONTH, myDate.get(Calendar.DAY_OF_MONTH));
+                endTime.set(Calendar.YEAR, myDate.get(Calendar.YEAR));
 
 
-     }
-         return events;
-     }
+                // initialisation de weekviewevent grace a cet evenment
+                event = new WeekViewEvent(evenement.getId(), getEventTitle(evenement), startTime, endTime);
+                // recuperation de la color
+                int color = DATABASE.calendrierDao().getIdCalendrierColorById(evenement.getCalendrierId());
+                event.setColor(color);
 
+                // ajout de levenment dans la liste des events compatible au composents week view
+                events.add(event);
+            }
+
+
+        }
+        return events;
+    }
 
 
     private void setupDateTimeInterpreter(final boolean shortDate) {
@@ -420,16 +404,31 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
 
             @Override
-            public String interpretTime(int hour,int minuts) {
+            public String interpretTime(int hour, int minuts) {
                 return hour > 11 ? (hour - 12) + " PM" : (hour == 0 ? "12 AM" : hour + " AM");
             }
         });
     }
 
-    public void refreshHome (){
+    // les methodes de navigation
+    public void goAjoutEvenment() {
+        Intent intent = new Intent(this, AjoutEvenmentActivity.class);
+        startActivity(intent);
+    }
+
+    public void goHome() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
+
+    //open calendrier activity
+    public void goCalendrierActivity() {
+        Intent intent_calendrier = new Intent(HomeActivity.this, CalendrierActivity.class);
+        startActivity(intent_calendrier);
+
+    }
+
+
     private int getincomingInten_idCalendrier() {
         if (getIntent().hasExtra("id_cal")) {
             int id_cal = getIntent().getIntExtra("id_cal", 1);
@@ -438,9 +437,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         return 0;
     }
-    private boolean verifyIncomingIntent(){
-        if (getincomingInten_idCalendrier()!=0)
-            return  true;
+
+    private boolean verifyIncomingIntent() {
+        if (getincomingInten_idCalendrier() != 0)
+            return true;
         else
             return false;
     }

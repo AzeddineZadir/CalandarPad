@@ -6,164 +6,182 @@
     android:layout_height="match_parent"
     tools:context="com.example.silver_desk.interfactest.AjoutCalendrierActivity">
 
-
-
-    <LinearLayout
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/ajout_cal_drawer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"
-        tools:ignore="MissingConstraints">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp">
 
-            <TextView
-                android:layout_width="121dp"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
 
-                android:text="@string/titre"
-                android:textSize="18sp"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="61dp" />
+                <TextView
+                    android:layout_width="121dp"
+                    android:layout_height="wrap_content"
 
-            <EditText
-                android:id="@+id/e_titre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                    android:text="@string/titre"
+                    android:textSize="18sp"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="61dp" />
 
-                android:ems="10"
-                android:hint="activitées sportives"
-                android:inputType="textPersonName"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="48dp" />
+                <EditText
+                    android:id="@+id/e_titre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:ems="10"
+                    android:hint="activitées sportives"
+                    android:inputType="textPersonName"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="48dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activite"
+                    android:textSize="18sp"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="144dp" />
+
+                <CheckBox
+                    android:id="@+id/c_activite"
+                    android:layout_width="236dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="123dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/visibilite"
+                    android:textSize="18sp"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="96dp" />
+
+                <CheckBox
+                    android:id="@+id/c_visibilite"
+                    android:layout_width="231dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="121dp"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/priorite"
+                    android:textSize="18sp"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="199dp" />
+
+                <Spinner
+                    android:id="@+id/s_prio"
+                    android:layout_width="197dp"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/description"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/et_descritpion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:ems="10"
+                    android:inputType="textMultiLine" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="66dp"
+
+                android:layout_above="@+id/fab_save_event"
+                android:layout_alignParentStart="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="153dp"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/couleur"
+                    android:textSize="18sp"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="171dp" />
+
+                <Button
+
+                    android:id="@+id/b_couleur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="160dp"
+                    android:background="@drawable/round_color"
+
+                    />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:text="@string/activite"
-                android:textSize="18sp"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="144dp" />
-
-            <CheckBox
-                android:id="@+id/c_activite"
-                android:layout_width="236dp"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="123dp"
-                android:layout_height="wrap_content"
-                android:text="@string/visibilite"
-                android:textSize="18sp"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="96dp" />
-
-            <CheckBox
-                android:id="@+id/c_visibilite"
-                android:layout_width="231dp"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="start"
+            android:layout_marginTop="11dp"
+            android:background="@color/whit"
+            app:headerLayout="@layout/header"
+            app:itemTextColor="@color/darkgray"
+            app:menu="@menu/drawermenu" />
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="121dp"
-                android:layout_height="wrap_content"
-
-                android:text="@string/priorite"
-                android:textSize="18sp"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="199dp" />
-
-            <Spinner
-                android:id="@+id/s_prio"
-                android:layout_width="197dp"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-
-                android:text="@string/description"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/et_descritpion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:ems="10"
-                android:inputType="textMultiLine" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="66dp"
-
-            android:layout_above="@+id/fab_save_event"
-            android:layout_alignParentStart="true"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="153dp"
-                android:layout_height="wrap_content"
-
-                android:text="@string/couleur"
-                android:textSize="18sp"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="171dp" />
-
-            <Button
-
-                android:id="@+id/b_couleur"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="160dp"
-                android:background="@drawable/round_color"
-
-                />
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
+    </android.support.v4.widget.DrawerLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_save_event"
         android:layout_width="wrap_content"
@@ -186,5 +204,6 @@
         android:clickable="true"
         app:backgroundTint="@color/button_back"
         app:srcCompat="@drawable/ic_delete" />
+
 
 </android.support.v7.widget.ContentFrameLayout>

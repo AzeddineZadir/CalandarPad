@@ -59,5 +59,6 @@
     <string name="yes">oui</string>
     <string name="no">non</string>
     <string name="addcalendar">Ajoutez un calendrier </string>
+    <string name="addevent">Ajoutez un événment </string>
 
 </resources>
