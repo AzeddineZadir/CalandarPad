@@ -51,7 +51,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
     Spinner spinner_delai, spinner_calendrier_parent;
     ArrayAdapter arrayAdapterdelai, arrayAdaptercal;
     List<String> listecal,listedelai;
-    int heure_d, minute_d, heure_f, minute_f;
+
     private boolean modification;
 
     @Override
@@ -248,15 +248,13 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         if (flag == FLAG_START_TIME) {
             heure_deb.set(Calendar.HOUR_OF_DAY, hour);
             heure_deb.set(Calendar.MINUTE, minut);
-            heure_d = heure_deb.get(Calendar.HOUR_OF_DAY);
-            minute_d = heure_deb.get(Calendar.MINUTE);
-            b_debut.setText( heure_d + ":" + minute_d);
+
+            b_debut.setText( genratTitelWithTime(heure_deb));
         } else if (flag == FLAG_END_TIME) {
             heure_fin.set(Calendar.HOUR_OF_DAY, hour);
             heure_fin.set(Calendar.MINUTE, minut);
-            heure_f = heure_fin.get(Calendar.HOUR_OF_DAY);
-            minute_f = heure_fin.get(Calendar.MINUTE);
-            b_fin.setText( heure_f + ":" + minute_f);
+
+            b_fin.setText(genratTitelWithTime(heure_fin));
         }
     }
 
@@ -267,7 +265,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         date.set(Calendar.MONTH, M);
         date.set(Calendar.DAY_OF_MONTH, D);
 
-        b_joure.setText( D + "/" + M + "/" + Y);
+       b_joure.setText(genratTitelWithDate(date));
     }
 
     // pour verifier si ond dois initialiser les champe ou non (modification)
@@ -326,7 +324,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
     // remplire les informations de levenment sur la vue apré click
     public void viewSetInfo() {
         // la vue doit etre formater suite a un onlong click emty view
-        if (verifyIncomingIntentDate()){
+        /*if (verifyIncomingIntentDate()){
             Calendar mdate= Calendar.getInstance();
             mdate.setTimeInMillis(getincomingInten_date());
 
@@ -347,7 +345,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
             //
 
 
-        }
+        }*/
 
 
 
@@ -377,17 +375,9 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
             heure_fin.setTimeInMillis(evenement.getHeure_fin());
             // init du jour
             date.setTimeInMillis(evenement.getJour());
-
-            // afficher lheure sur les button
-            b_debut.setText(genratTitelWithTime(heure_deb));
-            b_fin.setText(genratTitelWithTime(heure_fin));
-
-            // afficher la dat-e sur le button
-            b_joure.setText(genratTitelWithDate(date));
-
-
         }
-
+            // afficher les info sur les buttons
+        setTimeDateButtonInfo(b_debut,b_fin,b_joure);
     }
 
     // recuperer la position de litem grace a ca valeure textuel  pour  fair un setselection sur le spinner
@@ -532,7 +522,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
         int h_d = h.get(Calendar.HOUR_OF_DAY);
         int m_d = h.get(Calendar.MINUTE);
-        titel = h_d + ":" + m_d;
+        titel = formaterValeure(h_d)+ ":" + formaterValeure(m_d);
 
         return titel;
     }
@@ -546,7 +536,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         M=M+1 ;
         Y = h.get(Calendar.YEAR);
 
-       titel = "" + D + "/" + M + "/" + Y;
+       titel = "" + formaterValeure(D) + "/" + formaterValeure(M)+ "/" + formaterValeure(Y);
         return titel;
     }
 
@@ -566,7 +556,63 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         return  date ;
     }
 
+    // formater les chifre inferierue a 10 pour qui ils s'affiche de la sort 0X
+    public String formaterValeure( int h){
+        String c ;
+        if (h<10){
+            c = "0"+h ;
+        }else{
+            c=""+h ;
+        }
+        return  c ;
+    }
+
+    public void setTimeDateButtonInfo(Button b_hd,Button b_hf,Button b_j){
+        if (verifyIncomingIntentDate()){
+            Calendar mdate= Calendar.getInstance();
+            mdate.setTimeInMillis(getincomingInten_date());
+
+            long uneheure=3600000;
+            // intialisation du temps
+            heure_deb.setTimeInMillis(mdate.getTimeInMillis());
+            heure_fin.setTimeInMillis(mdate.getTimeInMillis()+uneheure);
+            // init du jour
+            date.setTimeInMillis(mdate.getTimeInMillis());
+
+            // afficher lheure sur les button
+            b_hd.setText(genratTitelWithTime(heure_deb));
+            b_hf.setText(genratTitelWithTime(heure_fin));
+
+            // afficher la dat-e sur le button
+            b_j.setText(genratTitelWithDate(date));
+        }else if(verifyIncomingIntentIdEvenment()){
+            // afficher lheure sur les button
+            b_hd.setText(genratTitelWithTime(heure_deb));
+            b_hf.setText(genratTitelWithTime(heure_fin));
+
+            // afficher la dat-e sur le button
+            b_j.setText(genratTitelWithDate(date));
+
+        }else{
+            Calendar mdate= Calendar.getInstance();
+
+            long uneheure=3600000;
+            // intialisation du temps
+            heure_deb.setTimeInMillis(mdate.getTimeInMillis());
+            heure_fin.setTimeInMillis(mdate.getTimeInMillis()+uneheure);
+            // init du jour
+            date.setTimeInMillis(mdate.getTimeInMillis());
+
+            // afficher lheure sur les button
+            b_hd.setText(genratTitelWithTime(heure_deb));
+            b_hf.setText(genratTitelWithTime(heure_fin));
+
+            // afficher la dat-e sur le button
+            b_j.setText(genratTitelWithDate(date));
+        }
 
 
+
+    }
 }
 
