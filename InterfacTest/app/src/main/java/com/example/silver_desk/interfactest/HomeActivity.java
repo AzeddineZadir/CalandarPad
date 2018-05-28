@@ -1,5 +1,6 @@
 package com.example.silver_desk.interfactest;
 
+import android.app.Activity;
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
@@ -11,6 +12,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,6 +24,8 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
@@ -65,6 +69,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private WeekView mWeekView;
     int compteur_onmonth = 0;
     Toolbar toolbar;
+    private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +110,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 Executors.newSingleThreadScheduledExecutor().execute(new Runnable() {
                     @Override
                     public void run() {
-                        Calendrier calendrier = new Calendrier("mon calendrier", true, true, R.color.color3, "moyenne", "le calendrier par defaut ");
+                        Calendrier calendrier = new Calendrier("mon calendrier", true, true, R.color.colorPrimary, "le calendrier par defaut ");
                         getInstance(getApplicationContext()).calendrierDao().insert(calendrier);
 
                     }
@@ -126,6 +131,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Calendrier calendrier = DATABASE.calendrierDao().selecCalendrierById(getincomingInten_idCalendrier());
             getSupportActionBar().setTitle(calendrier.getTitre());
             toolbar.setBackground(new ColorDrawable(calendrier.getCouleur()));
+            // statu bar
+            activity = new Activity();
+            Window window = this.getWindow();
+
+        // clear FLAG_TRANSLUCENT_STATUS flag:
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+            // finally change the color
+            window.setStatusBarColor(calendrier.getCouleur());
 
             // modification de la couleur du boutton dajout pour que il soit de la memee couleure que le calenrier
             fab_nav.setBackgroundTintList(ColorStateList.valueOf(calendrier.getCouleur()));
@@ -273,6 +289,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Toast.makeText(this, getString(R.string.calendar), Toast.LENGTH_LONG).show();
             goCalendrierActivity();
         }
+        // le teste
+        //affichage du calendrier
+        if (id == R.id.apropos) {
+        Intent intent = new Intent(this , Testajoutinterface.class);
+        startActivity(intent);
+        }
+
 
 
         return false;

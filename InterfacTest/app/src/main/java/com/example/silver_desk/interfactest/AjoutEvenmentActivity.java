@@ -118,7 +118,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
         // spinner cal
         spinner_calendrier_parent = (Spinner) findViewById(R.id.spinner_calendrier_parent);
-        listecal = DATABASE.calendrierDao().loadAllCalendrierTitels();
+        listecal = DATABASE.calendrierDao().loadAllCalendrierTitelsIfvisibel();
         arrayAdaptercal = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, listecal);
         spinner_calendrier_parent.setAdapter(arrayAdaptercal);
         if (verifyIncomingIntentIdEvenment()==false){
@@ -239,7 +239,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
     }
 
-    private long generatAlertTime( Calendar heure_deb ,Spinner spinner) {
+    private long generatAlertTime( Calendar heure_deb ,Spinner spinner, Calendar date) {
 
         Calendar timealerte = Calendar.getInstance();
         long time=0;
@@ -248,7 +248,12 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
             time=0 ;
         }else{
         timealerte.setTimeInMillis(heure_deb.getTimeInMillis()-delai);
+        timealerte.set(Calendar.YEAR,date.get(Calendar.YEAR));
+        timealerte.set(Calendar.MONTH,date.get(Calendar.MONTH));
+        timealerte.set(Calendar.DAY_OF_MONTH,date.get(Calendar.DAY_OF_MONTH));
         time = timealerte.getTimeInMillis();}
+
+
         return  time ;
     }
 
@@ -466,7 +471,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         // id calendrier parent
         int id_calendrier = id_cal;
         // heure alerte
-        long heure_alerte = generatAlertTime(heure_deb,spinner_delai);
+        long heure_alerte = generatAlertTime(heure_deb,spinner_delai,date);
         // delai alerte
         long delai = getdelaiFromSpiner(spinner_delai);
 
@@ -502,7 +507,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
         }
         //heure_alerte
-        evenement.setHeure_alerte(generatAlertTime(heure_deb,spinner_delai));
+        evenement.setHeure_alerte(generatAlertTime(heure_deb,spinner_delai,date));
         // delai alerte
         evenement.setDelai_alerte(getdelaiFromSpiner(spinner_delai));
         //insertion dans la base

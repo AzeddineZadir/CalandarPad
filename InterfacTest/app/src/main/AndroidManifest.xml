@@ -9,30 +9,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-
-        </activity>
-        <activity android:name=".HomeActivity"
+        <activity android:name=".MainActivity"></activity>
+        <activity
+            android:name=".HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CalendrierActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".CalendrierActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AjoutEvenmentActivity" />
-        
-        <service android:name=".service.TimerService"
+
+        <service
+            android:name=".service.TimerService"
             android:enabled="true"
-            android:exported="true"/>
-
-
+            android:exported="true" />
 
         <activity android:name=".SelectedCalendrierActivity" />
-        <activity android:name=".AjoutCalendrierActivity"></activity>
+        <activity android:name=".AjoutCalendrierActivity" />
+        <activity android:name=".Testajoutinterface"></activity>
     </application>
 
 </manifest>

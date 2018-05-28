@@ -67,7 +67,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
         NavigationView navigationView =(NavigationView)findViewById(R.id.nav);
         navigationView.setNavigationItemSelectedListener(this);
 
-        spinner_priorite = (Spinner)findViewById(R.id.s_prio);
+
         e_titre=(EditText)findViewById(R.id.e_titre);
         e_description=(EditText)findViewById(R.id.et_descritpion);
 
@@ -91,7 +91,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
         // configuration du spinner
         arrayAdapter=ArrayAdapter.createFromResource(this,R.array.priorite,android.R.layout.simple_spinner_item);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_priorite.setAdapter(arrayAdapter);
+
 
         // action bar
         getSupportActionBar().setTitle(getString(R.string.title_activity_ajout__calendrier));
@@ -186,7 +186,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
 
                 spinner=(Spinner)view1.findViewById(R.id.spinner_list_cal) ;
                 spinner.setVisibility(View.INVISIBLE);
-                List<String>listcal=DATABASE.calendrierDao().loadAllCalendrierTitels();
+                List<String>listcal=DATABASE.calendrierDao().loadAllCalendrierTitelsIfvisibel();
 
                 ArrayAdapter arrayAdapter= new ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item,enlevéUnTitre(listcal,calendrier.getTitre()));
                 spinner.setAdapter(arrayAdapter);
@@ -281,12 +281,11 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
          // init activité
             c_activite.setChecked(calendrier.isActivite());
          // init priorite
-            String cal_priorite= calendrier.getPriorite();
+
             String[] stringArray=getResources().getStringArray(R.array.priorite);
             List<String> stringList = new ArrayList<String>();
             stringList= stringArrayToList(stringArray);
-            int pos= getPositionOfitemByValu(cal_priorite,stringList);
-            spinner_priorite.setSelection(pos);
+
          // init couleur
             b_couleur.setBackgroundColor(calendrier.getCouleur());
 
@@ -333,7 +332,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
         calendrier.setTitre(e_titre.getText().toString());
         calendrier.setVisibilite(c_visibilite.isChecked());
         calendrier.setActivite(c_activite.isChecked());
-        calendrier.setPriorite(spinner_priorite.getSelectedItem().toString());
+
         calendrier.setDescription(e_description.getText().toString());
         calendrier.setCouleur(b_couleurBackground.getColor());
 
@@ -349,12 +348,12 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
       String titer =e_titre.getText().toString();
       Boolean activite=c_activite.isChecked();
       Boolean visibilite=c_visibilite.isChecked();
-      String priorite = spinner_priorite.getSelectedItem().toString();
+
       String description =e_description.getText().toString();
       int couleur=b_couleurBackground.getColor();
         // creation de lobjet
 
-        Calendrier calendrier= new Calendrier(id_cal,titer,visibilite,activite,couleur,priorite,description) ;
+        Calendrier calendrier= new Calendrier(id_cal,titer,visibilite,activite,couleur,description) ;
        DATABASE.calendrierDao().upDateCalendrier(calendrier);
         Toast.makeText(this, getString(R.string.updateSuccess), Toast.LENGTH_SHORT).show();
 

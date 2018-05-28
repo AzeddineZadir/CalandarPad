@@ -35,8 +35,8 @@ public interface CalendrierDao {
     @Query("SELECT titre FROM calendrier_table where id=:id")
     String  selecCalendrierTitreById(int id);
 
-    @Query("SELECT titre FROM calendrier_table")
-    List<String>  loadAllCalendrierTitels();
+    @Query("SELECT titre FROM calendrier_table WHERE visibilite ='1'")
+    List<String>  loadAllCalendrierTitelsIfvisibel();
 
     @Query("SELECT id FROM calendrier_table where titre =:titre")
      int  getIdCalendrierByTitel(String titre);
