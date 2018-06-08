@@ -7,14 +7,11 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +29,6 @@ import com.example.silver_desk.interfactest.database.Evenement;
 import com.example.silver_desk.interfactest.fragment.DatePickerFragment;
 import com.example.silver_desk.interfactest.fragment.TimePickerFragment;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -196,11 +192,40 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
                 backToHome();
             } else {
                 // Ajout d'un evenment
-                Evenement evenement = new Evenement();
-                inserEvenment(evenement, id_cal);
-                backToHome();
+                if(e_libele.getText().toString().equals("")) {
 
-            }
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Erreur de saisis");
+                    builder.setIcon(R.drawable.ic_announcement_black_24dp);
+                    builder.setMessage("vous n'avez pas saisie toutes les informations nécessaires");
+                    builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }else if(checkEventTime(heure_deb,heure_fin)==false){
+
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Incohérencce dans l'heure debut et l'heure fin");
+                    builder.setIcon(R.drawable.ic_announcement_black_24dp);
+                    builder.setMessage("Modifiez l'heure de début afin qu'elle soit antérieure a l'heure de fin de l'événement");
+                    builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }else{
+                    Evenement evenement = new Evenement();
+                    inserEvenment(evenement, id_cal);
+                    backToHome();
+                }
+                }
 
         }
 
@@ -650,5 +675,16 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
     }
 
+    public boolean checkEventTime(Calendar cd ,Calendar cf){
+        long d=cd.getTimeInMillis() ;
+        long f=cf.getTimeInMillis() ;
+        if (d<f){
+            return true ;
+        }else{
+            return false ;
+        }
+
+
+    }
 }
 

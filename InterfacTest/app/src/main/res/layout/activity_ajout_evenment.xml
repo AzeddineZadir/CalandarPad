@@ -75,7 +75,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="67dp">
 
                     <Button
                         android:id="@+id/b_debut"
@@ -126,7 +126,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="37dp"
+                    android:layout_height="48dp"
                     android:layout_marginTop="0dp"
                     android:orientation="horizontal">
 
@@ -140,7 +140,7 @@
 
                     <Spinner
                         android:id="@+id/spinner_calendrier_parent"
-                        android:layout_width="124dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
@@ -212,7 +212,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="75dp"
+                    android:layout_height="59dp"
 
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentStart="true"
@@ -230,7 +230,7 @@
 
                     <Spinner
                         android:id="@+id/spinner_delai"
-                        android:layout_width="121dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>

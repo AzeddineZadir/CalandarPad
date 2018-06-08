@@ -44,7 +44,7 @@
                     tools:layout_editor_absoluteY="61dp" />
 
                 <EditText
-                    android:id="@+id/e_titre"
+                    android:id="@+id/et_titre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 

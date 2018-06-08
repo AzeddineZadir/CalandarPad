@@ -11,7 +11,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +21,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.silver_desk.interfactest.database.Calendrier;
 import com.example.silver_desk.interfactest.database.Evenement;
@@ -42,7 +40,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
     // les compoansant manipuler dans ce fragmant
     Spinner spinner_priorite ;
 
-    EditText e_titre,e_description ;
+    EditText et_titre,et_description ;
     CheckBox c_activite,c_visibilite ;
     Button b_couleur ;
     FloatingActionButton fab_add_cal ,fab_delete_cal ;
@@ -70,12 +68,13 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        e_titre=(EditText)findViewById(R.id.e_titre);
-        e_description=(EditText)findViewById(R.id.et_descritpion);
+        et_titre=(EditText)findViewById(R.id.et_titre);
+        et_description=(EditText)findViewById(R.id.et_descritpion);
 
         b_couleur=(Button) findViewById(R.id.b_couleur);
 
         c_visibilite=(CheckBox)findViewById(R.id.c_visibilite);
+        c_visibilite.setChecked(true);
 
         fab_add_cal=(FloatingActionButton)findViewById(R.id.fab_save_event) ;
         fab_add_cal.setOnClickListener(this);
@@ -87,6 +86,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
 
 
         b_couleur.setOnClickListener(this);
+        b_couleur.setBackgroundColor(getResources().getColor(R.color.color3));
         // une couleure pardefaut
 
 
@@ -142,15 +142,28 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
               backCalendrierActivity();
             }else {
                 // Ajout
-                Calendrier calendrier= new Calendrier() ;
-                inserCalendrier(calendrier);
-                backCalendrierActivity();
+                if(et_titre.getText().toString().equals("")) {
 
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Erreur de saisis");
+                    builder.setIcon(R.drawable.ic_announcement_black_24dp);
+                    builder.setMessage("vous n'avez pas saisie toutes les informations nécessaires");
+                    builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }else{
+
+                   Calendrier calendrier = new Calendrier();
+                    inserCalendrier(calendrier);
+                    backCalendrierActivity();
+                }
             }
 
-            Toast.makeText(view.getContext(),getString(R.string.addCalendarToast),Toast.LENGTH_LONG).show();
-            Intent intent_calendrier = new Intent(this,CalendrierActivity.class);
-            startActivity(intent_calendrier);
 
         }
         if (view.getId()==R.id.b_couleur){
@@ -285,7 +298,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
             t_titreajout.setText(R.string.setcalendar);
            Calendrier calendrier= DATABASE.calendrierDao().selecCalendrierById(getincomingInten_idCalendrier());
          // init titre
-           e_titre.setText(calendrier.getTitre().toString());
+           et_titre.setText(calendrier.getTitre().toString());
          // init visibilité
             c_visibilite.setChecked(calendrier.isVisibilite());
 
@@ -339,12 +352,10 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
        // GradientDrawable gradient=(GradientDrawable) b_couleur.getBackground();
         ColorDrawable b_couleurBackground=(ColorDrawable) b_couleur.getBackground();
         // recuperation des information du calendrier
-        calendrier.setTitre(e_titre.getText().toString());
+        calendrier.setTitre(et_titre.getText().toString());
         calendrier.setVisibilite(c_visibilite.isChecked());
-        calendrier.setDescription(e_description.getText().toString());
+        calendrier.setDescription(et_description.getText().toString());
         calendrier.setCouleur(b_couleurBackground.getColor());
-
-
         DATABASE.calendrierDao().insert(calendrier);
         Toast.makeText(this, getString(R.string.addSuccess), Toast.LENGTH_SHORT).show();
     }
@@ -353,11 +364,11 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
 
         ColorDrawable b_couleurBackground=(ColorDrawable) b_couleur.getBackground();
 
-      String titer =e_titre.getText().toString();
+      String titer =et_titre.getText().toString();
 
       Boolean visibilite=c_visibilite.isChecked();
 
-      String description =e_description.getText().toString();
+      String description =et_description.getText().toString();
       int couleur=b_couleurBackground.getColor();
         // creation de lobjet
 
@@ -431,5 +442,20 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
         Intent intent_calendrier = new Intent(this, CalendrierActivity.class);
         startActivity(intent_calendrier);
 
+    }
+    public void showDialogIfEmplty(EditText editText){
+        if (editText.getText().equals("")){
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Erreur de saisis");
+            builder.setMessage("vous n'avez pas saisie toutes les informations nécessaire");
+            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
     }
 }
