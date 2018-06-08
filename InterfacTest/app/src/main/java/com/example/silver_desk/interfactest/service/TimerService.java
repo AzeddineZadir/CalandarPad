@@ -75,7 +75,7 @@ public class TimerService extends Service {
                 public void run() {
 
                     long currentTime=System.currentTimeMillis();
-                    List<Evenement> Event=DATABASE.evenementDao().selectCurrentEvenement(currentTime);
+                    List<Evenement> Event=DATABASE.evenementDao().selectCurrentEvenement();
                     displayNotification(Event);
 
                 }
