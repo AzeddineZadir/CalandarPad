@@ -56,11 +56,11 @@
 
             <ImageButton
                 android:id="@+id/imb_setting_cal"
-                android:layout_width="35dp"
+                android:layout_width="51dp"
                 android:layout_height="match_parent"
 
                 android:background="#ffffffff"
-                app:srcCompat="@drawable/ic_settings_black_24dp" />
+                app:srcCompat="@drawable/ic_mode_edit_black_24dp" />
 
 
         </LinearLayout>

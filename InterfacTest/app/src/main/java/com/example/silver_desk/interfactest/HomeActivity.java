@@ -110,7 +110,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 Executors.newSingleThreadScheduledExecutor().execute(new Runnable() {
                     @Override
                     public void run() {
-                        Calendrier calendrier = new Calendrier("mon calendrier", true, true, R.color.colorPrimary, "le calendrier par defaut ");
+                        Calendrier calendrier = new Calendrier("mon calendrier", true, R.color.color2, "le calendrier par defaut ");
                         getInstance(getApplicationContext()).calendrierDao().insert(calendrier);
 
                     }

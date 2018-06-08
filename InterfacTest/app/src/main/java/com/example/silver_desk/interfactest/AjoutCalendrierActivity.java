@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -46,6 +47,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
     Button b_couleur ;
     FloatingActionButton fab_add_cal ,fab_delete_cal ;
     ArrayAdapter<CharSequence> arrayAdapter ;
+    TextView t_titreajout;
     Evenement event;
 
     Time td,tf;
@@ -72,7 +74,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
         e_description=(EditText)findViewById(R.id.et_descritpion);
 
         b_couleur=(Button) findViewById(R.id.b_couleur);
-        c_activite=(CheckBox)findViewById(R.id.c_activite);
+
         c_visibilite=(CheckBox)findViewById(R.id.c_visibilite);
 
         fab_add_cal=(FloatingActionButton)findViewById(R.id.fab_save_event) ;
@@ -80,7 +82,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
 
         fab_delete_cal =(FloatingActionButton)findViewById(R.id.fab_delete_cal);
         fab_delete_cal.setOnClickListener(this);
-
+        fab_delete_cal.setVisibility(View.INVISIBLE);
 
 
 
@@ -96,6 +98,8 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
         // action bar
         getSupportActionBar().setTitle(getString(R.string.title_activity_ajout__calendrier));
 
+        // texte view
+        t_titreajout=(TextView)findViewById(R.id.t_titreajout);
 
 
         viewSetInfo();
@@ -226,6 +230,9 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
                             dialogInterface.dismiss();
                             backCalendrierActivity();
 
+                        }else{
+                            DATABASE.calendrierDao().deletCalendrier(calendrier);
+                            backCalendrierActivity();
                         }
 
 
@@ -273,13 +280,16 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
     //initialiser la vue en cas de modification
     private void viewSetInfo(){
         if (verifyIncomingIntent()){
+            // le titre de" la vue
+            getSupportActionBar().setTitle("Edition calendrier ");
+            t_titreajout.setText(R.string.setcalendar);
            Calendrier calendrier= DATABASE.calendrierDao().selecCalendrierById(getincomingInten_idCalendrier());
          // init titre
            e_titre.setText(calendrier.getTitre().toString());
          // init visibilité
             c_visibilite.setChecked(calendrier.isVisibilite());
-         // init activité
-            c_activite.setChecked(calendrier.isActivite());
+
+
          // init priorite
 
             String[] stringArray=getResources().getStringArray(R.array.priorite);
@@ -289,7 +299,7 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
          // init couleur
             b_couleur.setBackgroundColor(calendrier.getCouleur());
 
-
+         fab_delete_cal.setVisibility(View.VISIBLE);
 
 
 
@@ -331,8 +341,6 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
         // recuperation des information du calendrier
         calendrier.setTitre(e_titre.getText().toString());
         calendrier.setVisibilite(c_visibilite.isChecked());
-        calendrier.setActivite(c_activite.isChecked());
-
         calendrier.setDescription(e_description.getText().toString());
         calendrier.setCouleur(b_couleurBackground.getColor());
 
@@ -346,14 +354,14 @@ public class AjoutCalendrierActivity extends AppCompatActivity implements View.O
         ColorDrawable b_couleurBackground=(ColorDrawable) b_couleur.getBackground();
 
       String titer =e_titre.getText().toString();
-      Boolean activite=c_activite.isChecked();
+
       Boolean visibilite=c_visibilite.isChecked();
 
       String description =e_description.getText().toString();
       int couleur=b_couleurBackground.getColor();
         // creation de lobjet
 
-        Calendrier calendrier= new Calendrier(id_cal,titer,visibilite,activite,couleur,description) ;
+        Calendrier calendrier= new Calendrier(id_cal,titer,visibilite,couleur,description) ;
        DATABASE.calendrierDao().upDateCalendrier(calendrier);
         Toast.makeText(this, getString(R.string.updateSuccess), Toast.LENGTH_SHORT).show();
 

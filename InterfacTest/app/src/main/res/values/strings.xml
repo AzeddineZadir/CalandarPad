@@ -60,5 +60,9 @@
     <string name="no">non</string>
     <string name="addcalendar">Ajoutez un calendrier </string>
     <string name="addevent">Ajoutez un événment </string>
+    <string name="setcalendar">Modifiez un calendrier </string>
+    <string name="setevent">Modifiez un événment </string>
+    <string name="yourtitel">votre titre</string>
+    <string name="yourdesccreption">votre description</string>
 
 </resources>

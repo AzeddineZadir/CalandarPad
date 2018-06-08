@@ -24,6 +24,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -57,7 +58,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
     Spinner spinner_delai, spinner_calendrier_parent;
     ArrayAdapter arrayAdapterdelai, arrayAdaptercal;
     List<String> listecal,listedelai;
-
+    TextView t_titre ;
     private boolean modification;
 
     @Override
@@ -65,7 +66,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajout_evenment);
         // taction bar
-        getSupportActionBar().setTitle(R.string.addevent);
+        getSupportActionBar().setTitle("Ajout d'un événement");
 
         // le drawer menu
 
@@ -126,7 +127,8 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
             fab_delet_event.setVisibility(View.INVISIBLE);
 
         }
-
+        // yexte view
+        t_titre=(TextView)findViewById(R.id.t_titre);
         viewSetInfo();
 
     }
@@ -351,6 +353,9 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         // la vue doit etre formater suit au click sur un evenment
 
         if (verifyIncomingIntentIdEvenment()) {
+            getSupportActionBar().setTitle("Edition d'un événement");
+            t_titre.setText(R.string.setevent);
+
             Evenement evenement = DATABASE.evenementDao().selectEvenmentById(getincomingInten_idevenment());
 
             e_libele.setText(evenement.getLibele().toString());

@@ -7,6 +7,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -41,7 +42,8 @@ public abstract class AppDatabase extends RoomDatabase {
                         Executors.newSingleThreadScheduledExecutor().execute(new Runnable() {
                             @Override
                             public void run() {
-                                Calendrier calendrier = new Calendrier("mon calendrier",true,true,R.color.colorPrimary,"");
+
+                                Calendrier calendrier = new Calendrier("mon calendrier",true,R.color.color2,"");
                                 getInstance(context).calendrierDao().insert(calendrier);
                             }
                         });
