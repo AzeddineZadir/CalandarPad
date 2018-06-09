@@ -21,10 +21,12 @@ import android.widget.Toast;
 
 import com.example.silver_desk.interfactest.HomeActivity;
 import com.example.silver_desk.interfactest.R;
+import com.example.silver_desk.interfactest.database.Alerte;
 import com.example.silver_desk.interfactest.database.AppDatabase;
 import com.example.silver_desk.interfactest.database.Evenement;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -75,9 +77,8 @@ public class TimerService extends Service {
                 public void run() {
 
                     long currentTime=System.currentTimeMillis();
-                    List<Evenement> Event=DATABASE.evenementDao().selectCurrentEvenement();
-                    displayNotification(Event);
-
+                    List<Alerte>alertes=DATABASE.alerteDao().selectCurrentAlertes();
+                    displayNotification(getEventsByIdUsingAlert(alertes));
                 }
 
             });
@@ -135,4 +136,17 @@ public class TimerService extends Service {
             notificationManager.createNotificationChannel(notificationChannel);
         }
     }
+
+    private List<Evenement> getEventsByIdUsingAlert(List<Alerte> alertes){
+        List<Evenement>evenementList=new ArrayList<>();
+        for (int i=0 ;i<alertes.size();i++){
+            Evenement evenement = DATABASE.evenementDao().selectEvenmentById(alertes.get(i).getEvenementId());
+            evenementList.add(evenement);
+        }
+
+
+
+        return  evenementList;
+    }
+
 }

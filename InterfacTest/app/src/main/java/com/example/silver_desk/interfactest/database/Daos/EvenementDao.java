@@ -51,6 +51,9 @@ public interface EvenementDao {
     //long loadAlertDelaiById(int id);
 
 
+
+
+
     @Query("SELECT max(id) FROM evenement_table")
     int lastEventId();
 

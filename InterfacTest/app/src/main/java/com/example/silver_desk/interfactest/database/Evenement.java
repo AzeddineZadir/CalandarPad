@@ -63,7 +63,7 @@ public class Evenement {
     public Evenement() {
     }
 
-    public Evenement(int id, @NonNull String libele, @NonNull long jour, @NonNull long heure_debut, long heure_fin, String lieu, String description, boolean recurrence, boolean alerte, int calendrierId,  long heure_alerte, long delai_alerte) {
+    public Evenement(int id, @NonNull String libele, @NonNull long jour, @NonNull long heure_debut, long heure_fin, String lieu, String description, boolean recurrence, int calendrierId) {
         this.id = id;
         this.libele = libele;
         this.jour = jour;
@@ -72,7 +72,6 @@ public class Evenement {
         this.lieu = lieu;
         this.description = description;
         this.recurrence = recurrence;
-
         this.calendrierId = calendrierId;
 
 

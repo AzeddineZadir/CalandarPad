@@ -395,12 +395,12 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
             // recuperer la position du titrre dans le spinner
             spinner_calendrier_parent.setSelection(getPositionOfitemByValu(titre, listecal));
             // initialisation du spinner delait
-         //   long delai = DATABASE.evenementDao().loadAlertDelaiById(evenement.getId());
+          long delai = DATABASE.alerteDao().getdelaiFromAlertByIdEvent(getincomingInten_idevenment());
             String[] stringArray = getResources().getStringArray(R.array.delai_alerte);
             List<String> stringList = new ArrayList<String>();
             stringList = stringArrayToList(stringArray);
-         //   int pos = getPositionOfitemByValu(longDelaiToStringItem(delai), stringList);
-        //    spinner_delai.setSelection(pos);
+           int pos = getPositionOfitemByValu(longDelaiToStringItem(delai), stringList);
+            spinner_delai.setSelection(pos);
             // intialisation du temps
             heure_deb.setTimeInMillis(evenement.getHeure_debut());
             heure_fin.setTimeInMillis(evenement.getHeure_fin());
@@ -493,25 +493,24 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         //recurrance
         boolean recurrence = cb_recurrance.isChecked();
         // alerte
-        boolean alerte = false;
-        if (getdelaiFromSpiner(spinner_delai) == -1) {
-            alerte = false;
-        } else {
-            alerte = true;
-        }
+        boolean etat ;
 
+        if (getdelaiFromSpiner(spinner_delai)==-1){
+             etat = false ;
+        }else{
+             etat =true ;
+        }
+        int id_alerte= DATABASE.alerteDao().getIdAlertByIdEvent(id_ev);
+        Alerte upDatealerte = new Alerte(id_alerte,generatAlertTime(heure_deb,spinner_delai,date),getdelaiFromSpiner(spinner_delai),etat,id_ev);
         // id calendrier parent
         int id_calendrier = id_cal;
-        // heure alerte
-        long heure_alerte = generatAlertTime(heure_deb,spinner_delai,date);
-        // delai alerte
-        long delai = getdelaiFromSpiner(spinner_delai);
 
-        Evenement evenementModifer = new Evenement(id, libele, jour, h_d, h_f, lieu, description, recurrence, alerte, id_calendrier, heure_alerte, delai);
-
+        Evenement evenementModifer = new Evenement(id, libele, jour, h_d, h_f, lieu, description, recurrence, id_calendrier);
         DATABASE.evenementDao().upDateEvenment(evenementModifer);
         Toast.makeText(this, getString(R.string.updateSuccess), Toast.LENGTH_SHORT).show();
-
+        // update alerte
+        DATABASE.alerteDao().updateAlerte(upDatealerte);
+        Toast.makeText(this,"modification alerte", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -532,12 +531,8 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         evenement.setHeure_fin(heure_fin.getTimeInMillis());
 
         // alerte
-        if (getdelaiFromSpiner(spinner_delai) == -1) {
-
-        } else{
             alerte = new Alerte();
             alerte.setEtat(true);
-        }
         //heure_alerte
         alerte.setHeure_declenchement(generatAlertTime(heure_deb,spinner_delai,date));
         // delai alerte
@@ -547,7 +542,10 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         Toast.makeText(this, getString(R.string.addSuccess), Toast.LENGTH_SHORT).show();
         int id_eve=DATABASE.evenementDao().lastEventId();
         alerte.setEvenementId(id_eve);
+
         DATABASE.alerteDao().insertAlerte(alerte);
+        Toast.makeText(this, "alerte configuruer ", Toast.LENGTH_SHORT).show();
+
     }
 
     // generer un titre avec heur_debu et heure fin

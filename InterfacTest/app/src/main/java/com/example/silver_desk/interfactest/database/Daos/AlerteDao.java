@@ -22,10 +22,17 @@ public interface AlerteDao {
     @Update
     void updateAlerte(Alerte alerte);
 
+
+    // recupérer une alerte grace a son id evenment
+    @Query("SELECT id FROM alerte_table WHERE evenementId =:id_event")
+    int getIdAlertByIdEvent(int id_event);
+
+    @Query("SELECT delai FROM alerte_table WHERE evenementId =:id_event")
+    long getdelaiFromAlertByIdEvent(int id_event);
     //Requête selection pour le service
     @Query("SELECT * FROM alerte_table " +
             "WHERE (datetime(heure_declenchement/1000,'unixepoch') >=datetime('now')" +
             "AND datetime(heure_declenchement/1000,'unixepoch')<=datetime('now','+30 seconds'))")
-    List<Alerte> selectCurrentEvenement();
+    List<Alerte> selectCurrentAlertes();
 
 }
