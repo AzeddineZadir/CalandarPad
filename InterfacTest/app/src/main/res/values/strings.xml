@@ -14,6 +14,17 @@
         <item>élevée</item>
     </string-array>
 
+    <string-array name="recurrence">
+
+        <item>Quotidien</item>
+        <item>Hebdomadaire</item>
+       <!-- <item>Mensuel</item>
+        <item>Bimestriel</item>
+        <item>Trimestriel</item>
+        <item>Semestriel</item>
+        <item>Annuel</item>-->
+    </string-array>
+
     <string-array name="delai_alerte">
         <item>pas dalerte</item>
         <item>0 m</item>

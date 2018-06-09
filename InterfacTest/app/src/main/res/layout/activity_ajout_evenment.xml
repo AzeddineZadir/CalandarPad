@@ -140,7 +140,7 @@
 
                     <Spinner
                         android:id="@+id/spinner_calendrier_parent"
-                        android:layout_width="wrap_content"
+                        android:layout_width="126dp"
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
@@ -175,7 +175,7 @@
 
                     <TextView
                         android:id="@+id/t_recurrence"
-                        android:layout_width="227dp"
+                        android:layout_width="113dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:text="@string/recurrence"
@@ -183,10 +183,15 @@
 
                     <CheckBox
                         android:id="@+id/cb_recurrence"
-                        android:layout_width="wrap_content"
+                        android:layout_width="64dp"
                         android:layout_height="wrap_content"
 
-                        android:text="activé" />
+                        />
+
+                    <Spinner
+                        android:id="@+id/spinner_recurrence"
+                        android:layout_width="138dp"
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
 
@@ -220,7 +225,7 @@
 
                     <TextView
                         android:id="@+id/t_alert"
-                        android:layout_width="195dp"
+                        android:layout_width="193dp"
                         android:layout_height="wrap_content"
                         android:layout_alignEnd="@+id/t_libele"
                         android:layout_centerVertical="true"
@@ -230,7 +235,7 @@
 
                     <Spinner
                         android:id="@+id/spinner_delai"
-                        android:layout_width="wrap_content"
+                        android:layout_width="121dp"
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>

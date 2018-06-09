@@ -44,6 +44,7 @@ public class Evenement {
 
 
     @ColumnInfo(name = "lieu")
+
     private String lieu;
 
     @ColumnInfo(name = "description")
@@ -52,10 +53,14 @@ public class Evenement {
     @ColumnInfo(name = "recurrence")
     private boolean recurrence;
 
+    @ColumnInfo(name = "typerecurrence")
+    private String type_recurrence;
 
     @ColumnInfo(name = "calendrierId")
     private int calendrierId;
 
+    @ColumnInfo(name = "parentId")
+    private int parentId;
 
 
 
@@ -88,6 +93,20 @@ public class Evenement {
         this.calendrierId = calendrierId;
 
     }
+
+    public Evenement(int id, @NonNull String libele, @NonNull long jour, @NonNull long heure_debut, long heure_fin, String lieu, String description, boolean recurrence, String type_recurrence, int calendrierId) {
+        this.id = id;
+        this.libele = libele;
+        this.jour = jour;
+        this.heure_debut = heure_debut;
+        this.heure_fin = heure_fin;
+        this.lieu = lieu;
+        this.description = description;
+        this.recurrence = recurrence;
+        this.type_recurrence = type_recurrence;
+        this.calendrierId = calendrierId;
+    }
+
 
     public int getId() {
         return id;
@@ -156,7 +175,13 @@ public class Evenement {
         this.recurrence = recurrence;
     }
 
+    public String getType_recurrence() {
+        return type_recurrence;
+    }
 
+    public void setType_recurrence(String type_recurrence) {
+        this.type_recurrence = type_recurrence;
+    }
 
     public int getCalendrierId() {
         return calendrierId;
@@ -166,10 +191,13 @@ public class Evenement {
         this.calendrierId = calendrierId;
     }
 
+    public int getParentId() {
+        return parentId;
+    }
 
-
-
-
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
+    }
 }
 
     //Getters & Setters
