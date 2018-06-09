@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.silver_desk.interfactest.R;
+import com.example.silver_desk.interfactest.database.Daos.AlerteDao;
 import com.example.silver_desk.interfactest.database.Daos.CalendrierDao;
 import com.example.silver_desk.interfactest.database.Daos.EvenementDao;
 
@@ -21,7 +22,7 @@ import java.util.concurrent.Executors;
 public abstract class AppDatabase extends RoomDatabase {
     public abstract CalendrierDao calendrierDao ();
     public abstract EvenementDao evenementDao();
-
+    public abstract AlerteDao alerteDao();
     private static AppDatabase INSTANCE;
 
     public synchronized static AppDatabase getInstance(Context context) {

@@ -77,11 +77,6 @@ public interface EvenementDao {
     void deleteAllEvenmentByIdCalendrier(int id_cal);
 
 
-    //Requête selection pour le service
-    @Query("SELECT * FROM evenement_table " +
-            "WHERE (datetime(heure_alerte/1000,'unixepoch') >=datetime('now')" +
-            "AND datetime(heure_alerte/1000,'unixepoch')<=datetime('now','+30 seconds'))")
-    List<Evenement> selectCurrentEvenement();
 
 
 

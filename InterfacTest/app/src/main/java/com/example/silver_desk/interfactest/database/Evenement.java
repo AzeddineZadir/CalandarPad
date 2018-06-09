@@ -52,20 +52,10 @@ public class Evenement {
     @ColumnInfo(name = "recurrence")
     private boolean recurrence;
 
-    @ColumnInfo(name = "alerte")
-    private boolean alerte;
 
     @ColumnInfo(name = "calendrierId")
     private int calendrierId;
 
-    //lalerte
-
-
-    @ColumnInfo(name = "heure_alerte")
-    private long heure_alerte;
-
-    @ColumnInfo(name = "delai_alerte")
-    private long delai_alerte;
 
 
 
@@ -82,15 +72,13 @@ public class Evenement {
         this.lieu = lieu;
         this.description = description;
         this.recurrence = recurrence;
-        this.alerte = alerte;
+
         this.calendrierId = calendrierId;
 
-        this.heure_alerte = heure_alerte;
-        this.delai_alerte = delai_alerte;
 
     }
 
-    public Evenement(@NonNull String libele, @NonNull long jour, @NonNull long heure_debut, long heure_fin, String lieu, String description, boolean recurrence, boolean alerte, int calendrierId, long heure_alerte, long delai_alerte) {
+    public Evenement(@NonNull String libele, @NonNull long jour, @NonNull long heure_debut, long heure_fin, String lieu, String description, boolean recurrence, int calendrierId) {
         this.libele = libele;
         this.jour = jour;
         this.heure_debut = heure_debut;
@@ -98,10 +86,7 @@ public class Evenement {
         this.lieu = lieu;
         this.description = description;
         this.recurrence = recurrence;
-        this.alerte = alerte;
         this.calendrierId = calendrierId;
-        this.heure_alerte = heure_alerte;
-        this.delai_alerte = delai_alerte;
 
     }
 
@@ -173,13 +158,6 @@ public class Evenement {
     }
 
 
-    public boolean isAlerte() {
-        return alerte;
-    }
-
-    public void setAlerte(boolean alerte) {
-        this.alerte = alerte;
-    }
 
     public int getCalendrierId() {
         return calendrierId;
@@ -191,21 +169,6 @@ public class Evenement {
 
 
 
-    public long getHeure_alerte() {
-        return heure_alerte;
-    }
-
-    public void setHeure_alerte(long heure_alerte) {
-        this.heure_alerte = heure_alerte;
-    }
-
-    public long getDelai_alerte() {
-        return delai_alerte;
-    }
-
-    public void setDelai_alerte(long delai_alerte) {
-        this.delai_alerte = delai_alerte;
-    }
 
 
 }

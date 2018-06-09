@@ -195,9 +195,9 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
                 if(e_libele.getText().toString().equals("")) {
 
                     final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setTitle("Erreur de saisis");
+                    builder.setTitle("Erreur de saisie");
                     builder.setIcon(R.drawable.ic_announcement_black_24dp);
-                    builder.setMessage("vous n'avez pas saisie toutes les informations nécessaires");
+                    builder.setMessage("Vous n'avez pas saisi toutes les informations nécessaires");
                     builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -211,8 +211,8 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
                     final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setTitle("Incohérencce dans l'heure debut et l'heure fin");
                     builder.setIcon(R.drawable.ic_announcement_black_24dp);
-                    builder.setMessage("Modifiez l'heure de début afin qu'elle soit antérieure a l'heure de fin de l'événement");
-                    builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    builder.setMessage("Modifiez l'heure de début afin qu'elle soit antérieure à l'heure de fin de l'événement");
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
