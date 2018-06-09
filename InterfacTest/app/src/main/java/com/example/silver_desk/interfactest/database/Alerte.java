@@ -26,22 +26,27 @@ public class Alerte {
     @ColumnInfo(name = "delai")
     private long delai;
 
+    @ColumnInfo(name ="etat")
+    private boolean etat;
+
     @ColumnInfo(name = "evenementId")
     private int evenementId;
 
     public Alerte() {
     }
 
-    public Alerte(long heure_declenchement, long delai, int evenementId) {
+    public Alerte(long heure_declenchement, long delai, boolean etat, int evenementId) {
         this.heure_declenchement = heure_declenchement;
         this.delai = delai;
+        this.etat = etat;
         this.evenementId = evenementId;
     }
 
-    public Alerte(int id, long heure_declenchement, long delai, int evenementId) {
+    public Alerte(int id, long heure_declenchement, long delai, boolean etat, int evenementId) {
         this.id = id;
         this.heure_declenchement = heure_declenchement;
         this.delai = delai;
+        this.etat = etat;
         this.evenementId = evenementId;
     }
 
@@ -67,6 +72,14 @@ public class Alerte {
 
     public void setDelai(long delai) {
         this.delai = delai;
+    }
+
+    public boolean isEtat() {
+        return etat;
+    }
+
+    public void setEtat(boolean etat) {
+        this.etat = etat;
     }
 
     public int getEvenementId() {

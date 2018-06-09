@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.silver_desk.interfactest.database.Alerte;
 import com.example.silver_desk.interfactest.database.Evenement;
 import com.example.silver_desk.interfactest.fragment.DatePickerFragment;
 import com.example.silver_desk.interfactest.fragment.TimePickerFragment;
@@ -55,6 +56,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
     ArrayAdapter arrayAdapterdelai, arrayAdaptercal;
     List<String> listecal,listedelai;
     TextView t_titre ;
+    Alerte alerte ;
     private boolean modification;
 
     @Override
@@ -393,12 +395,12 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
             // recuperer la position du titrre dans le spinner
             spinner_calendrier_parent.setSelection(getPositionOfitemByValu(titre, listecal));
             // initialisation du spinner delait
-            long delai = DATABASE.evenementDao().loadAlertDelaiById(evenement.getId());
+         //   long delai = DATABASE.evenementDao().loadAlertDelaiById(evenement.getId());
             String[] stringArray = getResources().getStringArray(R.array.delai_alerte);
             List<String> stringList = new ArrayList<String>();
             stringList = stringArrayToList(stringArray);
-            int pos = getPositionOfitemByValu(longDelaiToStringItem(delai), stringList);
-            spinner_delai.setSelection(pos);
+         //   int pos = getPositionOfitemByValu(longDelaiToStringItem(delai), stringList);
+        //    spinner_delai.setSelection(pos);
             // intialisation du temps
             heure_deb.setTimeInMillis(evenement.getHeure_debut());
             heure_fin.setTimeInMillis(evenement.getHeure_fin());
@@ -531,18 +533,21 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
         // alerte
         if (getdelaiFromSpiner(spinner_delai) == -1) {
-            evenement.setAlerte(false);
-        } else {
-            evenement.setAlerte(true);
 
+        } else{
+            alerte = new Alerte();
+            alerte.setEtat(true);
         }
         //heure_alerte
-        evenement.setHeure_alerte(generatAlertTime(heure_deb,spinner_delai,date));
+        alerte.setHeure_declenchement(generatAlertTime(heure_deb,spinner_delai,date));
         // delai alerte
-        evenement.setDelai_alerte(getdelaiFromSpiner(spinner_delai));
+       alerte.setDelai(getdelaiFromSpiner(spinner_delai));
         //insertion dans la base
         DATABASE.evenementDao().insert(evenement);
         Toast.makeText(this, getString(R.string.addSuccess), Toast.LENGTH_SHORT).show();
+        int id_eve=DATABASE.evenementDao().lastEventId();
+        alerte.setEvenementId(id_eve);
+        DATABASE.alerteDao().insertAlerte(alerte);
     }
 
     // generer un titre avec heur_debu et heure fin

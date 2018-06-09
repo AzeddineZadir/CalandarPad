@@ -18,7 +18,7 @@ import com.example.silver_desk.interfactest.database.Daos.EvenementDao;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {Calendrier.class,Evenement.class},version = 1)
+@Database(entities = {Calendrier.class,Evenement.class,Alerte.class},version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract CalendrierDao calendrierDao ();
     public abstract EvenementDao evenementDao();

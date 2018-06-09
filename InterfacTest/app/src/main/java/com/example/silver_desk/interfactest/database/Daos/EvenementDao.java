@@ -42,13 +42,18 @@ public interface EvenementDao {
 
 
     // recuperer les evenment qui vont advenir a cette  minute
-    @Query("SELECT * FROM evenement_table WHERE heure_alerte =:heur")
-    public Evenement selectCurrentEvenment(long heur);
+    //@Query("SELECT * FROM evenement_table WHERE heure_alerte =:heur")
+    //public Evenement selectCurrentEvenment(long heur);
 
    // recuperer le delai dun evenment
 
-    @Query("SELECT delai_alerte FROM evenement_table WHERE  id =:id")
-    long loadAlertDelaiById(int id);
+    //@Query("SELECT delai_alerte FROM evenement_table WHERE  id =:id")
+    //long loadAlertDelaiById(int id);
+
+
+    @Query("SELECT max(id) FROM evenement_table")
+    int lastEventId();
+
 
 
     @Query("DELETE FROM evenement_table ")
