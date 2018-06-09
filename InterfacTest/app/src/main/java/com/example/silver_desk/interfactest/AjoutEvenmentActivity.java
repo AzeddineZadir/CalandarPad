@@ -224,9 +224,16 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
                     alertDialog.show();
                 }else{
                     Evenement evenement = new Evenement();
-                    inserEvenment(evenement, id_cal);
-                    backToHome();
-                }
+                    if (cb_recurrance.isChecked()){
+                        insertEvenmentRecur(evenement, id_cal);
+                        backToHome();
+
+                    }else{
+                        inserEvenment(evenement, id_cal);
+                        backToHome();
+                    }
+
+                 }
                 }
 
         }
@@ -548,6 +555,49 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
     }
 
+    // insert rec
+    public void insertEvenmentRecur(Evenement evenement , int id_cal){
+        long val =7*24*3600*1000;
+        for (int i=0;i<20;i++) {
+            // recuperation des information de l évenement
+            evenement.setLibele(e_libele.getText().toString());
+            evenement.setDescription(e_description.getText().toString());
+            evenement.setLieu(e_lieu.getText().toString());
+            evenement.setRecurrence(cb_recurrance.isChecked());
+            evenement.setCalendrierId(id_cal);
+            // le joure
+            evenement.setJour(date.getTimeInMillis()+i*val);
+            // heure debut;
+            evenement.setHeure_debut(heure_deb.getTimeInMillis());
+
+            // heure fin
+            evenement.setHeure_fin(heure_fin.getTimeInMillis());
+
+            // alerte
+            alerte = new Alerte();
+            alerte.setEtat(true);
+            //heure_alerte
+            alerte.setHeure_declenchement(generatAlertTime(heure_deb, spinner_delai, date));
+            // delai alerte
+            alerte.setDelai(getdelaiFromSpiner(spinner_delai));
+            //insertion dans la base
+            DATABASE.evenementDao().insert(evenement);
+            Toast.makeText(this, getString(R.string.addSuccess), Toast.LENGTH_SHORT).show();
+            int id_eve = DATABASE.evenementDao().lastEventId();
+            alerte.setEvenementId(id_eve);
+
+            DATABASE.alerteDao().insertAlerte(alerte);
+            Toast.makeText(this, "alerte configuruer ", Toast.LENGTH_SHORT).show();
+
+        }
+
+
+
+
+
+
+
+    }
     // generer un titre avec heur_debu et heure fin
     public String genratTitelWithTime(Calendar h) {
         String titel = "";

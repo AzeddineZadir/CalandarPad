@@ -361,8 +361,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private List<WeekViewEvent> myEventToWeekEvents(List<Evenement> evenementList, int newYear, int newMonth) {
         List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
-        compteur_onmonth++;
-        if (compteur_onmonth == 1) {
+       // compteur_onmonth++;
+       // if (compteur_onmonth == 1) {
             for (int i = 0; i < evenementList.size(); i++) {
                 WeekViewEvent event;
                 Evenement evenement = new Evenement();
@@ -405,7 +405,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
 
 
-        }
+       // }
         return events;
     }
 
