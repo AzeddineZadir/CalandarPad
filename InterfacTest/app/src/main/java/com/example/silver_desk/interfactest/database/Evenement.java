@@ -59,8 +59,6 @@ public class Evenement {
     @ColumnInfo(name = "calendrierId")
     private int calendrierId;
 
-    @ColumnInfo(name = "parentId")
-    private int parentId;
 
 
 
@@ -191,13 +189,7 @@ public class Evenement {
         this.calendrierId = calendrierId;
     }
 
-    public int getParentId() {
-        return parentId;
-    }
 
-    public void setParentId(int parentId) {
-        this.parentId = parentId;
-    }
 }
 
     //Getters & Setters

@@ -101,12 +101,13 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         //les check box
 
         cb_recurrance = (CheckBox) findViewById(R.id.cb_recurrence);
-        cb_recurrance.setOnClickListener(new View.OnClickListener() {
+
+        /*cb_recurrance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(cb_recurrance.isChecked()){spinner_recurrance.setVisibility(View.VISIBLE);}else{spinner_recurrance.setVisibility(View.INVISIBLE);}
             }
-        });
+        });*/
 
         //le time picker
         timePickerFragment = new TimePickerFragment();
@@ -169,11 +170,6 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         return super.onOptionsItemSelected(item);
     }
 
-
-
-
-
-
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.b_debut) {
@@ -207,8 +203,14 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
             if (modification == true) {
                 // modification
-                updatEvenment(getincomingInten_idevenment(), id_cal);
-                backToHome();
+
+                   // Evenement evenement= new Evenement() ;
+                   // insertEvenmentRecur(evenement,id_cal,getvaleureRecurrance(spinner_recurrance));
+
+                    updatEvenment(getincomingInten_idevenment(), id_cal);
+                    backToHome();
+
+
             } else {
                 // Ajout d'un evenment
                 if(e_libele.getText().toString().equals("")) {
@@ -241,14 +243,12 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
                     alertDialog.show();
                 }else{
                     Evenement evenement = new Evenement();
+                    //   insertEvenmentRecur(evenement, id_cal,getvaleureRecurrance(spinner_recurrance));
+                    // backToHome();
 
-                    if (spinner_recurrance.getSelectedItemId()==0){
-                       inserEvenment(evenement, id_cal);
-                       backToHome();
-                    }else{
-                        insertEvenmentRecur(evenement, id_cal,getvaleureRecurrance(spinner_recurrance));
+                        inserEvenment(evenement, id_cal);
                         backToHome();
-                    }
+
 
                  }
                 }
@@ -516,6 +516,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         String description = e_description.getText().toString();
         //recurrance
         boolean recurrence = cb_recurrance.isChecked();
+
         // alerte
         boolean etat ;
 
@@ -555,7 +556,7 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         evenement.setHeure_fin(heure_fin.getTimeInMillis());
 
         //recurrance
-        evenement.setRecurrence(false);
+        evenement.setRecurrence(cb_recurrance.isChecked());
 
         //type recurrance
         evenement.setType_recurrence("non");
@@ -580,78 +581,63 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
 
     // insert recurrant
     public void insertEvenmentRecur(Evenement evenement , int id_cal,int indice) {
+      insertLoop(evenement,id_cal,indice);
+
+    }
+
+
+
+    public  void insertLoop(Evenement evenement ,int id_cal,int indice){
         long val = indice * 24 * 3600 * 1000;
-        if (indice == 1) {
-            for (int i = 0; i < 30; i++) {
-                // recuperation des information de l évenement
-                evenement.setLibele(e_libele.getText().toString());
-                evenement.setDescription(e_description.getText().toString());
-                evenement.setLieu(e_lieu.getText().toString());
-                evenement.setRecurrence(cb_recurrance.isChecked());
-                evenement.setCalendrierId(id_cal);
-                // le joure
-                Calendar cal=Calendar.getInstance();
-                cal.setTimeInMillis(date.getTimeInMillis()+i*val);
-                evenement.setJour(cal.getTimeInMillis());
-                // heure debut;
-                evenement.setHeure_debut(heure_deb.getTimeInMillis());
-
-                // heure fin
-                evenement.setHeure_fin(heure_fin.getTimeInMillis());
-
-                // alerte
-                alerte = new Alerte();
-                alerte.setEtat(true);
-                //heure_alerte
-                alerte.setHeure_declenchement(generatAlertTime(heure_deb, spinner_delai, cal));
-                // delai alerte
-                alerte.setDelai(getdelaiFromSpiner(spinner_delai));
-                //insertion dans la base
-                DATABASE.evenementDao().insert(evenement);
-
-                int id_eve = DATABASE.evenementDao().lastEventId();
-                alerte.setEvenementId(id_eve);
-
-                DATABASE.alerteDao().insertAlerte(alerte);
-            }
-            Toast.makeText(this, getString(R.string.addSuccess), Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, "alerte configuruer ", Toast.LENGTH_SHORT).show();
-        } else if (indice == 7) {
-            for (int i = 0; i < 4; i++) {
-                // recuperation des information de l évenement
-                evenement.setLibele(e_libele.getText().toString());
-                evenement.setDescription(e_description.getText().toString());
-                evenement.setLieu(e_lieu.getText().toString());
-                evenement.setRecurrence(cb_recurrance.isChecked());
-                evenement.setCalendrierId(id_cal);
-                // le joure
-                Calendar cal=Calendar.getInstance();
-                cal.setTimeInMillis(date.getTimeInMillis()+i*val);
-                evenement.setJour(cal.getTimeInMillis());
-                // heure debut;
-                evenement.setHeure_debut(heure_deb.getTimeInMillis());
-
-                // heure fin
-                evenement.setHeure_fin(heure_fin.getTimeInMillis());
-
-                // alerte
-                alerte = new Alerte();
-                alerte.setEtat(true);
-                //heure_alerte
-                alerte.setHeure_declenchement(generatAlertTime(heure_deb, spinner_delai, cal));
-                // delai alerte
-                alerte.setDelai(getdelaiFromSpiner(spinner_delai));
-                //insertion dans la base
-                DATABASE.evenementDao().insert(evenement);
-
-                int id_eve = DATABASE.evenementDao().lastEventId();
-                alerte.setEvenementId(id_eve);
-
-                DATABASE.alerteDao().insertAlerte(alerte);
-            }
-            Toast.makeText(this, getString(R.string.addSuccess), Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, "alerte configuruer ", Toast.LENGTH_SHORT).show();
+        int nbrEvents=1 ;
+        if (indice==1){
+            // ces quotideins qui a etait selectioner
+            nbrEvents=30;
         }
+        if(indice==2){
+              // cest hebdomadaire qui a etait selectione
+            nbrEvents=12;}
+        if(indice==30){
+            nbrEvents=6 ;
+        }
+
+
+        // la boucle dajout
+        for (int i = 0; i < nbrEvents; i++) {
+            // recuperation des information de l évenement
+            evenement.setLibele(e_libele.getText().toString());
+            evenement.setDescription(e_description.getText().toString());
+            evenement.setLieu(e_lieu.getText().toString());
+            evenement.setRecurrence(cb_recurrance.isChecked());
+            evenement.setCalendrierId(id_cal);
+            // le joure
+            Calendar cal=Calendar.getInstance();
+            cal.setTimeInMillis(date.getTimeInMillis()+i*val);
+            evenement.setJour(cal.getTimeInMillis());
+            // heure debut;
+            evenement.setHeure_debut(heure_deb.getTimeInMillis());
+
+            // heure fin
+            evenement.setHeure_fin(heure_fin.getTimeInMillis());
+
+            // alerte
+            alerte = new Alerte();
+            alerte.setEtat(true);
+            //heure_alerte
+            alerte.setHeure_declenchement(generatAlertTime(heure_deb, spinner_delai, cal));
+            // delai alerte
+            alerte.setDelai(getdelaiFromSpiner(spinner_delai));
+            //insertion dans la base
+            DATABASE.evenementDao().insert(evenement);
+
+            int id_eve = DATABASE.evenementDao().lastEventId();
+            alerte.setEvenementId(id_eve);
+
+            DATABASE.alerteDao().insertAlerte(alerte);
+        }
+        Toast.makeText(this, getString(R.string.addSuccess), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "alerte configuruer ", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "alerte configuruer"+indice, Toast.LENGTH_SHORT).show();
 
     }
     // generer un titre avec heur_debu et heure fin
@@ -800,22 +786,22 @@ public class AjoutEvenmentActivity extends AppCompatActivity implements View.OnC
         int id= (int)spinner.getSelectedItemId();
         int a =0 ;
         switch (id){
-            case 1:
+            case 0:
                 a=1;
             break;
-            case 2:
+            case 1:
                 a=7;
              break;
-            case 3:
+            case 2:
                 a=30;
                 break;
-            case 4:
+            case 3:
                 a=60;
                 break;
-            case 5:
+            case 4:
                 a=90;
                 break;
-            case 6:
+            case 5:
                 a=180;
                 break;
 

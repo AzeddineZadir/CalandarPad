@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">InterfacTest</string>
+    <string name="app_name">JustCalendar</string>
     <string name="Dashboard">Dashboard</string>
     <string name="nomutilisateur">nomutilisateur</string>
     <string name="Bienvenus">Bienvenue</string>
@@ -18,8 +18,8 @@
 
         <item>Quotidien</item>
         <item>Hebdomadaire</item>
-       <!-- <item>Mensuel</item>
-        <item>Bimestriel</item>
+        <item>Mensuel</item>
+       <!-- <item>Bimestriel</item>
         <item>Trimestriel</item>
         <item>Semestriel</item>
         <item>Annuel</item>-->
@@ -75,5 +75,6 @@
     <string name="setevent">Modifiez un événment </string>
     <string name="yourtitel">votre titre</string>
     <string name="yourdesccreption">votre description</string>
+    <string name="titrerealisation">Cette application a été réalisé comme projet de fin ce cycle par :</string>
 
 </resources>
