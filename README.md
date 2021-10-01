@@ -10,4 +10,22 @@ L'étudiant a tendance à arriver en retard, ou carrément à rater ses rendez-v
 autre chose au même moment sans le savoir. Il n'arrive pas à se situer. C'est dans ce cadre que
 s'inscrit notre application : à assister l'étudiant et à l'aider à être plus productif et mieux organisé.
 
+# Capture d'ecrant et fonctionalitées 
+<p float="left">
+  <img src="/images/addcalendar.png" width="200" />
+  <img src="/images/addevent.png" width="200" /> 
+  <img src="/images/ajout_calendrier.png" width="200" />
+   <img src="/images/menu_droite.png" width="200" />
+</p>
+
+<p float="left">
+  <img src="/images/vue_ajourdui.png" width="200" />
+  <img src="/images/vue_3jrs.png" width="200" /> 
+  <img src="/images/supp.jpg" width="200" />
+  <img src="/images/selected_week.jpg" width="200" />
+</p>
+
+
+
+
 
