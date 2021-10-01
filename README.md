@@ -21,8 +21,8 @@ s'inscrit notre application : à assister l'étudiant et à l'aider à être plu
 <p float="left">
   <img src="/images/vue_ajourdui.png" width="200" />
   <img src="/images/vue_3jrs.png" width="200" /> 
-  <img src="/images/supp.jpg" width="200" />
-  <img src="/images/selected_week.jpg" width="200" />
+  <img src="/images/supp.jpg" width="200"  height = 355/>
+  <img src="/images/selected_week.jpg" width="200"  height = 355 />
 </p>
 
 
